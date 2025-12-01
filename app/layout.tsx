@@ -1,6 +1,9 @@
 import type { Metadata, Viewport } from 'next'
 import { Inter, Space_Grotesk } from 'next/font/google'
 import { ThemeProvider } from '@/components/theme-provider'
+import { Header } from '@/components/Header'
+import { Footer } from '@/components/Footer'
+import { ToastProvider } from '@/components/ui/Toast'
 import './globals.css'
 
 // ============================================
@@ -104,7 +107,13 @@ export default function RootLayout({
           storageKey="kashicoding-theme"
           enableTransitions={true}
         >
-          {children}
+          <ToastProvider>
+            <div className="flex min-h-screen flex-col">
+              <Header />
+              <div className="flex-1">{children}</div>
+              <Footer />
+            </div>
+          </ToastProvider>
         </ThemeProvider>
       </body>
     </html>
