@@ -52,33 +52,33 @@ export interface Theme {
 }
 
 // ============================================
-// MONOKAI THEME - Classic dark theme
+// MONOKAI THEME - HOT PINK dark theme
 // ============================================
 export const monokaiTheme: Theme = {
   name: 'monokai',
   displayName: 'Monokai',
-  description: 'Classic dark theme with vibrant colors',
+  description: 'Hot pink and neon green on dark brown',
   colors: {
-    primary: '230 219 116',           // #E6DB74 - Yellow
-    'primary-foreground': '39 40 34',
-    secondary: '249 38 114',          // #F92672 - Pink/Magenta
-    'secondary-foreground': '248 248 242',
-    accent: '166 226 46',             // #A6E22E - Green
-    'accent-secondary': '102 217 239', // #66D9EF - Blue
-    'accent-foreground': '39 40 34',
-    background: '39 40 34',           // #272822
-    'background-secondary': '32 33 27',
-    foreground: '248 248 242',        // #F8F8F2
-    'foreground-muted': '190 190 190',
-    border: '60 60 55',
-    'border-light': '75 76 70',
-    card: '46 47 41',
-    'card-hover': '52 53 47',
-    muted: '60 60 55',
-    destructive: '249 38 114',        // Pink for errors
-    success: '166 226 46',            // Green
-    warning: '253 151 31',            // #FD971F - Orange
-    info: '102 217 239',              // Blue
+    primary: '249 38 114',            // #F92672 - HOT PINK
+    'primary-foreground': '255 255 255',
+    secondary: '174 129 255',         // #AE81FF - Purple
+    'secondary-foreground': '255 255 255',
+    accent: '166 226 46',             // #A6E22E - Neon Green
+    'accent-secondary': '253 151 31', // #FD971F - Orange
+    'accent-foreground': '30 30 30',
+    background: '30 31 26',
+    'background-secondary': '39 40 34',
+    foreground: '248 248 242',
+    'foreground-muted': '150 150 150',
+    border: '80 82 72',
+    'border-light': '100 102 92',
+    card: '39 40 34',
+    'card-hover': '50 51 45',
+    muted: '70 72 65',
+    destructive: '249 38 114',
+    success: '166 226 46',
+    warning: '253 151 31',
+    info: '102 217 239',
   },
   radius: {
     sm: '0.25rem',
@@ -88,33 +88,33 @@ export const monokaiTheme: Theme = {
 }
 
 // ============================================
-// ONE DARK PRO THEME - Modern dark theme
+// ONE DARK PRO THEME - Cool BLUE theme
 // ============================================
 export const oneDarkProTheme: Theme = {
   name: 'one-dark-pro',
   displayName: 'One Dark Pro',
-  description: 'Popular dark theme from Atom editor',
+  description: 'Cool blue tones on dark gray',
   colors: {
-    primary: '97 175 239',            // #61AFEF - Blue
-    'primary-foreground': '255 255 255',
+    primary: '97 175 239',            // #61AFEF - Bright Blue
+    'primary-foreground': '20 20 25',
     secondary: '198 120 221',         // #C678DD - Purple
     'secondary-foreground': '255 255 255',
-    accent: '152 195 121',            // #98C379 - Green
-    'accent-secondary': '224 108 117', // #E06C75 - Red
-    'accent-foreground': '255 255 255',
-    background: '40 44 52',           // #282C34
+    accent: '86 182 194',             // #56B6C2 - Cyan
+    'accent-secondary': '152 195 121', // #98C379 - Green
+    'accent-foreground': '20 20 25',
+    background: '25 28 33',
     'background-secondary': '33 37 43',
-    foreground: '171 178 191',        // #ABB2BF
-    'foreground-muted': '130 137 150',
-    border: '60 65 75',
-    'border-light': '75 80 90',
-    card: '46 50 58',
-    'card-hover': '52 56 64',
-    muted: '60 65 75',
-    destructive: '224 108 117',       // Red
-    success: '152 195 121',           // Green
-    warning: '209 154 102',           // #D19A66 - Orange
-    info: '86 182 194',               // #56B6C2 - Cyan
+    foreground: '220 223 228',
+    'foreground-muted': '140 145 155',
+    border: '70 75 85',
+    'border-light': '90 95 105',
+    card: '33 37 43',
+    'card-hover': '43 47 53',
+    muted: '50 55 65',
+    destructive: '224 108 117',
+    success: '152 195 121',
+    warning: '229 192 123',
+    info: '97 175 239',
   },
   radius: {
     sm: '0.25rem',
@@ -124,33 +124,33 @@ export const oneDarkProTheme: Theme = {
 }
 
 // ============================================
-// DRACULA THEME - Elegant dark theme
+// DRACULA THEME - PURPLE vampire theme
 // ============================================
 export const draculaTheme: Theme = {
   name: 'dracula',
   displayName: 'Dracula',
-  description: 'Elegant dark theme with purple accents',
+  description: 'Purple vampire vibes with neon accents',
   colors: {
-    primary: '189 147 249',           // #BD93F9 - Purple
-    'primary-foreground': '255 255 255',
-    secondary: '255 121 198',         // #FF79C6 - Pink
+    primary: '189 147 249',           // #BD93F9 - Bright Purple
+    'primary-foreground': '20 20 30',
+    secondary: '255 121 198',         // #FF79C6 - Hot Pink
     'secondary-foreground': '255 255 255',
-    accent: '80 250 123',             // #50FA7B - Green
-    'accent-secondary': '139 233 253', // #8BE9FD - Cyan
-    'accent-foreground': '40 42 54',
-    background: '40 42 54',           // #282A36
-    'background-secondary': '33 34 44',
-    foreground: '248 248 242',        // #F8F8F2
-    'foreground-muted': '190 190 190',
-    border: '68 71 90',
-    'border-light': '85 88 107',
-    card: '46 48 60',
-    'card-hover': '52 54 66',
+    accent: '80 250 123',             // #50FA7B - Neon Green
+    'accent-secondary': '255 184 108', // #FFB86C - Orange
+    'accent-foreground': '20 20 30',
+    background: '30 32 41',
+    'background-secondary': '40 42 54',
+    foreground: '248 248 242',
+    'foreground-muted': '180 180 190',
+    border: '98 114 164',
+    'border-light': '118 134 184',
+    card: '40 42 54',
+    'card-hover': '50 52 64',
     muted: '68 71 90',
-    destructive: '255 85 85',         // #FF5555 - Red
-    success: '80 250 123',            // Green
-    warning: '241 250 140',           // #F1FA8C - Yellow
-    info: '139 233 253',              // Cyan
+    destructive: '255 85 85',
+    success: '80 250 123',
+    warning: '241 250 140',
+    info: '139 233 253',
   },
   radius: {
     sm: '0.25rem',
@@ -160,38 +160,38 @@ export const draculaTheme: Theme = {
 }
 
 // ============================================
-// GITHUB LIGHT THEME - Clean light theme
+// GITHUB LIGHT THEME - BRIGHT light theme
 // ============================================
 export const githubLightTheme: Theme = {
   name: 'github-light',
   displayName: 'GitHub Light',
-  description: 'Clean light theme inspired by GitHub',
+  description: 'Bright white with bold colors',
   colors: {
-    primary: '9 105 218',             // #0969DA - Blue
+    primary: '5 80 174',              // #0550AE - Dark Blue
     'primary-foreground': '255 255 255',
-    secondary: '130 80 223',          // #8250DF - Purple
+    secondary: '111 66 193',          // #6F42C1 - Purple
     'secondary-foreground': '255 255 255',
-    accent: '26 127 55',              // #1A7F37 - Green
-    'accent-secondary': '191 135 0',   // #BF8700 - Orange
+    accent: '22 163 74',              // #16A34A - Green
+    'accent-secondary': '234 88 12',   // #EA580C - Orange
     'accent-foreground': '255 255 255',
-    background: '255 255 255',        // #FFFFFF
-    'background-secondary': '246 248 250',
-    foreground: '36 41 47',           // #24292F
-    'foreground-muted': '87 96 106',
-    border: '208 215 222',            // #D0D7DE
-    'border-light': '234 238 242',
+    background: '255 255 255',
+    'background-secondary': '247 250 252',
+    foreground: '15 23 42',
+    'foreground-muted': '71 85 105',
+    border: '226 232 240',
+    'border-light': '241 245 249',
     card: '255 255 255',
-    'card-hover': '246 248 250',
-    muted: '246 248 250',
-    destructive: '207 34 46',         // #CF222E - Red
-    success: '26 127 55',             // Green
-    warning: '191 135 0',             // Orange
-    info: '9 105 218',                // Blue
+    'card-hover': '248 250 252',
+    muted: '241 245 249',
+    destructive: '220 38 38',
+    success: '22 163 74',
+    warning: '234 88 12',
+    info: '14 165 233',
   },
   radius: {
-    sm: '0.375rem',
-    md: '0.5rem',
-    lg: '0.75rem',
+    sm: '0.5rem',
+    md: '0.75rem',
+    lg: '1rem',
   },
 }
 
