@@ -16,11 +16,14 @@ async function main() {
       category: 'CLASS',
       tags: ['calculator', 'javascript', 'nextjs', 'tailwind'],
       techStack: ['Next.js 16', 'React 19', 'TypeScript', 'Tailwind CSS', 'Lucide React'],
-      imageUrl: '/projects/js-calculator.png', // We'll add the image
+      features: ['Draggable modals', 'Multiple themes', 'Calculation history', 'Keyboard support'],
+      thumbnail: '/projects/js-calculator.png', // We'll add the image
+      images: [],
       featured: true,
       published: true,
       githubUrl: 'https://github.com/kashik09/js-calc',
-      // demoUrl: 'https://js-calc-kashi.vercel.app', // Add after deploying
+      liveUrl: '', // Add after deploying
+      publishedAt: new Date()
     }
   })
 

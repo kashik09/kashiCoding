@@ -98,9 +98,9 @@ model ProjectRequest {
   company     String?
 
   // Project details
-  projectType ProjectType
-  budget      BudgetRange
-  timeline    Timeline
+  projectType String
+  budget      String
+  timeline    String
   description String        @db.Text
 
   // Additional details
@@ -304,5 +304,7 @@ enum ProjectCategory {
   MACHINE_LEARNING
   BLOCKCHAIN
   GAME_DEVELOPMENT
+  PERSONAL
+  CLASS
   OTHER
 }

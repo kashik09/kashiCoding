@@ -48,14 +48,14 @@ export function Hero({ title, subtitle, ctaText, ctaLink }: HeroProps) {
       scale: 1,
       transition: {
         duration: 0.5,
-        ease: 'easeOut',
+        ease: 'easeOut' as const,
       },
     },
     hover: {
       scale: 1.05,
       transition: {
         duration: 0.2,
-        ease: 'easeInOut',
+        ease: 'easeInOut' as const,
       },
     },
     tap: {
