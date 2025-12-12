@@ -50,18 +50,18 @@
      PASTEL THEME
      ============================================ */
   [data-theme='pastel'] {
-    --color-primary: 203 166 247;
+    --color-primary: 147 51 234;
     --color-primary-foreground: 255 255 255;
-    --color-secondary: 162 210 255;
-    --color-secondary-foreground: 30 41 59;
-    --color-accent: 255 183 197;
-    --color-accent-secondary: 255 218 185;
+    --color-secondary: 59 130 246;
+    --color-secondary-foreground: 255 255 255;
+    --color-accent: 219 39 119;
+    --color-accent-secondary: 251 146 60;
     --color-accent-foreground: 255 255 255;
 
     --color-background: 255 250 250;
     --color-background-secondary: 249 245 247;
-    --color-foreground: 51 51 51;
-    --color-foreground-muted: 115 115 115;
+    --color-foreground: 30 30 30;
+    --color-foreground-muted: 82 82 82;
 
     --color-border: 229 212 232;
     --color-border-light: 243 232 245;
@@ -75,18 +75,18 @@
   }
 
   [data-theme='pastel'].dark {
-    --color-primary: 167 139 250;
-    --color-primary-foreground: 17 24 39;
-    --color-secondary: 96 165 250;
-    --color-secondary-foreground: 17 24 39;
+    --color-primary: 196 181 253;
+    --color-primary-foreground: 30 30 30;
+    --color-secondary: 147 197 253;
+    --color-secondary-foreground: 30 30 30;
     --color-accent: 251 113 133;
-    --color-accent-secondary: 253 164 175;
-    --color-accent-foreground: 17 24 39;
+    --color-accent-secondary: 253 186 116;
+    --color-accent-foreground: 30 30 30;
 
     --color-background: 24 24 27;
     --color-background-secondary: 39 39 42;
     --color-foreground: 250 250 250;
-    --color-foreground-muted: 161 161 170;
+    --color-foreground-muted: 212 212 216;
 
     --color-border: 63 63 70;
     --color-border-light: 82 82 91;
@@ -99,18 +99,18 @@
      NEON THEME
      ============================================ */
   [data-theme='neon'] {
-    --color-primary: 236 72 153;
+    --color-primary: 219 39 119;
     --color-primary-foreground: 255 255 255;
-    --color-secondary: 168 85 247;
+    --color-secondary: 147 51 234;
     --color-secondary-foreground: 255 255 255;
-    --color-accent: 34 211 238;
-    --color-accent-secondary: 132 204 22;
-    --color-accent-foreground: 17 24 39;
+    --color-accent: 6 182 212;
+    --color-accent-secondary: 101 163 13;
+    --color-accent-foreground: 255 255 255;
 
     --color-background: 255 255 255;
     --color-background-secondary: 249 250 251;
-    --color-foreground: 17 24 39;
-    --color-foreground-muted: 100 116 139;
+    --color-foreground: 15 23 42;
+    --color-foreground-muted: 71 85 105;
 
     --color-border: 226 232 240;
     --color-border-light: 241 245 249;
@@ -124,18 +124,18 @@
   }
 
   [data-theme='neon'].dark {
-    --color-primary: 236 72 153;
+    --color-primary: 251 113 133;
     --color-primary-foreground: 255 255 255;
-    --color-secondary: 168 85 247;
-    --color-secondary-foreground: 255 255 255;
-    --color-accent: 6 182 212;
-    --color-accent-secondary: 163 230 53;
-    --color-accent-foreground: 17 24 39;
+    --color-secondary: 196 181 253;
+    --color-secondary-foreground: 15 23 42;
+    --color-accent: 34 211 238;
+    --color-accent-secondary: 190 242 100;
+    --color-accent-foreground: 15 23 42;
 
     --color-background: 10 10 10;
     --color-background-secondary: 23 23 23;
     --color-foreground: 250 250 250;
-    --color-foreground-muted: 161 161 170;
+    --color-foreground-muted: 212 212 216;
 
     --color-border: 39 39 42;
     --color-border-light: 63 63 70;
@@ -197,21 +197,21 @@
      RETRO THEME
      ============================================ */
   [data-theme='retro'] {
-    --color-primary: 234 88 12;
+    --color-primary: 194 65 12;
     --color-primary-foreground: 255 255 255;
-    --color-secondary: 220 38 38;
+    --color-secondary: 185 28 28;
     --color-secondary-foreground: 255 255 255;
-    --color-accent: 234 179 8;
-    --color-accent-secondary: 168 85 247;
+    --color-accent: 161 98 7;
+    --color-accent-secondary: 107 33 168;
     --color-accent-foreground: 255 255 255;
 
     --color-background: 254 252 232;
     --color-background-secondary: 254 249 195;
-    --color-foreground: 71 40 4;
-    --color-foreground-muted: 120 53 15;
+    --color-foreground: 41 20 0;
+    --color-foreground-muted: 92 38 0;
 
-    --color-border: 253 224 71;
-    --color-border-light: 254 240 138;
+    --color-border: 217 119 6;
+    --color-border-light: 245 158 11;
     --color-card: 255 255 255;
     --color-card-hover: 254 252 232;
     --color-muted: 254 243 199;
@@ -223,16 +223,16 @@
 
   [data-theme='retro'].dark {
     --color-primary: 251 146 60;
-    --color-primary-foreground: 17 24 39;
-    --color-secondary: 239 68 68;
-    --color-secondary-foreground: 255 255 255;
+    --color-primary-foreground: 30 30 30;
+    --color-secondary: 248 113 113;
+    --color-secondary-foreground: 30 30 30;
     --color-accent: 250 204 21;
     --color-accent-secondary: 192 132 252;
-    --color-accent-foreground: 17 24 39;
+    --color-accent-foreground: 30 30 30;
 
     --color-background: 23 23 23;
     --color-background-secondary: 38 38 38;
-    --color-foreground: 254 243 199;
+    --color-foreground: 250 250 249;
     --color-foreground-muted: 212 212 216;
 
     --color-border: 63 63 70;
@@ -250,14 +250,14 @@
     --color-primary-foreground: 255 255 255;
     --color-secondary: 101 163 13;
     --color-secondary-foreground: 255 255 255;
-    --color-accent: 132 204 22;
-    --color-accent-secondary: 234 179 8;
+    --color-accent: 101 163 13;
+    --color-accent-secondary: 202 138 4;
     --color-accent-foreground: 255 255 255;
 
     --color-background: 250 250 249;
     --color-background-secondary: 245 245 244;
-    --color-foreground: 28 25 23;
-    --color-foreground-muted: 87 83 78;
+    --color-foreground: 20 20 18;
+    --color-foreground-muted: 68 64 60;
 
     --color-border: 214 211 209;
     --color-border-light: 231 229 228;
@@ -271,18 +271,18 @@
   }
 
   [data-theme='nature'].dark {
-    --color-primary: 74 222 128;
-    --color-primary-foreground: 20 83 45;
-    --color-secondary: 163 230 53;
-    --color-secondary-foreground: 20 83 45;
-    --color-accent: 132 204 22;
-    --color-accent-secondary: 250 204 21;
-    --color-accent-foreground: 20 83 45;
+    --color-primary: 134 239 172;
+    --color-primary-foreground: 20 20 18;
+    --color-secondary: 190 242 100;
+    --color-secondary-foreground: 20 20 18;
+    --color-accent: 163 230 53;
+    --color-accent-secondary: 253 224 71;
+    --color-accent-foreground: 20 20 18;
 
     --color-background: 28 25 23;
     --color-background-secondary: 41 37 36;
     --color-foreground: 250 250 249;
-    --color-foreground-muted: 168 162 158;
+    --color-foreground-muted: 214 211 209;
 
     --color-border: 68 64 60;
     --color-border-light: 87 83 78;
@@ -465,6 +465,25 @@
      ============================================ */
   .gradient-text {
     @apply bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent;
+  }
+
+  /* ============================================
+     TEXT SHADOWS FOR READABILITY
+     ============================================ */
+  .text-shadow-sm {
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  }
+
+  .text-shadow {
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+
+  .text-shadow-lg {
+    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  }
+
+  .text-shadow-white {
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
   }
 
   /* ============================================
