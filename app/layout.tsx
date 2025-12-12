@@ -1,8 +1,8 @@
 import type { Metadata, Viewport } from 'next'
 import { Inter, Space_Grotesk } from 'next/font/google'
 import { ThemeProvider } from '@/components/theme-provider'
-import { Header } from '@/components/Header'
-import { Footer } from '@/components/Footer'
+import Header from '@/components/Header'
+import Footer from '@/components/Footer'
 import { ToastProvider } from '@/components/ui/Toast'
 import './globals.css'
 
