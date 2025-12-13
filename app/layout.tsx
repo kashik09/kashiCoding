@@ -105,7 +105,7 @@ export default function RootLayout({
         suppressHydrationWarning
       >
         <ThemeProvider
-          defaultTheme="monokai"
+          defaultTheme="onedark"
           storageKey="kashicoding-theme"
           enableTransitions={true}
         >
