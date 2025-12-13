@@ -20,15 +20,15 @@ export function Button({
   disabled,
   ...props
 }: ButtonProps) {
-  const baseStyles = 'font-medium rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 inline-flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed'
-
+  const baseStyles = 'inline-flex items-center justify-center gap-2 font-medium rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed'
+  
   const variants = {
-    primary: 'bg-accent text-white hover:bg-accent/90 focus:ring-accent hover:shadow-lg',
-    secondary: 'bg-secondary text-foreground border border-border hover:bg-accent/10 focus:ring-accent',
-    outline: 'bg-transparent text-accent border-2 border-accent hover:bg-accent hover:text-white focus:ring-accent',
-    ghost: 'bg-transparent text-foreground hover:bg-accent/10 focus:ring-accent'
+    primary: 'bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500 shadow-sm hover:shadow-md',
+    secondary: 'bg-white text-gray-900 border-2 border-gray-300 hover:bg-gray-50 focus:ring-gray-500 shadow-sm',
+    outline: 'bg-transparent text-blue-600 border-2 border-blue-600 hover:bg-blue-600 hover:text-white focus:ring-blue-500',
+    ghost: 'bg-transparent text-gray-700 hover:bg-gray-100 focus:ring-gray-500'
   }
-
+  
   const sizes = {
     sm: 'px-3 py-1.5 text-sm',
     md: 'px-4 py-2 text-base',
@@ -43,9 +43,7 @@ export function Button({
       disabled={isDisabled}
       {...props}
     >
-      {loading && (
-        <Loader2 className="animate-spin" size={size === 'sm' ? 14 : size === 'lg' ? 20 : 16} />
-      )}
+      {loading && <Loader2 className="animate-spin" size={size === 'sm' ? 14 : size === 'lg' ? 20 : 16} />}
       {!loading && icon && iconPosition === 'left' && icon}
       {children}
       {!loading && icon && iconPosition === 'right' && icon}
