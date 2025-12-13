@@ -2,19 +2,15 @@
 
 import Link from 'next/link'
 import { useTheme } from '@/lib/ThemeContext'
-import { Menu, X, Code2, Zap, Waves, Moon, Sun } from 'lucide-react'
+import { Menu, X, Code2 } from 'lucide-react'
 import { useState } from 'react'
+import { getThemesArray, type ThemeName } from '@/lib/themes'
 
 export default function Header() {
   const { theme, setTheme } = useTheme()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
-  const themes = [
-    { value: 'onedark', label: 'One Dark Pro', Icon: Moon },
-    { value: 'tokyonight', label: 'Tokyo Night', Icon: Waves },
-    { value: 'monokai', label: 'Monokai Pro', Icon: Zap },
-    { value: 'githublight', label: 'GitHub Light', Icon: Sun }
-  ]
+  const themes = getThemesArray()
 
   const navLinks = [
     { href: '/projects', label: 'Projects' },
@@ -22,6 +18,8 @@ export default function Header() {
     { href: '/about', label: 'About' },
     { href: '/request', label: 'Request' }
   ]
+
+  const currentTheme = themes.find(t => t.name === theme)
 
   return (
     <header className="sticky top-0 z-50 bg-primary/90 backdrop-blur-md border-b border-border">
@@ -53,21 +51,18 @@ export default function Header() {
             <div className="relative">
               <select
                 value={theme}
-                onChange={(e) => setTheme(e.target.value as any)}
+                onChange={(e) => setTheme(e.target.value as ThemeName)}
                 className="appearance-none pl-8 sm:pl-10 pr-3 sm:pr-4 py-1.5 sm:py-2 bg-secondary border border-border rounded-lg text-xs sm:text-sm font-medium text-foreground focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none transition cursor-pointer"
               >
                 {themes.map((t) => (
-                  <option key={t.value} value={t.value}>
-                    {t.label}
+                  <option key={t.name} value={t.name}>
+                    {t.displayName}
                   </option>
                 ))}
               </select>
               <div className="absolute left-2 sm:left-3 top-1/2 -translate-y-1/2 pointer-events-none">
-                {themes.find(t => t.value === theme)?.Icon && (
-                  (() => {
-                    const IconComponent = themes.find(t => t.value === theme)!.Icon
-                    return <IconComponent size={14} className="sm:w-4 sm:h-4 text-accent" />
-                  })()
+                {currentTheme && (
+                  <currentTheme.icon size={14} className="sm:w-4 sm:h-4 text-accent" />
                 )}
               </div>
             </div>

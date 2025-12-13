@@ -4,6 +4,8 @@
  * Professional color schemes inspired by popular VS Code themes
  */
 
+import { Moon, CloudMoon, Palette, Sun, LucideIcon } from 'lucide-react'
+
 export type ThemeName = 'onedark' | 'tokyonight' | 'monokai' | 'githublight'
 
 export interface ThemeColors {
@@ -42,6 +44,7 @@ export interface Theme {
   name: ThemeName
   displayName: string
   description: string
+  icon: LucideIcon
   colors: ThemeColors
   radius: {
     sm: string
@@ -57,6 +60,7 @@ export const oneDarkTheme: Theme = {
   name: 'onedark',
   displayName: 'One Dark Pro',
   description: 'VS Code\'s iconic dark theme',
+  icon: Moon,
   colors: {
     primary: '97 175 239',
     'primary-foreground': '255 255 255',
@@ -93,6 +97,7 @@ export const tokyoNightTheme: Theme = {
   name: 'tokyonight',
   displayName: 'Tokyo Night',
   description: 'Deep blue night sky theme',
+  icon: CloudMoon,
   colors: {
     primary: '122 162 247',
     'primary-foreground': '255 255 255',
@@ -129,6 +134,7 @@ export const monokaiTheme: Theme = {
   name: 'monokai',
   displayName: 'Monokai Pro',
   description: 'Vibrant retro-futuristic theme',
+  icon: Palette,
   colors: {
     primary: '255 97 136',
     'primary-foreground': '252 252 250',
@@ -165,6 +171,7 @@ export const githubLightTheme: Theme = {
   name: 'githublight',
   displayName: 'GitHub Light',
   description: 'Clean light theme from GitHub',
+  icon: Sun,
   colors: {
     primary: '9 105 218',
     'primary-foreground': '255 255 255',
@@ -220,6 +227,13 @@ export function getTheme(name: ThemeName): Theme {
  */
 export function getThemeNames(): ThemeName[] {
   return Object.keys(themes) as ThemeName[]
+}
+
+/**
+ * Get all themes as array
+ */
+export function getThemesArray(): Theme[] {
+  return Object.values(themes)
 }
 
 /**
