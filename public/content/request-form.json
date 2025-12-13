@@ -1,0 +1,62 @@
+{
+  "header": {
+    "title": "Request a Service",
+    "subtitle": "Tell me about your project and I'll get back to you within 24 hours"
+  },
+  "fields": {
+    "serviceTypes": [
+      { "value": "web", "label": "Web Development" },
+      { "value": "mobile", "label": "Mobile Development" },
+      { "value": "design", "label": "UI/UX Design" },
+      { "value": "consulting", "label": "Consulting" },
+      { "value": "other", "label": "Other" }
+    ],
+    "budgetRanges": [
+      { "value": "<500", "label": "Under $500" },
+      { "value": "500-1000", "label": "$500 - $1,000" },
+      { "value": "1000-2500", "label": "$1,000 - $2,500" },
+      { "value": "2500+", "label": "$2,500+" }
+    ],
+    "timelines": [
+      { "value": "urgent", "label": "ASAP (1-2 weeks)" },
+      { "value": "normal", "label": "Normal (2-4 weeks)" },
+      { "value": "flexible", "label": "Flexible (1-2 months)" }
+    ]
+  },
+  "placeholders": {
+    "name": "John Doe",
+    "email": "john@example.com",
+    "description": "Tell me about your project, goals, and any specific requirements..."
+  },
+  "labels": {
+    "name": "Full Name",
+    "email": "Email Address",
+    "serviceType": "Service Type",
+    "budget": "Budget Range",
+    "timeline": "Timeline",
+    "description": "Project Description",
+    "files": "Project Files (Optional)"
+  },
+  "fileUpload": {
+    "title": "Upload project files",
+    "subtitle": "Click to browse or drag and drop",
+    "acceptedFormats": "Supports: PDF, DOC, JPG, PNG (Max 10MB each)",
+    "maxSize": 10485760
+  },
+  "submitButton": {
+    "text": "Submit Request",
+    "loadingText": "Submitting..."
+  },
+  "successMessage": "Request submitted successfully! I'll get back to you within 24 hours.",
+  "disclaimer": {
+    "text": "By submitting this form, you agree to our",
+    "termsText": "Terms of Service",
+    "termsLink": "/terms",
+    "privacyText": "Privacy Policy",
+    "privacyLink": "/privacy"
+  },
+  "metadata": {
+    "lastUpdated": "2025-12-13T00:00:00Z",
+    "version": "1.0"
+  }
+}

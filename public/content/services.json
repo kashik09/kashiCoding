@@ -1,0 +1,86 @@
+{
+  "header": {
+    "title": "Services",
+    "subtitle": "Professional development services tailored to your needs"
+  },
+  "services": [
+    {
+      "id": "web-dev",
+      "icon": "Code",
+      "title": "Web Development",
+      "description": "Custom websites and web applications built with modern technologies",
+      "features": [
+        "Responsive design",
+        "SEO optimization",
+        "Performance focused",
+        "Cross-browser compatible"
+      ],
+      "pricing": "From $500"
+    },
+    {
+      "id": "mobile-dev",
+      "icon": "Smartphone",
+      "title": "Mobile Development",
+      "description": "Native and cross-platform mobile applications",
+      "features": [
+        "iOS & Android",
+        "React Native",
+        "App store deployment",
+        "Push notifications"
+      ],
+      "pricing": "From $1,500"
+    },
+    {
+      "id": "ui-ux",
+      "icon": "Palette",
+      "title": "UI/UX Design",
+      "description": "Beautiful, user-centered design that converts",
+      "features": [
+        "Wireframing",
+        "Prototyping",
+        "User research",
+        "Design systems"
+      ],
+      "pricing": "From $300"
+    },
+    {
+      "id": "consulting",
+      "icon": "Zap",
+      "title": "Consulting",
+      "description": "Technical guidance and code reviews",
+      "features": [
+        "Architecture review",
+        "Performance audit",
+        "Best practices",
+        "Team training"
+      ],
+      "pricing": "From $100/hr"
+    }
+  ],
+  "cta": {
+    "heading": "Ready to Start Your Project?",
+    "text": "Let's discuss how I can help bring your ideas to life",
+    "buttonText": "Request a Quote"
+  },
+  "faq": [
+    {
+      "id": "turnaround",
+      "question": "What's your typical turnaround time?",
+      "answer": "Most projects take 2-4 weeks depending on complexity. Rush delivery is available for an additional fee."
+    },
+    {
+      "id": "maintenance",
+      "question": "Do you offer maintenance and support?",
+      "answer": "Yes! I offer ongoing maintenance packages to keep your project running smoothly and up-to-date."
+    },
+    {
+      "id": "payment",
+      "question": "What payment methods do you accept?",
+      "answer": "I accept bank transfers, PayPal, and most major credit cards. Payment terms are typically 50% upfront, 50% on completion."
+    }
+  ],
+  "metadata": {
+    "lastUpdated": "2025-12-13T00:00:00Z",
+    "version": "1.0"
+  }
+}
