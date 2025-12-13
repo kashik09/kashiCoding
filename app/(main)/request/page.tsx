@@ -91,13 +91,13 @@ export default function RequestPage() {
   return (
     <div className="max-w-3xl mx-auto py-12">
       <div className="text-center mb-12">
-        <h1 className="text-4xl font-bold text-foreground mb-4">Request a Service</h1>
-        <p className="text-xl text-foreground/70">
+        <h1 className="text-4xl font-bold text-gray-900 mb-4">Request a Service</h1>
+        <p className="text-xl text-gray-600">
           Tell me about your project and I'll get back to you within 24 hours
         </p>
       </div>
 
-      <form onSubmit={handleSubmit} className="bg-secondary rounded-2xl p-8 border border-border space-y-6">
+      <form onSubmit={handleSubmit} className="bg-white rounded-2xl p-8 border border-gray-200 space-y-6">
         {error && (
           <div className="p-4 bg-red-500/10 border border-red-500 rounded-lg text-red-500">
             {error}
@@ -125,11 +125,11 @@ export default function RequestPage() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-foreground mb-2">Service Type</label>
+          <label className="block text-sm font-medium text-gray-900 mb-2">Service Type</label>
           <select
             value={formData.serviceType}
             onChange={(e) => setFormData({ ...formData, serviceType: e.target.value })}
-            className="w-full px-4 py-2 bg-primary border border-border rounded-lg focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none transition"
+            className="w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-lg focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none transition"
             required
           >
             <option value="">Select a service...</option>
@@ -143,11 +143,11 @@ export default function RequestPage() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
-            <label className="block text-sm font-medium text-foreground mb-2">Budget Range</label>
+            <label className="block text-sm font-medium text-gray-900 mb-2">Budget Range</label>
             <select
               value={formData.budget}
               onChange={(e) => setFormData({ ...formData, budget: e.target.value })}
-              className="w-full px-4 py-2 bg-primary border border-border rounded-lg focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none transition"
+              className="w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-lg focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none transition"
               required
             >
               <option value="">Select budget...</option>
@@ -159,11 +159,11 @@ export default function RequestPage() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-foreground mb-2">Timeline</label>
+            <label className="block text-sm font-medium text-gray-900 mb-2">Timeline</label>
             <select
               value={formData.timeline}
               onChange={(e) => setFormData({ ...formData, timeline: e.target.value })}
-              className="w-full px-4 py-2 bg-primary border border-border rounded-lg focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none transition"
+              className="w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-lg focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none transition"
               required
             >
               <option value="">Select timeline...</option>
@@ -175,29 +175,29 @@ export default function RequestPage() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-foreground mb-2">Project Description</label>
+          <label className="block text-sm font-medium text-gray-900 mb-2">Project Description</label>
           <textarea
             value={formData.description}
             onChange={(e) => setFormData({ ...formData, description: e.target.value })}
             rows={6}
-            className="w-full px-4 py-2 bg-primary border border-border rounded-lg focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none transition resize-none"
+            className="w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-lg focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none transition resize-none"
             placeholder="Tell me about your project, goals, and any specific requirements..."
             required
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-foreground mb-2">Project Files (Optional)</label>
+          <label className="block text-sm font-medium text-gray-900 mb-2">Project Files (Optional)</label>
 
           {/* File Upload Area */}
           <div
             onClick={() => fileInputRef.current?.click()}
-            className="border-2 border-dashed border-border rounded-lg p-8 text-center hover:border-accent hover:bg-accent/5 transition-all cursor-pointer group"
+            className="border-2 border-dashed border-gray-200 rounded-lg p-8 text-center hover:border-blue-500 hover:bg-blue-600/5 transition-all cursor-pointer group"
           >
-            <Upload className="mx-auto mb-4 text-foreground/50 group-hover:text-accent transition-colors" size={32} />
-            <p className="text-foreground/70 mb-2 font-medium">Upload project files</p>
-            <p className="text-foreground/50 text-sm">Click to browse or drag and drop</p>
-            <p className="text-foreground/40 text-xs mt-2">Supports: PDF, DOC, JPG, PNG (Max 10MB each)</p>
+            <Upload className="mx-auto mb-4 text-gray-900/50 group-hover:text-blue-600 transition-colors" size={32} />
+            <p className="text-gray-600 mb-2 font-medium">Upload project files</p>
+            <p className="text-gray-900/50 text-sm">Click to browse or drag and drop</p>
+            <p className="text-gray-900/40 text-xs mt-2">Supports: PDF, DOC, JPG, PNG (Max 10MB each)</p>
             <input
               ref={fileInputRef}
               type="file"
@@ -211,23 +211,23 @@ export default function RequestPage() {
           {/* Selected Files List */}
           {selectedFiles.length > 0 && (
             <div className="mt-4 space-y-2">
-              <p className="text-sm font-medium text-foreground/70">
+              <p className="text-sm font-medium text-gray-600">
                 Selected Files ({selectedFiles.length})
               </p>
               {selectedFiles.map((file, index) => (
                 <div
                   key={index}
-                  className="flex items-center justify-between p-3 bg-card border border-border rounded-lg hover:border-accent transition-colors group"
+                  className="flex items-center justify-between p-3 bg-white border border-gray-200 rounded-lg hover:border-blue-500 transition-colors group"
                 >
                   <div className="flex items-center gap-3 flex-1 min-w-0">
-                    <div className="flex-shrink-0 p-2 bg-accent/10 rounded-lg">
-                      <File className="text-accent" size={20} />
+                    <div className="flex-shrink-0 p-2 bg-blue-50 rounded-lg">
+                      <File className="text-blue-600" size={20} />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-foreground truncate">
+                      <p className="text-sm font-medium text-gray-900 truncate">
                         {file.name}
                       </p>
-                      <p className="text-xs text-foreground/50">
+                      <p className="text-xs text-gray-900/50">
                         {formatFileSize(file.size)}
                       </p>
                     </div>
@@ -238,7 +238,7 @@ export default function RequestPage() {
                     className="flex-shrink-0 p-2 rounded-lg hover:bg-destructive/10 transition-colors group"
                     aria-label="Remove file"
                   >
-                    <X className="text-foreground/50 group-hover:text-destructive" size={18} />
+                    <X className="text-gray-900/50 group-hover:text-destructive" size={18} />
                   </button>
                 </div>
               ))}
@@ -256,11 +256,11 @@ export default function RequestPage() {
           {loading ? 'Submitting...' : 'Submit Request'}
         </Button>
 
-        <p className="text-center text-sm text-foreground/70">
+        <p className="text-center text-sm text-gray-600">
           By submitting this form, you agree to our{' '}
-          <a href="/terms" className="text-accent hover:underline">Terms of Service</a>
+          <a href="/terms" className="text-blue-600 hover:underline">Terms of Service</a>
           {' '}and{' '}
-          <a href="/privacy" className="text-accent hover:underline">Privacy Policy</a>
+          <a href="/privacy" className="text-blue-600 hover:underline">Privacy Policy</a>
         </p>
       </form>
     </div>
