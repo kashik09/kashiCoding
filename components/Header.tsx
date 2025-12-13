@@ -2,15 +2,13 @@
 
 import Link from 'next/link'
 import { useTheme } from '@/lib/ThemeContext'
-import { Menu, X, Code2 } from 'lucide-react'
+import { themes } from '@/lib/themes'
+import { Menu, X } from 'lucide-react'
 import { useState } from 'react'
-import { getThemesArray, type ThemeName } from '@/lib/themes'
 
 export default function Header() {
   const { theme, setTheme } = useTheme()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-
-  const themes = getThemesArray()
 
   const navLinks = [
     { href: '/projects', label: 'Projects' },
@@ -19,75 +17,63 @@ export default function Header() {
     { href: '/request', label: 'Request' }
   ]
 
-  const currentTheme = themes.find(t => t.name === theme)
-
   return (
-    <header className="sticky top-0 z-50 bg-primary/90 backdrop-blur-md border-b border-border">
-      <nav className="container mx-auto px-3 sm:px-4 py-3 sm:py-4">
-        <div className="flex items-center justify-between gap-2 sm:gap-4">
+    <header className="sticky top-0 z-50 bg-background/90 backdrop-blur-md border-b border-border">
+      <nav className="container mx-auto px-4 py-4">
+        <div className="flex items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-1.5 sm:gap-2 text-lg sm:text-xl md:text-2xl font-bold text-accent hover:opacity-80 transition flex-shrink-0">
-            <Code2 size={24} className="sm:w-7 sm:h-7" />
-            <span className="hidden sm:inline">Kashi Kweyu</span>
-            <span className="sm:hidden">KK</span>
+          <Link href="/" className="text-2xl font-bold text-accent hover:opacity-80 transition">
+            KashiCoding
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-4 lg:gap-6">
+          <div className="hidden md:flex items-center gap-6">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-sm lg:text-base text-foreground hover:text-accent transition font-medium"
+                className="text-foreground hover:text-accent transition font-medium"
               >
                 {link.label}
               </Link>
             ))}
           </div>
 
-          {/* Theme Controls */}
-          <div className="flex items-center gap-2 sm:gap-3">
-            {/* Theme Selector */}
-            <div className="relative">
-              <select
-                value={theme}
-                onChange={(e) => setTheme(e.target.value as ThemeName)}
-                className="appearance-none pl-8 sm:pl-10 pr-3 sm:pr-4 py-1.5 sm:py-2 bg-secondary border border-border rounded-lg text-xs sm:text-sm font-medium text-foreground focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none transition cursor-pointer"
-              >
-                {themes.map((t) => (
-                  <option key={t.name} value={t.name}>
-                    {t.displayName}
-                  </option>
-                ))}
-              </select>
-              <div className="absolute left-2 sm:left-3 top-1/2 -translate-y-1/2 pointer-events-none">
-                {currentTheme && (
-                  <currentTheme.icon size={14} className="sm:w-4 sm:h-4 text-accent" />
-                )}
-              </div>
-            </div>
+          {/* Theme Selector */}
+          <div className="flex items-center gap-3">
+            <select
+              value={theme}
+              onChange={(e) => setTheme(e.target.value as any)}
+              className="px-3 py-2 bg-card border border-border rounded-lg text-sm font-medium text-foreground focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none transition"
+            >
+              {Object.entries(themes).map(([key, { name, icon }]) => (
+                <option key={key} value={key}>
+                  {icon} {name}
+                </option>
+              ))}
+            </select>
 
             {/* Mobile Menu Button */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-1.5 sm:p-2 rounded-lg bg-secondary border border-border hover:bg-accent/10 transition flex-shrink-0"
+              className="md:hidden p-2 rounded-lg bg-card border border-border hover:bg-accent/10 transition"
               aria-label="Toggle menu"
             >
-              {mobileMenuOpen ? <X size={18} className="sm:w-5 sm:h-5 text-foreground" /> : <Menu size={18} className="sm:w-5 sm:h-5 text-foreground" />}
+              {mobileMenuOpen ? <X size={20} className="text-foreground" /> : <Menu size={20} className="text-foreground" />}
             </button>
           </div>
         </div>
 
         {/* Mobile Menu */}
         {mobileMenuOpen && (
-          <div className="md:hidden mt-3 sm:mt-4 pt-3 sm:pt-4 border-t border-border animate-slide-down">
-            <div className="flex flex-col gap-2">
+          <div className="md:hidden mt-4 pt-4 border-t border-border">
+            <div className="flex flex-col gap-3">
               {navLinks.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className="px-3 sm:px-4 py-2 text-sm sm:text-base text-foreground hover:text-accent hover:bg-secondary rounded-lg transition font-medium"
+                  className="px-4 py-2 text-foreground hover:text-accent hover:bg-card rounded-lg transition font-medium"
                 >
                   {link.label}
                 </Link>
