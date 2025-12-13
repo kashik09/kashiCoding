@@ -24,10 +24,25 @@ export default function NewProjectPage() {
     published: true
   })
 
-  const addTag = () => {
-    if (tagInput.trim() && !tags.includes(tagInput.trim())) {
-      setTags([...tags, tagInput.trim()])
-      setTagInput('')
+  // Preset suggestions
+  const tagSuggestions = [
+    'javascript', 'typescript', 'react', 'nextjs', 'calculator',
+    'webapp', 'mobile', 'api', 'fullstack', 'backend', 'frontend',
+    'ui-ux', 'database', 'authentication', 'realtime', 'ai'
+  ]
+
+  const techSuggestions = [
+    'React', 'Next.js', 'TypeScript', 'JavaScript', 'Tailwind CSS',
+    'Node.js', 'PostgreSQL', 'Prisma', 'MongoDB', 'Express',
+    'Swift', 'PHP', 'Python', 'Git', 'Vercel', 'Supabase',
+    'NextAuth', 'Framer Motion', 'Lucide React', 'Zod'
+  ]
+
+  const addTag = (tag?: string) => {
+    const tagToAdd = tag || tagInput.trim()
+    if (tagToAdd && !tags.includes(tagToAdd)) {
+      setTags([...tags, tagToAdd])
+      if (!tag) setTagInput('')
     }
   }
 
@@ -35,10 +50,11 @@ export default function NewProjectPage() {
     setTags(tags.filter(t => t !== tag))
   }
 
-  const addTech = () => {
-    if (techInput.trim() && !techStack.includes(techInput.trim())) {
-      setTechStack([...techStack, techInput.trim()])
-      setTechInput('')
+  const addTech = (tech?: string) => {
+    const techToAdd = tech || techInput.trim()
+    if (techToAdd && !techStack.includes(techToAdd)) {
+      setTechStack([...techStack, techToAdd])
+      if (!tech) setTechInput('')
     }
   }
 
@@ -187,6 +203,24 @@ export default function NewProjectPage() {
             <label className="block text-sm font-medium text-foreground mb-2">
               Tags
             </label>
+
+            {/* Suggestions */}
+            <div className="mb-3">
+              <p className="text-xs text-foreground/60 mb-2">Click to add or type your own:</p>
+              <div className="flex flex-wrap gap-2">
+                {tagSuggestions.filter(s => !tags.includes(s)).map(suggestion => (
+                  <button
+                    key={suggestion}
+                    type="button"
+                    onClick={() => addTag(suggestion)}
+                    className="px-2 py-1 text-xs bg-accent/10 text-accent border border-accent/30 rounded hover:bg-accent/20 transition"
+                  >
+                    + {suggestion}
+                  </button>
+                ))}
+              </div>
+            </div>
+
             <div className="flex gap-2 mb-2">
               <input
                 type="text"
@@ -194,11 +228,11 @@ export default function NewProjectPage() {
                 onChange={(e) => setTagInput(e.target.value)}
                 onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), addTag())}
                 className="flex-1 px-4 py-2 bg-primary border border-border rounded-lg focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none transition"
-                placeholder="Type a tag and press Enter"
+                placeholder="Type a custom tag and press Enter"
               />
               <button
                 type="button"
-                onClick={addTag}
+                onClick={() => addTag()}
                 className="px-4 py-2 bg-accent text-white rounded-lg hover:bg-accent/90 transition"
               >
                 <Plus size={20} />
@@ -228,6 +262,24 @@ export default function NewProjectPage() {
             <label className="block text-sm font-medium text-foreground mb-2">
               Tech Stack
             </label>
+
+            {/* Suggestions */}
+            <div className="mb-3">
+              <p className="text-xs text-foreground/60 mb-2">Click to add or type your own:</p>
+              <div className="flex flex-wrap gap-2">
+                {techSuggestions.filter(s => !techStack.includes(s)).map(suggestion => (
+                  <button
+                    key={suggestion}
+                    type="button"
+                    onClick={() => addTech(suggestion)}
+                    className="px-2 py-1 text-xs bg-accent/10 text-accent border border-accent/30 rounded hover:bg-accent/20 transition"
+                  >
+                    + {suggestion}
+                  </button>
+                ))}
+              </div>
+            </div>
+
             <div className="flex gap-2 mb-2">
               <input
                 type="text"
@@ -235,11 +287,11 @@ export default function NewProjectPage() {
                 onChange={(e) => setTechInput(e.target.value)}
                 onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), addTech())}
                 className="flex-1 px-4 py-2 bg-primary border border-border rounded-lg focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none transition"
-                placeholder="Type a technology and press Enter"
+                placeholder="Type a custom technology and press Enter"
               />
               <button
                 type="button"
-                onClick={addTech}
+                onClick={() => addTech()}
                 className="px-4 py-2 bg-accent text-white rounded-lg hover:bg-accent/90 transition"
               >
                 <Plus size={20} />
@@ -278,24 +330,34 @@ export default function NewProjectPage() {
           </div>
 
           {/* Checkboxes */}
-          <div className="flex items-center gap-6">
-            <label className="flex items-center gap-2 cursor-pointer">
+          <div className="space-y-4">
+            <label className="flex items-start gap-2 cursor-pointer">
               <input
                 type="checkbox"
                 checked={formData.featured}
                 onChange={(e) => setFormData({ ...formData, featured: e.target.checked })}
-                className="w-4 h-4 rounded border-border"
+                className="w-4 h-4 rounded border-border mt-1"
               />
-              <span className="text-foreground">Featured Project</span>
+              <div>
+                <span className="text-foreground font-medium">Featured Project</span>
+                <p className="text-xs text-foreground/60 mt-1">
+                  Featured projects appear first on your projects page and homepage, highlighting your best work.
+                </p>
+              </div>
             </label>
-            <label className="flex items-center gap-2 cursor-pointer">
+            <label className="flex items-start gap-2 cursor-pointer">
               <input
                 type="checkbox"
                 checked={formData.published}
                 onChange={(e) => setFormData({ ...formData, published: e.target.checked })}
-                className="w-4 h-4 rounded border-border"
+                className="w-4 h-4 rounded border-border mt-1"
               />
-              <span className="text-foreground">Publish Immediately</span>
+              <div>
+                <span className="text-foreground font-medium">Publish Immediately</span>
+                <p className="text-xs text-foreground/60 mt-1">
+                  Make this project visible to visitors right away. Uncheck to save as draft.
+                </p>
+              </div>
             </label>
           </div>
         </div>
