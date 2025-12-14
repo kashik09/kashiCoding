@@ -65,6 +65,31 @@ export default function AdminPage() {
         ))}
       </div>
 
+      {/* Content Management */}
+      <div className="bg-white rounded-2xl p-6 border border-gray-200">
+        <h2 className="text-xl font-bold text-gray-900 mb-4">Content Management</h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <Link
+            href="/admin/content/services"
+            className="px-6 py-4 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition text-center font-medium shadow-sm"
+          >
+            Edit Services Page
+          </Link>
+          <Link
+            href="/admin/content/request-form"
+            className="px-6 py-4 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition text-center font-medium shadow-sm"
+          >
+            Edit Request Form
+          </Link>
+          <Link
+            href="/admin/content/about"
+            className="px-6 py-4 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition text-center font-medium shadow-sm"
+          >
+            Edit About Page
+          </Link>
+        </div>
+      </div>
+
       {/* Quick Actions */}
       <div className="bg-white rounded-2xl p-6 border border-gray-200">
         <h2 className="text-xl font-bold text-gray-900 mb-4">Quick Actions</h2>
