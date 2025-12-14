@@ -1,6 +1,14 @@
-import { Moon, CloudMoon, Palette, Sun, LucideIcon } from 'lucide-react'
+import { Cloud, Moon, Droplets, Sun, CircleDot, FileText, Gem, Waves, LucideIcon } from 'lucide-react'
 
-export type ThemeName = 'onedark' | 'tokyonight' | 'monokai' | 'githublight'
+export type ThemeName = 
+  | 'dracula' 
+  | 'tokyonight' 
+  | 'ayumirage' 
+  | 'ayulight'
+  | 'abyss'
+  | 'solarized'
+  | 'quietlight'
+  | 'material'
 
 export interface Theme {
   name: string
@@ -9,26 +17,46 @@ export interface Theme {
 }
 
 export const themes: Record<ThemeName, Theme> = {
-  onedark: {
-    name: 'One Dark Pro',
-    value: 'onedark',
-    icon: Moon,
+  dracula: {
+    name: 'Purple Rain',
+    value: 'dracula',
+    icon: Cloud,
   },
   tokyonight: {
     name: 'Tokyo Night',
     value: 'tokyonight',
-    icon: CloudMoon,
+    icon: Moon,
   },
-  monokai: {
-    name: 'Monokai Pro',
-    value: 'monokai',
-    icon: Palette,
+  ayumirage: {
+    name: 'Ayu Mirage',
+    value: 'ayumirage',
+    icon: Droplets,
   },
-  githublight: {
-    name: 'GitHub Light',
-    value: 'githublight',
+  ayulight: {
+    name: 'Ayu Light',
+    value: 'ayulight',
     icon: Sun,
+  },
+  abyss: {
+    name: 'Abyss',
+    value: 'abyss',
+    icon: CircleDot,
+  },
+  solarized: {
+    name: 'Solarized Light',
+    value: 'solarized',
+    icon: FileText,
+  },
+  quietlight: {
+    name: 'Quiet Light',
+    value: 'quietlight',
+    icon: FileText,
+  },
+  material: {
+    name: 'Material Theme',
+    value: 'material',
+    icon: Gem,
   },
 }
 
-export const defaultTheme: ThemeName = 'onedark'
+export const defaultTheme: ThemeName = 'tokyonight'

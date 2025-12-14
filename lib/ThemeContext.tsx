@@ -11,16 +11,16 @@ interface ThemeContextType {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined)
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [theme, setThemeState] = useState<ThemeName>('onedark')
+  const [theme, setThemeState] = useState<ThemeName>('tokyonight')
   const [mounted, setMounted] = useState(false)
 
   // Load theme from localStorage on mount
   useEffect(() => {
     setMounted(true)
     const savedTheme = localStorage.getItem('kashikweyu-theme') as ThemeName
-    if (savedTheme && ['onedark', 'tokyonight', 'monokai', 'githublight'].includes(savedTheme)) {
-      setThemeState(savedTheme)
-    }
+      if (savedTheme && ['dracula', 'tokyonight', 'ayumirage', 'ayulight', 'abyss', 'solarized', 'quietlight', 'material'].includes(savedTheme)) {
+        setThemeState(savedTheme)
+      }
   }, [])
 
   // Apply theme to document

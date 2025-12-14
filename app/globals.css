@@ -4,33 +4,33 @@
 
 @layer base {
   /* ============================================
-     ONE DARK PRO (Default)
+     DRACULA (Purple Rain)
      ============================================ */
   :root,
-  [data-theme='onedark'] {
-    --color-primary: 97 175 239;
-    --color-primary-foreground: 255 255 255;
-    --color-secondary: 198 120 221;
-    --color-secondary-foreground: 255 255 255;
-    --color-accent: 152 195 121;
-    --color-accent-secondary: 229 192 123;
-    --color-accent-foreground: 40 44 52;
+  [data-theme='dracula'] {
+    --color-primary: 189 147 249;        /* Purple */
+    --color-primary-foreground: 40 42 54;
+    --color-secondary: 255 121 198;      /* Pink */
+    --color-secondary-foreground: 40 42 54;
+    --color-accent: 80 250 123;          /* Green */
+    --color-accent-secondary: 241 250 140; /* Yellow */
+    --color-accent-foreground: 40 42 54;
 
-    --color-background: 40 44 52;
-    --color-background-secondary: 33 37 43;
-    --color-foreground: 171 178 191;
-    --color-foreground-muted: 92 99 112;
+    --color-background: 40 42 54;        /* #282A36 */
+    --color-background-secondary: 33 34 44;
+    --color-foreground: 248 248 242;
+    --color-foreground-muted: 152 166 173;
 
-    --color-border: 59 64 74;
-    --color-border-light: 76 82 99;
-    --color-card: 33 37 43;
-    --color-card-hover: 44 48 56;
-    --color-muted: 59 64 74;
+    --color-border: 68 71 90;
+    --color-border-light: 98 114 164;
+    --color-card: 33 34 44;
+    --color-card-hover: 68 71 90;
+    --color-muted: 68 71 90;
 
-    --color-destructive: 224 108 117;
-    --color-success: 152 195 121;
-    --color-warning: 229 192 123;
-    --color-info: 86 182 194;
+    --color-destructive: 255 85 85;
+    --color-success: 80 250 123;
+    --color-warning: 241 250 140;
+    --color-info: 139 233 253;
   }
 
   /* ============================================
@@ -63,61 +63,177 @@
   }
 
   /* ============================================
-     MONOKAI PRO
+     AYU MIRAGE
      ============================================ */
-  [data-theme='monokai'] {
-    --color-primary: 255 97 136;
-    --color-primary-foreground: 252 252 250;
-    --color-secondary: 252 152 103;
-    --color-secondary-foreground: 252 252 250;
-    --color-accent: 169 220 118;
-    --color-accent-secondary: 255 216 102;
-    --color-accent-foreground: 45 42 46;
+  [data-theme='ayumirage'] {
+    --color-primary: 95 181 255;         /* Blue */
+    --color-primary-foreground: 255 255 255;
+    --color-secondary: 242 151 102;      /* Orange */
+    --color-secondary-foreground: 255 255 255;
+    --color-accent: 186 230 126;         /* Green */
+    --color-accent-secondary: 255 204 102; /* Yellow */
+    --color-accent-foreground: 31 33 41;
 
-    --color-background: 45 42 46;
-    --color-background-secondary: 35 33 37;
-    --color-foreground: 252 252 250;
-    --color-foreground-muted: 147 147 143;
+    --color-background: 31 33 41;        /* #1F2129 */
+    --color-background-secondary: 26 27 33;
+    --color-foreground: 203 204 198;
+    --color-foreground-muted: 112 122 140;
 
-    --color-border: 66 62 67;
-    --color-border-light: 96 92 97;
-    --color-card: 35 33 37;
-    --color-card-hover: 45 42 46;
-    --color-muted: 66 62 67;
+    --color-border: 51 54 66;
+    --color-border-light: 71 76 91;
+    --color-card: 26 27 33;
+    --color-card-hover: 51 54 66;
+    --color-muted: 51 54 66;
 
-    --color-destructive: 255 97 136;
-    --color-success: 169 220 118;
-    --color-warning: 255 216 102;
-    --color-info: 120 220 232;
+    --color-destructive: 242 151 102;
+    --color-success: 186 230 126;
+    --color-warning: 255 204 102;
+    --color-info: 95 181 255;
   }
 
   /* ============================================
-     GITHUB LIGHT
+     AYU LIGHT
      ============================================ */
-  [data-theme='githublight'] {
-    --color-primary: 9 105 218;
+  [data-theme='ayulight'] {
+    --color-primary: 65 137 223;         /* Blue */
     --color-primary-foreground: 255 255 255;
-    --color-secondary: 130 80 223;
+    --color-secondary: 250 116 34;       /* Orange */
     --color-secondary-foreground: 255 255 255;
-    --color-accent: 26 127 55;
-    --color-accent-secondary: 191 63 3;
+    --color-accent: 134 182 91;          /* Green */
+    --color-accent-secondary: 228 181 89; /* Yellow */
     --color-accent-foreground: 255 255 255;
 
-    --color-background: 255 255 255;
-    --color-background-secondary: 246 248 250;
-    --color-foreground: 36 41 47;
-    --color-foreground-muted: 87 96 106;
+    --color-background: 250 251 252;     /* #FAFBFC */
+    --color-background-secondary: 242 243 245;
+    --color-foreground: 90 98 114;
+    --color-foreground-muted: 142 152 170;
 
-    --color-border: 208 215 222;
-    --color-border-light: 234 238 242;
+    --color-border: 207 214 224;
+    --color-border-light: 230 234 239;
     --color-card: 255 255 255;
-    --color-card-hover: 246 248 250;
-    --color-muted: 234 238 242;
+    --color-card-hover: 242 243 245;
+    --color-muted: 230 234 239;
 
-    --color-destructive: 207 34 46;
-    --color-success: 26 127 55;
-    --color-warning: 149 117 8;
-    --color-info: 0 149 255;
+    --color-destructive: 242 88 93;
+    --color-success: 134 182 91;
+    --color-warning: 228 181 89;
+    --color-info: 65 137 223;
+  }
+
+  /* ============================================
+     ABYSS
+     ============================================ */
+  [data-theme='abyss'] {
+    --color-primary: 34 136 255;         /* Bright Blue */
+    --color-primary-foreground: 255 255 255;
+    --color-secondary: 99 119 255;       /* Purple */
+    --color-secondary-foreground: 255 255 255;
+    --color-accent: 34 221 170;          /* Cyan */
+    --color-accent-secondary: 87 255 153; /* Green */
+    --color-accent-foreground: 0 9 26;
+
+    --color-background: 0 9 26;          /* #00091A - Ultra dark */
+    --color-background-secondary: 0 13 33;
+    --color-foreground: 106 177 255;
+    --color-foreground-muted: 80 98 130;
+
+    --color-border: 18 39 61;
+    --color-border-light: 34 61 94;
+    --color-card: 0 13 33;
+    --color-card-hover: 18 39 61;
+    --color-muted: 18 39 61;
+
+    --color-destructive: 255 85 115;
+    --color-success: 87 255 153;
+    --color-warning: 255 204 102;
+    --color-info: 34 221 170;
+  }
+
+  /* ============================================
+     SOLARIZED LIGHT
+     ============================================ */
+  [data-theme='solarized'] {
+    --color-primary: 38 139 210;         /* Blue */
+    --color-primary-foreground: 255 255 255;
+    --color-secondary: 211 54 130;       /* Magenta */
+    --color-secondary-foreground: 255 255 255;
+    --color-accent: 133 153 0;           /* Green */
+    --color-accent-secondary: 181 137 0;  /* Yellow */
+    --color-accent-foreground: 255 255 255;
+
+    --color-background: 253 246 227;     /* #FDF6E3 - Warm cream */
+    --color-background-secondary: 238 232 213;
+    --color-foreground: 101 123 131;
+    --color-foreground-muted: 147 161 161;
+
+    --color-border: 218 208 189;
+    --color-border-light: 238 232 213;
+    --color-card: 238 232 213;
+    --color-card-hover: 218 208 189;
+    --color-muted: 218 208 189;
+
+    --color-destructive: 220 50 47;
+    --color-success: 133 153 0;
+    --color-warning: 181 137 0;
+    --color-info: 42 161 152;
+  }
+
+  /* ============================================
+     QUIET LIGHT
+     ============================================ */
+  [data-theme='quietlight'] {
+    --color-primary: 0 119 170;          /* Blue */
+    --color-primary-foreground: 255 255 255;
+    --color-secondary: 166 38 164;       /* Purple */
+    --color-secondary-foreground: 255 255 255;
+    --color-accent: 0 128 0;             /* Green */
+    --color-accent-secondary: 152 104 1;  /* Brown */
+    --color-accent-foreground: 255 255 255;
+
+    --color-background: 246 246 246;     /* #F6F6F6 - Soft gray */
+    --color-background-secondary: 237 237 237;
+    --color-foreground: 51 51 51;
+    --color-foreground-muted: 102 102 102;
+
+    --color-border: 212 212 212;
+    --color-border-light: 227 227 227;
+    --color-card: 255 255 255;
+    --color-card-hover: 237 237 237;
+    --color-muted: 227 227 227;
+
+    --color-destructive: 164 0 0;
+    --color-success: 0 128 0;
+    --color-warning: 152 104 1;
+    --color-info: 0 119 170;
+  }
+
+  /* ============================================
+     MATERIAL THEME
+     ============================================ */
+  [data-theme='material'] {
+    --color-primary: 130 170 255;        /* Blue */
+    --color-primary-foreground: 255 255 255;
+    --color-secondary: 199 146 234;      /* Purple */
+    --color-secondary-foreground: 255 255 255;
+    --color-accent: 195 232 141;         /* Green */
+    --color-accent-secondary: 255 203 107; /* Yellow */
+    --color-accent-foreground: 38 50 56;
+
+    --color-background: 38 50 56;        /* #263238 - Ocean blue */
+    --color-background-secondary: 30 39 46;
+    --color-foreground: 236 239 244;
+    --color-foreground-muted: 144 164 174;
+
+    --color-border: 55 71 79;
+    --color-border-light: 84 110 122;
+    --color-card: 30 39 46;
+    --color-card-hover: 55 71 79;
+    --color-muted: 55 71 79;
+
+    --color-destructive: 255 83 112;
+    --color-success: 195 232 141;
+    --color-warning: 255 203 107;
+    --color-info: 137 221 255;
   }
 
   /* ============================================
@@ -131,9 +247,6 @@
     @apply bg-background text-foreground antialiased;
   }
 
-  /* ============================================
-     TYPOGRAPHY
-     ============================================ */
   h1, h2, h3, h4, h5, h6 {
     @apply font-bold tracking-tight text-foreground;
   }
@@ -144,6 +257,10 @@
 
   a {
     @apply text-primary hover:underline transition-colors;
+  }
+
+  code {
+    @apply bg-muted text-accent px-1 py-0.5 rounded text-sm font-mono;
   }
 
   /* ============================================
@@ -164,27 +281,6 @@
   ::selection {
     @apply bg-primary/20 text-foreground;
   }
-
-    /* ============================================
-     FONTS - PIXEL VIBES
-     ============================================ */
-  :root {
-    --font-mono: var(--font-space-mono), 'Space Mono', 'IBM Plex Mono', 
-                 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-                 'Liberation Mono', 'Courier New', monospace;
-  }
-
-  body {
-    @apply bg-background text-foreground antialiased;
-    font-family: var(--font-mono);
-  }
-
-  /* Make headings use the pixel font too */
-  h1, h2, h3, h4, h5, h6 {
-    @apply font-bold tracking-tight text-foreground;
-    font-family: var(--font-mono);
-  }
-  
 }
 
 @layer utilities {
