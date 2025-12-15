@@ -10,10 +10,10 @@ export default function HomePage() {
         <div className="inline-block px-4 py-2 bg-green-100 text-green-800 rounded-full text-sm font-medium mb-4 border border-green-200">
           ✨ Available for freelance projects
         </div>
-        <h1 className="text-5xl md:text-7xl font-bold text-gray-900">
-          Hi, I'm <span className="text-blue-600">Kashi</span>
+        <h1 className="text-5xl md:text-7xl font-bold text-foreground">
+          Hi, I'm <span className="text-primary">Kashi</span>
         </h1>
-        <p className="text-2xl md:text-3xl text-gray-600 max-w-3xl mx-auto">
+        <p className="text-2xl md:text-3xl text-foreground-muted max-w-3xl mx-auto">
           A Junior Developer building innovative solutions with modern web technologies
         </p>
         <div className="flex gap-4 justify-center mt-8">
@@ -33,32 +33,32 @@ export default function HomePage() {
 
       {/* Features */}
       <section className="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <div className="text-center p-8 bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-md hover:border-blue-300 transition-all">
-          <div className="inline-block p-4 bg-blue-100 rounded-xl mb-4">
-            <Code2 className="text-blue-600" size={32} />
+        <div className="text-center p-8 bg-card rounded-2xl border border-border shadow-sm hover:shadow-md hover:border-blue-300 transition-all">
+          <div className="inline-block p-4 bg-primary/20 rounded-xl mb-4">
+            <Code2 className="text-primary" size={32} />
           </div>
-          <h3 className="text-xl font-bold text-gray-900 mb-2">Clean Code</h3>
-          <p className="text-gray-600">
+          <h3 className="text-xl font-bold text-foreground mb-2">Clean Code</h3>
+          <p className="text-foreground-muted">
             Writing maintainable, scalable, and efficient code following best practices
           </p>
         </div>
 
-        <div className="text-center p-8 bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-md hover:border-purple-300 transition-all">
-          <div className="inline-block p-4 bg-purple-100 rounded-xl mb-4">
-            <Palette className="text-purple-600" size={32} />
+        <div className="text-center p-8 bg-card rounded-2xl border border-border shadow-sm hover:shadow-md hover:border-purple-300 transition-all">
+          <div className="inline-block p-4 bg-secondary/20 rounded-xl mb-4">
+            <Palette className="text-secondary" size={32} />
           </div>
-          <h3 className="text-xl font-bold text-gray-900 mb-2">Modern Design</h3>
-          <p className="text-gray-600">
+          <h3 className="text-xl font-bold text-foreground mb-2">Modern Design</h3>
+          <p className="text-foreground-muted">
             Creating beautiful, responsive interfaces that users love
           </p>
         </div>
 
-        <div className="text-center p-8 bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-md hover:border-green-300 transition-all">
+        <div className="text-center p-8 bg-card rounded-2xl border border-border shadow-sm hover:shadow-md hover:border-green-300 transition-all">
           <div className="inline-block p-4 bg-green-100 rounded-xl mb-4">
             <Zap className="text-green-600" size={32} />
           </div>
-          <h3 className="text-xl font-bold text-gray-900 mb-2">Fast Performance</h3>
-          <p className="text-gray-600">
+          <h3 className="text-xl font-bold text-foreground mb-2">Fast Performance</h3>
+          <p className="text-foreground-muted">
             Optimized applications that load quickly and run smoothly
           </p>
         </div>
