@@ -32,7 +32,7 @@ export default function HomePage() {
       </section>
 
       {/* Features */}
-      <section className="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <section className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto px-4">
         <div className="text-center p-8 bg-card rounded-2xl border border-border shadow-sm hover:shadow-md hover:border-primary transition-all">
           <div className="inline-block p-4 bg-primary/20 rounded-xl mb-4">
             <Code2 className="text-primary" size={32} />
@@ -65,9 +65,9 @@ export default function HomePage() {
       </section>
 
       {/* CTA Section */}
-      <section className="bg-gradient-to-r from-primary to-secondary rounded-3xl p-12 text-center text-white shadow-xl">
-        <h2 className="text-4xl font-bold mb-4">Ready to start your project?</h2>
-        <p className="text-xl mb-8 opacity-90">
+      <section className="bg-gradient-to-r from-primary to-secondary rounded-3xl p-12 md:p-16 text-center text-white shadow-xl max-w-6xl mx-auto">
+        <h2 className="text-4xl md:text-5xl font-bold mb-4">Ready to start your project?</h2>
+        <p className="text-xl md:text-2xl mb-8 font-medium">
           Let's work together to bring your ideas to life
         </p>
         <Link href="/request">
