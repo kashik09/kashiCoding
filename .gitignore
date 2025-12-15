@@ -32,6 +32,8 @@ yarn-error.log*
 .claude
 SUPABASE_GUIDE.md
 NOTIFICATIONS_SETUP.md
+audit-and-fix-all-colors.sh
+fix-colors.sh
 
 # vercel
 .vercel
