@@ -93,7 +93,7 @@ export default async function ServicesPage() {
       </div>
 
       {/* CTA Section */}
-      <section className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-3xl p-12 text-center text-white shadow-xl">
+      <section className="bg-gradient-to-br from-primary via-primary to-primary/80 rounded-3xl p-12 text-center text-white shadow-xl">
         <h2 className="text-4xl font-bold mb-4 text-white">{data.cta.heading}</h2>
         <p className="text-xl mb-8 text-white/90">
           {data.cta.text}
