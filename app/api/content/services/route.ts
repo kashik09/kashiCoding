@@ -9,10 +9,7 @@ export async function GET() {
     const fileContent = await fs.readFile(CONTENT_PATH, 'utf-8')
     const data = JSON.parse(fileContent)
 
-    return NextResponse.json({
-      success: true,
-      data
-    })
+    return NextResponse.json(data)
   } catch (error) {
     console.error('Error reading services content:', error)
     return NextResponse.json(

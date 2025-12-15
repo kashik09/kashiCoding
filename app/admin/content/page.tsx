@@ -60,13 +60,9 @@ export default function ContentEditorPage() {
     try {
       setLoading(true)
       const res = await fetch('/api/content/about')
-      const response = await res.json()
-
-      if (response.success) {
-        setContent(response.data)
-      } else {
-        setMessage({ type: 'error', text: 'Failed to load content' })
-      }
+      if (!res.ok) throw new Error('Failed to fetch')
+      const data = await res.json()
+      setContent(data)
     } catch (error) {
       setMessage({ type: 'error', text: 'Error loading content' })
     } finally {
@@ -89,11 +85,13 @@ export default function ContentEditorPage() {
 
       const response = await res.json()
 
-      if (response.success) {
+      if (response.success && response.data) {
         setMessage({ type: 'success', text: 'Content saved successfully!' })
         setContent(response.data)
-      } else {
+      } else if (response.error) {
         setMessage({ type: 'error', text: response.error || 'Failed to save content' })
+      } else {
+        setMessage({ type: 'error', text: 'Failed to save content' })
       }
     } catch (error) {
       setMessage({ type: 'error', text: 'Error saving content' })
