@@ -189,7 +189,7 @@ export default function ServicesEditorPage() {
   if (loading) {
     return (
       <div className="flex justify-center items-center py-12">
-        <p className="text-gray-600">Loading...</p>
+        <p className="text-foreground-muted">Loading...</p>
       </div>
     )
   }
@@ -207,8 +207,8 @@ export default function ServicesEditorPage() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Edit Services</h1>
-          <p className="text-gray-600 mt-1">Manage your services page content</p>
+          <h1 className="text-3xl font-bold text-foreground">Edit Services</h1>
+          <p className="text-foreground-muted mt-1">Manage your services page content</p>
         </div>
         <Button onClick={handleSave} disabled={saving} icon={<Save size={20} />}>
           {saving ? 'Saving...' : 'Save Changes'}
@@ -230,8 +230,8 @@ export default function ServicesEditorPage() {
       )}
 
       {/* Page Header Section */}
-      <div className="bg-white rounded-2xl p-6 border border-gray-200 space-y-4">
-        <h2 className="text-xl font-bold text-gray-900">Page Header</h2>
+      <div className="bg-card rounded-2xl p-6 border border-border space-y-4">
+        <h2 className="text-xl font-bold text-foreground">Page Header</h2>
         <Input
           label="Title"
           value={data.header.title}
@@ -245,9 +245,9 @@ export default function ServicesEditorPage() {
       </div>
 
       {/* Services Section */}
-      <div className="bg-white rounded-2xl p-6 border border-gray-200 space-y-6">
+      <div className="bg-card rounded-2xl p-6 border border-border space-y-6">
         <div className="flex items-center justify-between">
-          <h2 className="text-xl font-bold text-gray-900">Services</h2>
+          <h2 className="text-xl font-bold text-foreground">Services</h2>
           <Button onClick={addService} variant="outline" icon={<Plus size={20} />}>
             Add Service
           </Button>
@@ -255,9 +255,9 @@ export default function ServicesEditorPage() {
 
         <div className="space-y-6">
           {data.services.map((service) => (
-            <div key={service.id} className="border border-gray-200 rounded-lg p-6 space-y-4">
+            <div key={service.id} className="border border-border rounded-lg p-6 space-y-4">
               <div className="flex items-center justify-between">
-                <h3 className="font-semibold text-gray-900">{service.title}</h3>
+                <h3 className="font-semibold text-foreground">{service.title}</h3>
                 <button
                   onClick={() => removeService(service.id)}
                   className="text-red-500 hover:text-red-700 p-2"
@@ -294,10 +294,10 @@ export default function ServicesEditorPage() {
 
               <div>
                 <div className="flex items-center justify-between mb-2">
-                  <label className="text-sm font-medium text-gray-900">Features</label>
+                  <label className="text-sm font-medium text-foreground">Features</label>
                   <button
                     onClick={() => addFeature(service.id)}
-                    className="text-blue-600 hover:text-blue-700 text-sm font-medium"
+                    className="text-primary hover:text-blue-700 text-sm font-medium"
                   >
                     + Add Feature
                   </button>
@@ -309,7 +309,7 @@ export default function ServicesEditorPage() {
                         type="text"
                         value={feature}
                         onChange={(e) => updateFeature(service.id, index, e.target.value)}
-                        className="flex-1 px-4 py-2 bg-gray-50 border border-gray-200 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition"
+                        className="flex-1 px-4 py-2 bg-gray-50 border border-border rounded-lg focus:border-primary focus:ring-2 focus:ring-blue-500/20 outline-none transition"
                       />
                       <button
                         onClick={() => removeFeature(service.id, index)}
@@ -327,8 +327,8 @@ export default function ServicesEditorPage() {
       </div>
 
       {/* CTA Section */}
-      <div className="bg-white rounded-2xl p-6 border border-gray-200 space-y-4">
-        <h2 className="text-xl font-bold text-gray-900">Call to Action</h2>
+      <div className="bg-card rounded-2xl p-6 border border-border space-y-4">
+        <h2 className="text-xl font-bold text-foreground">Call to Action</h2>
         <Input
           label="Heading"
           value={data.cta.heading}
@@ -347,9 +347,9 @@ export default function ServicesEditorPage() {
       </div>
 
       {/* FAQ Section */}
-      <div className="bg-white rounded-2xl p-6 border border-gray-200 space-y-6">
+      <div className="bg-card rounded-2xl p-6 border border-border space-y-6">
         <div className="flex items-center justify-between">
-          <h2 className="text-xl font-bold text-gray-900">FAQ</h2>
+          <h2 className="text-xl font-bold text-foreground">FAQ</h2>
           <Button onClick={addFAQ} variant="outline" icon={<Plus size={20} />}>
             Add Question
           </Button>
@@ -357,9 +357,9 @@ export default function ServicesEditorPage() {
 
         <div className="space-y-4">
           {data.faq.map((item) => (
-            <div key={item.id} className="border border-gray-200 rounded-lg p-4 space-y-3">
+            <div key={item.id} className="border border-border rounded-lg p-4 space-y-3">
               <div className="flex items-center justify-between">
-                <label className="text-sm font-medium text-gray-900">Question & Answer</label>
+                <label className="text-sm font-medium text-foreground">Question & Answer</label>
                 <button
                   onClick={() => removeFAQ(item.id)}
                   className="text-red-500 hover:text-red-700 p-2"
@@ -373,12 +373,12 @@ export default function ServicesEditorPage() {
                 onChange={(e) => updateFAQ(item.id, 'question', e.target.value)}
               />
               <div>
-                <label className="block text-sm font-medium text-gray-900 mb-2">Answer</label>
+                <label className="block text-sm font-medium text-foreground mb-2">Answer</label>
                 <textarea
                   value={item.answer}
                   onChange={(e) => updateFAQ(item.id, 'answer', e.target.value)}
                   rows={3}
-                  className="w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition resize-none"
+                  className="w-full px-4 py-2 bg-gray-50 border border-border rounded-lg focus:border-primary focus:ring-2 focus:ring-blue-500/20 outline-none transition resize-none"
                 />
               </div>
             </div>
