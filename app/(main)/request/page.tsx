@@ -144,7 +144,7 @@ export default function RequestPage() {
   if (!config) {
     return (
       <div className="max-w-3xl mx-auto py-12 text-center">
-        <p className="text-gray-600">Loading form...</p>
+        <p className="text-foreground-muted">Loading form...</p>
       </div>
     )
   }
@@ -152,13 +152,13 @@ export default function RequestPage() {
   return (
     <div className="max-w-3xl mx-auto py-12">
       <div className="text-center mb-12">
-        <h1 className="text-4xl font-bold text-gray-900 mb-4">{config.header.title}</h1>
-        <p className="text-xl text-gray-600">
+        <h1 className="text-4xl font-bold text-foreground mb-4">{config.header.title}</h1>
+        <p className="text-xl text-foreground-muted">
           {config.header.subtitle}
         </p>
       </div>
 
-      <form onSubmit={handleSubmit} className="bg-white rounded-2xl p-8 border border-gray-200 space-y-6">
+      <form onSubmit={handleSubmit} className="bg-card rounded-2xl p-8 border border-border space-y-6">
         {error && (
           <div className="p-4 bg-red-500/10 border border-red-500 rounded-lg text-red-500">
             {error}
@@ -186,11 +186,11 @@ export default function RequestPage() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-900 mb-2">{config.labels.serviceType}</label>
+          <label className="block text-sm font-medium text-foreground mb-2">{config.labels.serviceType}</label>
           <select
             value={formData.serviceType}
             onChange={(e) => setFormData({ ...formData, serviceType: e.target.value })}
-            className="w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-lg focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none transition"
+            className="w-full px-4 py-2 bg-gray-50 border border-border rounded-lg focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none transition"
             required
           >
             <option value="">Select a service...</option>
@@ -202,11 +202,11 @@ export default function RequestPage() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
-            <label className="block text-sm font-medium text-gray-900 mb-2">{config.labels.budget}</label>
+            <label className="block text-sm font-medium text-foreground mb-2">{config.labels.budget}</label>
             <select
               value={formData.budget}
               onChange={(e) => setFormData({ ...formData, budget: e.target.value })}
-              className="w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-lg focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none transition"
+              className="w-full px-4 py-2 bg-gray-50 border border-border rounded-lg focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none transition"
               required
             >
               <option value="">Select budget...</option>
@@ -217,11 +217,11 @@ export default function RequestPage() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-900 mb-2">{config.labels.timeline}</label>
+            <label className="block text-sm font-medium text-foreground mb-2">{config.labels.timeline}</label>
             <select
               value={formData.timeline}
               onChange={(e) => setFormData({ ...formData, timeline: e.target.value })}
-              className="w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-lg focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none transition"
+              className="w-full px-4 py-2 bg-gray-50 border border-border rounded-lg focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none transition"
               required
             >
               <option value="">Select timeline...</option>
@@ -233,29 +233,29 @@ export default function RequestPage() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-900 mb-2">{config.labels.description}</label>
+          <label className="block text-sm font-medium text-foreground mb-2">{config.labels.description}</label>
           <textarea
             value={formData.description}
             onChange={(e) => setFormData({ ...formData, description: e.target.value })}
             rows={6}
-            className="w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-lg focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none transition resize-none"
+            className="w-full px-4 py-2 bg-gray-50 border border-border rounded-lg focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none transition resize-none"
             placeholder={config.placeholders.description}
             required
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-900 mb-2">{config.labels.files}</label>
+          <label className="block text-sm font-medium text-foreground mb-2">{config.labels.files}</label>
 
           {/* File Upload Area */}
           <div
             onClick={() => fileInputRef.current?.click()}
-            className="border-2 border-dashed border-gray-200 rounded-lg p-8 text-center hover:border-blue-500 hover:bg-blue-600/5 transition-all cursor-pointer group"
+            className="border-2 border-dashed border-border rounded-lg p-8 text-center hover:border-primary hover:bg-primary/5 transition-all cursor-pointer group"
           >
-            <Upload className="mx-auto mb-4 text-gray-900/50 group-hover:text-blue-600 transition-colors" size={32} />
-            <p className="text-gray-600 mb-2 font-medium">{config.fileUpload.title}</p>
-            <p className="text-gray-900/50 text-sm">{config.fileUpload.subtitle}</p>
-            <p className="text-gray-900/40 text-xs mt-2">{config.fileUpload.acceptedFormats}</p>
+            <Upload className="mx-auto mb-4 text-foreground/50 group-hover:text-primary transition-colors" size={32} />
+            <p className="text-foreground-muted mb-2 font-medium">{config.fileUpload.title}</p>
+            <p className="text-foreground/50 text-sm">{config.fileUpload.subtitle}</p>
+            <p className="text-foreground/40 text-xs mt-2">{config.fileUpload.acceptedFormats}</p>
             <input
               ref={fileInputRef}
               type="file"
@@ -269,23 +269,23 @@ export default function RequestPage() {
           {/* Selected Files List */}
           {selectedFiles.length > 0 && (
             <div className="mt-4 space-y-2">
-              <p className="text-sm font-medium text-gray-600">
+              <p className="text-sm font-medium text-foreground-muted">
                 Selected Files ({selectedFiles.length})
               </p>
               {selectedFiles.map((file, index) => (
                 <div
                   key={index}
-                  className="flex items-center justify-between p-3 bg-white border border-gray-200 rounded-lg hover:border-blue-500 transition-colors group"
+                  className="flex items-center justify-between p-3 bg-card border border-border rounded-lg hover:border-primary transition-colors group"
                 >
                   <div className="flex items-center gap-3 flex-1 min-w-0">
-                    <div className="flex-shrink-0 p-2 bg-blue-50 rounded-lg">
-                      <File className="text-blue-600" size={20} />
+                    <div className="flex-shrink-0 p-2 bg-primary/10 rounded-lg">
+                      <File className="text-primary" size={20} />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-gray-900 truncate">
+                      <p className="text-sm font-medium text-foreground truncate">
                         {file.name}
                       </p>
-                      <p className="text-xs text-gray-900/50">
+                      <p className="text-xs text-foreground/50">
                         {formatFileSize(file.size)}
                       </p>
                     </div>
@@ -296,7 +296,7 @@ export default function RequestPage() {
                     className="flex-shrink-0 p-2 rounded-lg hover:bg-destructive/10 transition-colors group"
                     aria-label="Remove file"
                   >
-                    <X className="text-gray-900/50 group-hover:text-destructive" size={18} />
+                    <X className="text-foreground/50 group-hover:text-destructive" size={18} />
                   </button>
                 </div>
               ))}
@@ -314,11 +314,11 @@ export default function RequestPage() {
           {loading ? config.submitButton.loadingText : config.submitButton.text}
         </Button>
 
-        <p className="text-center text-sm text-gray-600">
+        <p className="text-center text-sm text-foreground-muted">
           {config.disclaimer.text}{' '}
-          <a href={config.disclaimer.termsLink} className="text-blue-600 hover:underline">{config.disclaimer.termsText}</a>
+          <a href={config.disclaimer.termsLink} className="text-primary hover:underline">{config.disclaimer.termsText}</a>
           {' '}and{' '}
-          <a href={config.disclaimer.privacyLink} className="text-blue-600 hover:underline">{config.disclaimer.privacyText}</a>
+          <a href={config.disclaimer.privacyLink} className="text-primary hover:underline">{config.disclaimer.privacyText}</a>
         </p>
       </form>
     </div>
