@@ -106,9 +106,9 @@ function ToastContainer({
 function ToastItem({ toast, onClose }: { toast: Toast; onClose: () => void }) {
   const typeStyles = {
     success: 'bg-success/10 border border-success text-success',
-    error: 'bg-error/10 border border-error text-error',
+    error: 'bg-destructive/10 border border-destructive text-destructive',
     warning: 'bg-warning/10 border border-warning text-warning',
-    info: 'bg-primary text-white',
+    info: 'bg-info/10 border border-info text-info',
   }
 
   const icons = {
