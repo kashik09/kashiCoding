@@ -20,8 +20,8 @@ async function getAboutContent() {
       throw new Error('Failed to fetch content')
     }
 
-    const response = await res.json()
-    return response.data
+    const data = await res.json()
+    return data
   } catch (error) {
     console.error('Error loading about content:', error)
     // Return fallback content if API fails
