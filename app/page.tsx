@@ -43,9 +43,9 @@ export default function HomePage() {
           </p>
         </div>
 
-        <div className="text-center p-8 bg-card rounded-2xl border border-border shadow-sm hover:shadow-md hover:border-secondary transition-all">
-          <div className="inline-block p-4 bg-secondary/20 rounded-xl mb-4">
-            <Palette className="text-secondary" size={32} />
+        <div className="text-center p-8 bg-card rounded-2xl border border-border shadow-sm hover:shadow-md hover:border-primary transition-all">
+          <div className="inline-block p-4 bg-primary/20 rounded-xl mb-4">
+            <Palette className="text-primary" size={32} />
           </div>
           <h3 className="text-xl font-bold text-foreground mb-2">Modern Design</h3>
           <p className="text-foreground-muted">
@@ -65,7 +65,7 @@ export default function HomePage() {
       </section>
 
       {/* CTA Section */}
-      <section className="bg-gradient-to-r from-primary to-secondary rounded-3xl p-12 md:p-16 text-center text-white shadow-xl max-w-6xl mx-auto">
+      <section className="bg-gradient-to-br from-primary via-primary to-primary/80 rounded-3xl p-12 md:p-16 text-center text-white shadow-xl max-w-6xl mx-auto">
         <h2 className="text-4xl md:text-5xl font-bold mb-4">Ready to start your project?</h2>
         <p className="text-xl md:text-2xl mb-8 font-medium">
           Let's work together to bring your ideas to life
