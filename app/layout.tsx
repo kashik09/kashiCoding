@@ -1,8 +1,6 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { ThemeProvider } from '@/lib/ThemeContext'
-import Header from '@/components/Header'
-import Footer from '@/components/Footer'
 import './globals.css'
 import { Analytics } from "@vercel/analytics/next"
 
@@ -22,11 +20,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
         <ThemeProvider>
-          <div className="min-h-screen flex flex-col">
-            <Header />
-            <div className="flex-1">{children}</div>
-            <Footer />
-          </div>
+          {children}
         </ThemeProvider>
         <Analytics />
       </body>

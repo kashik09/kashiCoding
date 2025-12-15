@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { LayoutDashboard, FolderKanban, FileText, Users, Settings, LogOut } from 'lucide-react'
+import AdminHeader from '@/components/AdminHeader'
 
 export default function AdminLayout({
   children,
@@ -16,11 +17,13 @@ export default function AdminLayout({
 
   return (
     <div className="min-h-screen bg-background">
+      <AdminHeader />
+
       <div className="flex">
         {/* Sidebar */}
-        <aside className="w-64 min-h-screen bg-card border-r border-border">
+        <aside className="w-64 min-h-[calc(100vh-73px)] bg-card border-r border-border">
           <div className="p-6">
-            <h2 className="text-2xl font-bold text-primary mb-8">Admin Panel</h2>
+            <h2 className="text-lg font-bold text-foreground mb-6">Navigation</h2>
 
             <nav className="space-y-2">
               {navItems.map((item) => (
