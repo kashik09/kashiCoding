@@ -30,7 +30,7 @@ export default function Header() {
             {navLinks.map((link) => (
               <Link
                 href={link.href}
-                className="text-foreground hover:text-accent transition font-medium"
+                className="text-text hover:text-accent transition font-medium"
               >
                 {link.label}
               </Link>
@@ -60,7 +60,7 @@ export default function Header() {
                   key={link.href}
                   href={link.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className="px-4 py-2 text-foreground hover:text-accent hover:bg-card rounded-lg transition font-medium"
+                  className="px-4 py-2 text-text hover:text-accent hover:bg-card rounded-lg transition font-medium"
                 >
                   {link.label}
                 </Link>
