@@ -50,6 +50,7 @@ export default function ContentEditorPage() {
   const [content, setContent] = useState<AboutContent | null>(null)
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
+  const [uploading, setUploading] = useState(false)
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null)
 
   useEffect(() => {
@@ -193,6 +194,40 @@ export default function ContentEditorPage() {
     })
   }
 
+  const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0]
+    if (!file || !content) return
+
+    try {
+      setUploading(true)
+      setMessage(null)
+
+      const formData = new FormData()
+      formData.append('file', file)
+
+      const res = await fetch('/api/upload', {
+        method: 'POST',
+        body: formData
+      })
+
+      const response = await res.json()
+
+      if (response.success && response.url) {
+        setContent({
+          ...content,
+          hero: { ...content.hero, avatarUrl: response.url }
+        })
+        setMessage({ type: 'success', text: 'Image uploaded successfully!' })
+      } else {
+        setMessage({ type: 'error', text: response.error || 'Failed to upload image' })
+      }
+    } catch (error) {
+      setMessage({ type: 'error', text: 'Error uploading image' })
+    } finally {
+      setUploading(false)
+    }
+  }
+
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
@@ -301,13 +336,39 @@ export default function ContentEditorPage() {
             />
           </div>
           <div className="md:col-span-2">
-            <label className="block text-sm font-medium text-foreground/70 mb-2">Avatar URL</label>
-            <input
-              type="text"
-              value={content.hero.avatarUrl}
-              onChange={(e) => setContent({ ...content, hero: { ...content.hero, avatarUrl: e.target.value } })}
-              className="w-full px-4 py-2 bg-background border border-border rounded-lg text-foreground focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none"
-            />
+            <label className="block text-sm font-medium text-foreground/70 mb-2">Avatar Image</label>
+            <div className="flex items-center gap-4">
+              {content.hero.avatarUrl && (
+                <div className="relative w-20 h-20 rounded-full overflow-hidden border-2 border-border flex-shrink-0">
+                  <img
+                    src={content.hero.avatarUrl}
+                    alt="Avatar preview"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              )}
+              <div className="flex-1 space-y-2">
+                <div className="flex gap-2">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageUpload}
+                    disabled={uploading}
+                    className="flex-1 px-4 py-2 bg-background border border-border rounded-lg text-foreground file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-primary file:text-white hover:file:bg-primary/90 disabled:opacity-50"
+                  />
+                </div>
+                <input
+                  type="text"
+                  value={content.hero.avatarUrl}
+                  onChange={(e) => setContent({ ...content, hero: { ...content.hero, avatarUrl: e.target.value } })}
+                  placeholder="Or enter image URL manually"
+                  className="w-full px-4 py-2 bg-background border border-border rounded-lg text-foreground focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none text-sm"
+                />
+                {uploading && (
+                  <p className="text-sm text-primary">Uploading image...</p>
+                )}
+              </div>
+            </div>
           </div>
         </div>
       </section>
