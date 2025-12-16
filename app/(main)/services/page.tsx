@@ -93,13 +93,13 @@ export default async function ServicesPage() {
       </div>
 
       {/* CTA Section */}
-      <section className="bg-gradient-to-br from-primary via-primary to-primary/80 rounded-3xl p-12 text-center text-white shadow-xl">
-        <h2 className="text-4xl font-bold mb-4 text-white">{data.cta.heading}</h2>
-        <p className="text-xl mb-8 text-white/90">
+      <section className="bg-gradient-to-br from-primary via-primary to-primary/80 rounded-3xl p-12 md:p-16 text-center text-white shadow-xl max-w-6xl mx-auto">
+        <h2 className="text-4xl md:text-5xl font-bold mb-4">{data.cta.heading}</h2>
+        <p className="text-xl md:text-2xl mb-8 font-medium">
           {data.cta.text}
         </p>
         <Link href="/request">
-          <Button variant="secondary" size="lg">
+          <Button variant="outline" size="lg" className="bg-white/10 border-white hover:bg-white hover:text-primary">
             {data.cta.buttonText}
           </Button>
         </Link>
