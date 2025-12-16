@@ -2,6 +2,7 @@
 
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react'
 import { ThemeName } from './themes'
+import { track } from '@vercel/analytics'
 
 interface ThemeContextType {
   theme: ThemeName
@@ -18,9 +19,9 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     setMounted(true)
     const savedTheme = localStorage.getItem('kashikweyu-theme') as ThemeName
-      if (savedTheme && ['dracula', 'ayulight', 'quietlight', 'material'].includes(savedTheme)) {
-        setThemeState(savedTheme)
-      }
+    if (savedTheme && ['dracula', 'ayulight', 'quietlight', 'material'].includes(savedTheme)) {
+      setThemeState(savedTheme)
+    }
   }, [])
 
   // Apply theme to document
@@ -43,6 +44,16 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   const setTheme = (newTheme: ThemeName) => {
     console.log('🔄 Changing theme to:', newTheme)
     setThemeState(newTheme)
+    
+    // Track theme change with analytics
+    if (mounted) {
+      track('theme_change', {
+        themeName: newTheme,
+        previousTheme: theme,
+        timestamp: new Date().toISOString()
+      })
+      console.log('📊 Analytics: Theme change tracked')
+    }
   }
 
   // Prevent flash of unstyled content
