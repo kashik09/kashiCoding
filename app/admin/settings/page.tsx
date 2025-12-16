@@ -52,15 +52,15 @@ export default function AdminSettingsPage() {
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
         {/* Sidebar */}
         <div className="lg:col-span-1">
-          <div className="bg-secondary rounded-2xl border border-border p-4 space-y-2">
+          <div className="bg-card rounded-2xl border border-border p-4 space-y-2">
             {tabs.map(tab => (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
                 className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition ${
                   activeTab === tab.id
-                    ? 'bg-primary text-accent border-l-2 border-accent'
-                    : 'text-foreground/70 hover:bg-primary/50'
+                    ? 'bg-primary/10 text-primary border-l-2 border-primary'
+                    : 'text-muted-foreground hover:bg-muted'
                 }`}
               >
                 <tab.icon size={20} />
@@ -72,7 +72,7 @@ export default function AdminSettingsPage() {
 
         {/* Content */}
         <div className="lg:col-span-3">
-          <div className="bg-secondary rounded-2xl border border-border p-6 space-y-6">
+          <div className="bg-card rounded-2xl border border-border p-6 space-y-6">
             {/* Profile Tab */}
             {activeTab === 'profile' && (
               <div className="space-y-6">
@@ -86,7 +86,7 @@ export default function AdminSettingsPage() {
                     type="text"
                     value={settings.name}
                     onChange={(e) => setSettings({ ...settings, name: e.target.value })}
-                    className="w-full px-4 py-2 bg-primary border border-border rounded-lg focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none transition"
+                    className="w-full px-4 py-2 bg-muted border border-border rounded-lg focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition"
                   />
                 </div>
 
@@ -98,7 +98,7 @@ export default function AdminSettingsPage() {
                     type="email"
                     value={settings.email}
                     onChange={(e) => setSettings({ ...settings, email: e.target.value })}
-                    className="w-full px-4 py-2 bg-primary border border-border rounded-lg focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none transition"
+                    className="w-full px-4 py-2 bg-muted border border-border rounded-lg focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition"
                   />
                 </div>
 
@@ -110,7 +110,7 @@ export default function AdminSettingsPage() {
                     value={settings.bio}
                     onChange={(e) => setSettings({ ...settings, bio: e.target.value })}
                     rows={4}
-                    className="w-full px-4 py-2 bg-primary border border-border rounded-lg focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none transition resize-none"
+                    className="w-full px-4 py-2 bg-muted border border-border rounded-lg focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition resize-none"
                   />
                 </div>
               </div>
@@ -121,10 +121,10 @@ export default function AdminSettingsPage() {
               <div className="space-y-6">
                 <h2 className="text-xl font-bold text-foreground">Notification Preferences</h2>
 
-                <label className="flex items-center justify-between p-4 bg-primary rounded-lg cursor-pointer">
+                <label className="flex items-center justify-between p-4 bg-muted rounded-lg cursor-pointer hover:bg-muted/70 transition">
                   <div>
                     <p className="font-medium text-foreground">Email Notifications</p>
-                    <p className="text-sm text-foreground/70">Receive email updates</p>
+                    <p className="text-sm text-muted-foreground">Receive email updates</p>
                   </div>
                   <input
                     type="checkbox"
@@ -137,10 +137,10 @@ export default function AdminSettingsPage() {
                   />
                 </label>
 
-                <label className="flex items-center justify-between p-4 bg-primary rounded-lg cursor-pointer">
+                <label className="flex items-center justify-between p-4 bg-muted rounded-lg cursor-pointer hover:bg-muted/70 transition">
                   <div>
                     <p className="font-medium text-foreground">Request Notifications</p>
-                    <p className="text-sm text-foreground/70">Get notified of new service requests</p>
+                    <p className="text-sm text-muted-foreground">Get notified of new service requests</p>
                   </div>
                   <input
                     type="checkbox"
@@ -160,10 +160,10 @@ export default function AdminSettingsPage() {
               <div className="space-y-6">
                 <h2 className="text-xl font-bold text-foreground">Security Settings</h2>
 
-                <label className="flex items-center justify-between p-4 bg-primary rounded-lg cursor-pointer">
+                <label className="flex items-center justify-between p-4 bg-muted rounded-lg cursor-pointer hover:bg-muted/70 transition">
                   <div>
                     <p className="font-medium text-foreground">Two-Factor Authentication</p>
-                    <p className="text-sm text-foreground/70">Add an extra layer of security</p>
+                    <p className="text-sm text-muted-foreground">Add an extra layer of security</p>
                   </div>
                   <input
                     type="checkbox"
@@ -187,7 +187,7 @@ export default function AdminSettingsPage() {
                       ...settings,
                       security: { ...settings.security, sessionTimeout: e.target.value }
                     })}
-                    className="w-full px-4 py-2 bg-primary border border-border rounded-lg focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none transition"
+                    className="w-full px-4 py-2 bg-muted border border-border rounded-lg focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition"
                   />
                 </div>
               </div>
@@ -198,10 +198,10 @@ export default function AdminSettingsPage() {
               <div className="space-y-6">
                 <h2 className="text-xl font-bold text-foreground">Site Settings</h2>
 
-                <label className="flex items-center justify-between p-4 bg-primary rounded-lg cursor-pointer">
+                <label className="flex items-center justify-between p-4 bg-muted rounded-lg cursor-pointer hover:bg-muted/70 transition">
                   <div>
                     <p className="font-medium text-foreground">Maintenance Mode</p>
-                    <p className="text-sm text-foreground/70">Make site unavailable to visitors</p>
+                    <p className="text-sm text-muted-foreground">Make site unavailable to visitors</p>
                   </div>
                   <input
                     type="checkbox"
@@ -214,10 +214,10 @@ export default function AdminSettingsPage() {
                   />
                 </label>
 
-                <label className="flex items-center justify-between p-4 bg-primary rounded-lg cursor-pointer">
+                <label className="flex items-center justify-between p-4 bg-muted rounded-lg cursor-pointer hover:bg-muted/70 transition">
                   <div>
                     <p className="font-medium text-foreground">Allow Registration</p>
-                    <p className="text-sm text-foreground/70">Allow new users to register</p>
+                    <p className="text-sm text-muted-foreground">Allow new users to register</p>
                   </div>
                   <input
                     type="checkbox"
@@ -237,7 +237,7 @@ export default function AdminSettingsPage() {
               <button
                 onClick={handleSave}
                 disabled={saving}
-                className="flex items-center gap-2 px-6 py-3 bg-accent text-white rounded-lg hover:bg-accent/90 transition disabled:opacity-50"
+                className="flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition disabled:opacity-50"
               >
                 <Save size={20} />
                 {saving ? 'Saving...' : 'Save Changes'}
