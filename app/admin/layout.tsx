@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { LayoutDashboard, FolderKanban, FileText, Users, Settings, LogOut } from 'lucide-react'
 import AdminHeader from '@/components/AdminHeader'
+import { ToastProvider } from '@/components/ui/Toast'
 
 export default function AdminLayout({
   children,
@@ -16,45 +17,47 @@ export default function AdminLayout({
   ]
 
   return (
-    <div className="min-h-screen bg-background">
-      <AdminHeader />
+    <ToastProvider>
+      <div className="min-h-screen bg-background">
+        <AdminHeader />
 
-      <div className="flex">
-        {/* Sidebar */}
-        <aside className="w-64 min-h-[calc(100vh-73px)] bg-card border-r border-border">
-          <div className="p-6">
-            <h2 className="text-lg font-bold text-foreground mb-6">Navigation</h2>
+        <div className="flex">
+          {/* Sidebar */}
+          <aside className="w-64 min-h-[calc(100vh-73px)] bg-card border-r border-border">
+            <div className="p-6">
+              <h2 className="text-lg font-bold text-foreground mb-6">Navigation</h2>
 
-            <nav className="space-y-2">
-              {navItems.map((item) => (
+              <nav className="space-y-2">
+                {navItems.map((item) => (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className="flex items-center gap-3 px-4 py-3 rounded-lg text-foreground hover:bg-primary/10 hover:text-primary transition-colors"
+                  >
+                    <item.icon size={20} />
+                    <span>{item.label}</span>
+                  </Link>
+                ))}
+              </nav>
+
+              <div className="mt-8 pt-8 border-t border-border">
                 <Link
-                  key={item.href}
-                  href={item.href}
+                  href="/"
                   className="flex items-center gap-3 px-4 py-3 rounded-lg text-foreground hover:bg-primary/10 hover:text-primary transition-colors"
                 >
-                  <item.icon size={20} />
-                  <span>{item.label}</span>
+                  <LogOut size={20} />
+                  <span>Back to Site</span>
                 </Link>
-              ))}
-            </nav>
-
-            <div className="mt-8 pt-8 border-t border-border">
-              <Link
-                href="/"
-                className="flex items-center gap-3 px-4 py-3 rounded-lg text-foreground hover:bg-primary/10 hover:text-primary transition-colors"
-              >
-                <LogOut size={20} />
-                <span>Back to Site</span>
-              </Link>
+              </div>
             </div>
-          </div>
-        </aside>
+          </aside>
 
-        {/* Main Content */}
-        <main className="flex-1 p-8 bg-background">
-          {children}
-        </main>
+          {/* Main Content */}
+          <main className="flex-1 p-8 bg-background">
+            {children}
+          </main>
+        </div>
       </div>
-    </div>
+    </ToastProvider>
   )
 }
