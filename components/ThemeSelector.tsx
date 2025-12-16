@@ -25,19 +25,30 @@ export function ThemeSelector() {
 
   return (
     <div ref={dropdownRef} className="relative">
+      {/* Desktop Button: Full theme name + icon */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 px-4 py-2 bg-card border border-border rounded-full hover:bg-card-hover transition shadow-sm min-w-[180px] justify-between"
+        className="hidden md:flex items-center gap-2 px-4 py-2 bg-card border border-border rounded-full hover:bg-card-hover transition shadow-sm min-w-[180px] justify-between"
       >
         <div className="flex items-center gap-2">
           <Icon size={18} className="text-foreground" />
-          <span className="hidden md:inline text-sm font-medium text-foreground truncate max-w-[120px]">
+          <span className="text-sm font-medium text-foreground truncate max-w-[120px]">
             {currentTheme.name}
           </span>
         </div>
         <ChevronDown size={16} className="text-foreground-muted flex-shrink-0" />
       </button>
 
+      {/* Mobile Button: Icon only */}
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="md:hidden flex items-center justify-center p-2 bg-card border border-border rounded-full hover:bg-card-hover transition shadow-sm"
+        aria-label="Select theme"
+      >
+        <Icon size={20} className="text-foreground" />
+      </button>
+
+      {/* Dropdown Menu */}
       {isOpen && (
         <div className="absolute right-0 mt-2 w-56 bg-card border border-border rounded-xl shadow-xl overflow-hidden z-50">
           {Object.entries(themes).map(([key, t]) => {
