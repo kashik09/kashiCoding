@@ -1,7 +1,7 @@
 'use client'
 
-import { useState } from 'react'
-import { Search, Eye, Trash2, Mail, Clock, CheckCircle, XCircle } from 'lucide-react'
+import { useState, useEffect } from 'react'
+import { Search, Eye, Trash2, Mail, Clock, CheckCircle, XCircle, AlertTriangle } from 'lucide-react'
 
 type RequestStatus = 'pending' | 'contacted' | 'completed' | 'rejected'
 
@@ -22,6 +22,13 @@ export default function AdminRequestsPage() {
   const [filter, setFilter] = useState<'all' | RequestStatus>('all')
   const [selectedRequest, setSelectedRequest] = useState<Request | null>(null)
   const [showModal, setShowModal] = useState(false)
+  const [showDeleteModal, setShowDeleteModal] = useState(false)
+  const [requestToDelete, setRequestToDelete] = useState<Request | null>(null)
+  const [toast, setToast] = useState<{ show: boolean; message: string; type: 'success' | 'error' }>({
+    show: false,
+    message: '',
+    type: 'success'
+  })
 
   // TODO: Fetch from database
   const [requests, setRequests] = useState<Request[]>([
@@ -69,9 +76,22 @@ export default function AdminRequestsPage() {
   }
 
   const handleDelete = (id: number) => {
-    if (confirm('Are you sure you want to delete this request?')) {
-      setRequests(requests.filter(r => r.id !== id))
-    }
+    setRequests(requests.filter(r => r.id !== id))
+    setShowDeleteModal(false)
+    setRequestToDelete(null)
+    showToast('Request deleted successfully', 'success')
+  }
+
+  const confirmDelete = (request: Request) => {
+    setRequestToDelete(request)
+    setShowDeleteModal(true)
+  }
+
+  const showToast = (message: string, type: 'success' | 'error') => {
+    setToast({ show: true, message, type })
+    setTimeout(() => {
+      setToast({ show: false, message: '', type: 'success' })
+    }, 3000)
   }
 
   const handleView = (request: Request) => {
@@ -218,7 +238,7 @@ export default function AdminRequestsPage() {
                           <Eye size={18} />
                         </button>
                         <button 
-                          onClick={() => handleDelete(request.id)}
+                          onClick={() => confirmDelete(request)}
                           className="p-2 hover:bg-red-500/10 text-red-600 dark:text-red-400 rounded-lg transition"
                           title="Delete request"
                         >
@@ -313,6 +333,83 @@ export default function AdminRequestsPage() {
           </div>
         </div>
       )}
+
+      {/* Delete Confirmation Modal */}
+      {showDeleteModal && requestToDelete && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <div className="bg-card rounded-2xl border border-border max-w-md w-full">
+            <div className="p-6">
+              <div className="flex items-center gap-4 mb-4">
+                <div className="w-12 h-12 bg-red-500/10 rounded-full flex items-center justify-center">
+                  <AlertTriangle className="text-red-600 dark:text-red-400" size={24} />
+                </div>
+                <div>
+                  <h2 className="text-xl font-bold text-foreground">Delete Request</h2>
+                  <p className="text-sm text-foreground-muted">This action cannot be undone</p>
+                </div>
+              </div>
+              
+              <p className="text-foreground mb-6">
+                Are you sure you want to delete the request from <span className="font-semibold">{requestToDelete.name}</span>?
+              </p>
+
+              <div className="flex gap-3">
+                <button 
+                  onClick={() => {
+                    setShowDeleteModal(false)
+                    setRequestToDelete(null)
+                  }}
+                  className="flex-1 px-6 py-3 bg-card-hover border border-border text-foreground rounded-lg hover:bg-card transition font-medium"
+                >
+                  Cancel
+                </button>
+                <button 
+                  onClick={() => handleDelete(requestToDelete.id)}
+                  className="flex-1 px-6 py-3 bg-red-600 dark:bg-red-500 text-white rounded-lg hover:bg-red-700 dark:hover:bg-red-600 transition font-medium"
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Toast Notification */}
+      {toast.show && (
+        <div className="fixed bottom-6 right-6 z-50 animate-slideIn">
+          <div className={`px-6 py-4 rounded-lg shadow-lg border ${
+            toast.type === 'success' 
+              ? 'bg-green-500/10 border-green-500/20 text-green-600 dark:text-green-400' 
+              : 'bg-red-500/10 border-red-500/20 text-red-600 dark:text-red-400'
+          }`}>
+            <div className="flex items-center gap-3">
+              {toast.type === 'success' ? (
+                <CheckCircle size={20} />
+              ) : (
+                <XCircle size={20} />
+              )}
+              <p className="font-medium">{toast.message}</p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <style jsx>{`
+        @keyframes slideIn {
+          from {
+            transform: translateX(100%);
+            opacity: 0;
+          }
+          to {
+            transform: translateX(0);
+            opacity: 1;
+          }
+        }
+        .animate-slideIn {
+          animation: slideIn 0.3s ease-out;
+        }
+      `}</style>
     </div>
   )
 }
