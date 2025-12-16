@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { LayoutDashboard, FolderKanban, FileText, Users, Settings, LogOut } from 'lucide-react'
+import { LayoutDashboard, FolderKanban, FileText, Users, Settings, LogOut, Tags } from 'lucide-react'
 import AdminHeader from '@/components/AdminHeader'
 import { ToastProvider } from '@/components/ui/Toast'
 
@@ -11,6 +11,7 @@ export default function AdminLayout({
   const navItems = [
     { href: '/admin', icon: LayoutDashboard, label: 'Dashboard' },
     { href: '/admin/projects', icon: FolderKanban, label: 'Projects' },
+    { href: '/admin/tags', icon: Tags, label: 'Tags & Tech' },
     { href: '/admin/requests', icon: FileText, label: 'Requests' },
     { href: '/admin/users', icon: Users, label: 'Users' },
     { href: '/admin/settings', icon: Settings, label: 'Settings' },
