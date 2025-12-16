@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { Home, User } from 'lucide-react'
-import ThemeSelector from './ThemeSelector'
+import { ThemeSelector } from './ThemeSelector' 
 
 export default function AdminHeader() {
   return (
