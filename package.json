@@ -2,7 +2,7 @@
   "name": "kashi-kweyu-portfolio",
   "version": "0.1.0",
   "private": true,
-    "engines": {
+  "engines": {
     "node": ">=20 <21"
   },
   "scripts": {
@@ -32,6 +32,7 @@
     "nodemailer": "^7.0.11",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-icons": "^5.5.0",
     "resend": "^6.6.0",
     "tailwind-merge": "^2.2.0"
   },

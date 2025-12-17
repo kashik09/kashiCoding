@@ -1,21 +1,24 @@
 'use client'
 
 import { useState } from 'react'
+import { signIn } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
+import { FcGoogle } from 'react-icons/fc'
+import { FaGithub } from 'react-icons/fa'
 
 export default function SignupPage() {
   const router = useRouter()
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState('')
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     password: '',
     confirmPassword: ''
   })
-  const [error, setError] = useState('')
-  const [loading, setLoading] = useState(false)
   const [agreedToTerms, setAgreedToTerms] = useState(false)
 
   const passwordStrength = (password: string) => {
@@ -37,7 +40,12 @@ export default function SignupPage() {
     }
 
     if (!agreedToTerms) {
-      setError('Please agree to the terms and conditions')
+      setError('Please agree to the Terms and Conditions')
+      return
+    }
+
+    if (formData.password.length < 8) {
+      setError('Password must be at least 8 characters')
       return
     }
 
@@ -54,15 +62,38 @@ export default function SignupPage() {
         })
       })
 
-      if (response.ok) {
-        router.push('/login?registered=true')
-      } else {
-        const data = await response.json()
-        setError(data.error || 'Failed to create account')
+      const data = await response.json()
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to create account')
       }
-    } catch (err) {
-      setError('Something went wrong. Please try again.')
+
+      // Auto sign in after signup
+      const result = await signIn('credentials', {
+        email: formData.email,
+        password: formData.password,
+        redirect: false
+      })
+
+      if (result?.error) {
+        setError('Account created, but sign in failed. Please try logging in.')
+        setTimeout(() => router.push('/login'), 2000)
+      } else {
+        router.push('/dashboard')
+      }
+    } catch (err: any) {
+      setError(err.message || 'Something went wrong')
     } finally {
+      setLoading(false)
+    }
+  }
+
+  const handleOAuthSignIn = async (provider: 'google' | 'github') => {
+    setLoading(true)
+    try {
+      await signIn(provider, { callbackUrl: '/dashboard' })
+    } catch (err) {
+      setError('Failed to sign in with ' + provider)
       setLoading(false)
     }
   }
@@ -73,109 +104,149 @@ export default function SignupPage() {
       <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary/10 pointer-events-none"></div>
 
       <div className="relative z-10">
+        {/* Header */}
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-foreground mb-2">Create Account</h1>
           <p className="text-muted-foreground">Sign up to get started</p>
         </div>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
+        {/* Error Message */}
         {error && (
-          <div className="p-3 bg-destructive/10 border border-destructive rounded-lg text-destructive text-sm">
+          <div className="mb-6 p-4 bg-red-500/10 border border-red-500/30 rounded-lg text-red-600 dark:text-red-400 text-sm">
             {error}
           </div>
         )}
 
-        <Input
-          type="text"
-          label="Full Name"
-          value={formData.name}
-          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-          placeholder="John Doe"
-          required
-        />
+        {/* OAuth Buttons */}
+        <div className="space-y-3 mb-6">
+          <button
+            type="button"
+            onClick={() => handleOAuthSignIn('google')}
+            disabled={loading}
+            className="w-full flex items-center justify-center gap-3 px-6 py-3 bg-card border border-border text-foreground rounded-lg hover:bg-muted transition disabled:opacity-50"
+          >
+            <FcGoogle size={20} />
+            <span>Continue with Google</span>
+          </button>
 
-        <Input
-          type="email"
-          label="Email"
-          value={formData.email}
-          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-          placeholder="your@email.com"
-          required
-        />
+          <button
+            type="button"
+            onClick={() => handleOAuthSignIn('github')}
+            disabled={loading}
+            className="w-full flex items-center justify-center gap-3 px-6 py-3 bg-card border border-border text-foreground rounded-lg hover:bg-muted transition disabled:opacity-50"
+          >
+            <FaGithub size={20} />
+            <span>Continue with GitHub</span>
+          </button>
+        </div>
 
-        <div>
+        {/* Divider */}
+        <div className="relative my-6">
+          <div className="absolute inset-0 flex items-center">
+            <div className="w-full border-t border-border"></div>
+          </div>
+          <div className="relative flex justify-center text-sm">
+            <span className="px-4 bg-card text-muted-foreground">OR</span>
+          </div>
+        </div>
+
+        {/* Form */}
+        <form onSubmit={handleSubmit} className="space-y-4">
           <Input
+            label="Full Name"
+            type="text"
+            value={formData.name}
+            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+            placeholder="John Doe"
+            required
+          />
+
+          <Input
+            label="Email"
+            type="email"
+            value={formData.email}
+            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+            placeholder="your@email.com"
+            required
+          />
+
+          <div>
+            <Input
+              label="Password"
+              type="password"
+              value={formData.password}
+              onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+              placeholder="••••••••"
+              required
+            />
+            {formData.password && (
+              <div className="mt-2">
+                <div className="flex gap-1 mb-1">
+                  {[1, 2, 3].map((level) => (
+                    <div
+                      key={level}
+                      className={`h-1 flex-1 rounded ${
+                        level <= strength.strength
+                          ? strength.strength === 1
+                            ? 'bg-red-500'
+                            : strength.strength === 2
+                            ? 'bg-yellow-500'
+                            : 'bg-green-500'
+                          : 'bg-border'
+                      }`}
+                    />
+                  ))}
+                </div>
+                <p className="text-xs text-muted-foreground">
+                  Password strength: {strength.label}
+                </p>
+              </div>
+            )}
+          </div>
+
+          <Input
+            label="Confirm Password"
             type="password"
-            label="Password"
-            value={formData.password}
-            onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+            value={formData.confirmPassword}
+            onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
             placeholder="••••••••"
             required
           />
-          {formData.password && (
-            <div className="mt-2">
-              <div className="flex gap-1 mb-1">
-                {[1, 2, 3].map((level) => (
-                  <div
-                    key={level}
-                    className={`h-1 flex-1 rounded ${
-                      level <= strength.strength
-                        ? strength.strength === 1
-                          ? 'bg-red-500'
-                          : strength.strength === 2
-                          ? 'bg-yellow-500'
-                          : 'bg-blue-500'
-                        : 'bg-border'
-                    }`}
-                  />
-                ))}
-              </div>
-              <p className="text-xs text-muted-foreground">
-                Password strength: {strength.label}
-              </p>
-            </div>
-          )}
-        </div>
 
-        <Input
-          type="password"
-          label="Confirm Password"
-          value={formData.confirmPassword}
-          onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
-          placeholder="••••••••"
-          required
-        />
+          {/* Terms Checkbox */}
+          <div className="flex items-start gap-3">
+            <input
+              type="checkbox"
+              id="terms"
+              checked={agreedToTerms}
+              onChange={(e) => setAgreedToTerms(e.target.checked)}
+              className="mt-1 w-4 h-4 rounded border-border bg-card text-primary focus:ring-2 focus:ring-primary/20"
+              required
+            />
+            <label htmlFor="terms" className="text-sm text-foreground">
+              I agree to the{' '}
+              <Link href="/legal/terms" className="text-primary hover:underline">
+                Terms and Conditions
+              </Link>{' '}
+              and{' '}
+              <Link href="/legal/privacy-policy" className="text-primary hover:underline">
+                Privacy Policy
+              </Link>
+            </label>
+          </div>
 
-        <label className="flex items-start gap-2 text-sm text-foreground">
-          <input
-            type="checkbox"
-            checked={agreedToTerms}
-            onChange={(e) => setAgreedToTerms(e.target.checked)}
-            className="mt-1 rounded"
-          />
-          <span>
-            I agree to the{' '}
-            <Link href="/legal/terms" className="text-primary hover:underline">
-              Terms and Conditions
-            </Link>
-            {' '}and{' '}
-            <Link href="/legal/privacy-policy" className="text-primary hover:underline">
-              Privacy Policy
-            </Link>
-          </span>
-        </label>
+          <Button
+            type="submit"
+            variant="primary"
+            size="lg"
+            className="w-full"
+            disabled={loading}
+          >
+            {loading ? 'Creating account...' : 'Sign Up'}
+          </Button>
+        </form>
 
-        <Button
-          type="submit"
-          variant="primary"
-          size="lg"
-          className="w-full"
-          disabled={loading}
-        >
-          {loading ? 'Creating account...' : 'Sign Up'}
-        </Button>
-      </form>
-
+        {/* Sign In Link */}
         <p className="mt-6 text-center text-sm text-muted-foreground">
           Already have an account?{' '}
           <Link href="/login" className="text-primary hover:underline font-medium">
