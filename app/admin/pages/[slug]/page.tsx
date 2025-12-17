@@ -2,12 +2,14 @@
 
 import { useEffect, useState } from 'react'
 import { useRouter, useParams } from 'next/navigation'
-import { ArrowLeft, Save, Plus, Trash2, GripVertical, Eye } from 'lucide-react'
+import { ArrowLeft, Save, Plus, Trash2, Eye, EyeOff, ChevronUp, ChevronDown } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
 import { StyledSelect } from '@/components/ui/StyledSelect'
 import { Spinner } from '@/components/ui/Spinner'
 import ConfirmModal from '@/components/ui/ConfirmModal'
+import { sectionRegistry, getAllSectionTypes } from '@/lib/sections/registry'
+import { SectionType } from '@/lib/sections/types'
 
 interface PageData {
   id?: string
@@ -20,22 +22,12 @@ interface PageData {
 
 interface Section {
   id?: string
-  type: string
+  type: SectionType
   data: any
   order: number
 }
 
-const SECTION_TYPES = [
-  { value: 'HERO', label: 'Hero Section' },
-  { value: 'RICH_TEXT', label: 'Rich Text / Markdown' },
-  { value: 'PROJECT_GRID', label: 'Project Grid' },
-  { value: 'CARDS', label: 'Cards' },
-  { value: 'CTA', label: 'Call to Action' },
-  { value: 'FAQ', label: 'FAQ' },
-  { value: 'CONTACT_BLOCK', label: 'Contact Block' }
-]
-
-export default function PageEditorPage() {
+export default function VisualPageEditor() {
   const router = useRouter()
   const params = useParams()
   const slug = params.slug as string
@@ -51,6 +43,8 @@ export default function PageEditorPage() {
     seoDescription: ''
   })
   const [sections, setSections] = useState<Section[]>([])
+  const [selectedSectionIndex, setSelectedSectionIndex] = useState<number | null>(null)
+  const [showPreview, setShowPreview] = useState(true)
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [deleteModal, setDeleteModal] = useState<{ open: boolean; sectionIndex: number | null }>({
     open: false,
@@ -117,7 +111,6 @@ export default function PageEditorPage() {
     try {
       setSaving(true)
 
-      // Save or create page
       const pageResponse = await fetch(
         isNew ? '/api/pages' : `/api/pages/${slug}`,
         {
@@ -134,11 +127,9 @@ export default function PageEditorPage() {
         return
       }
 
-      // If new page, we need to add sections to the newly created page
       if (isNew && sections.length > 0) {
         const createdPageSlug = pageResult.data.slug
 
-        // Add all sections
         for (const section of sections) {
           await fetch(`/api/pages/${createdPageSlug}/sections`, {
             method: 'POST',
@@ -153,7 +144,6 @@ export default function PageEditorPage() {
 
         router.push(`/admin/pages/${createdPageSlug}`)
       } else if (!isNew && sections.length > 0) {
-        // Update existing sections
         const sectionsWithIds = sections.filter(s => s.id)
         if (sectionsWithIds.length > 0) {
           await fetch(`/api/pages/${slug}/sections`, {
@@ -163,7 +153,6 @@ export default function PageEditorPage() {
           })
         }
 
-        // Add new sections (without id)
         const newSections = sections.filter(s => !s.id)
         for (const section of newSections) {
           await fetch(`/api/pages/${slug}/sections`, {
@@ -177,10 +166,8 @@ export default function PageEditorPage() {
           })
         }
 
-        // Reload to get updated sections with IDs
         await fetchPage()
       } else if (!isNew) {
-        // Just update page metadata
         router.push('/admin/pages')
       }
 
@@ -193,34 +180,15 @@ export default function PageEditorPage() {
     }
   }
 
-  const addSection = (type: string) => {
+  const addSection = (type: SectionType) => {
+    const entry = sectionRegistry[type]
     const newSection: Section = {
       type,
-      data: getDefaultDataForType(type),
+      data: entry.defaultData,
       order: sections.length
     }
     setSections([...sections, newSection])
-  }
-
-  const getDefaultDataForType = (type: string): any => {
-    switch (type) {
-      case 'HERO':
-        return { title: '', subtitle: '', ctaText: '', ctaLink: '' }
-      case 'RICH_TEXT':
-        return { content: '' }
-      case 'PROJECT_GRID':
-        return { title: '', filter: 'ALL' }
-      case 'CARDS':
-        return { title: '', cards: [] }
-      case 'CTA':
-        return { title: '', description: '', buttonText: '', buttonLink: '' }
-      case 'FAQ':
-        return { title: '', items: [] }
-      case 'CONTACT_BLOCK':
-        return { title: '', showForm: true }
-      default:
-        return {}
-    }
+    setSelectedSectionIndex(sections.length)
   }
 
   const updateSection = (index: number, data: any) => {
@@ -231,6 +199,9 @@ export default function PageEditorPage() {
 
   const deleteSection = (index: number) => {
     setSections(sections.filter((_, i) => i !== index))
+    if (selectedSectionIndex === index) {
+      setSelectedSectionIndex(null)
+    }
     setDeleteModal({ open: false, sectionIndex: null })
   }
 
@@ -242,6 +213,11 @@ export default function PageEditorPage() {
       section.order = i
     })
     setSections(updated)
+    if (selectedSectionIndex === index) {
+      setSelectedSectionIndex(index - 1)
+    } else if (selectedSectionIndex === index - 1) {
+      setSelectedSectionIndex(index)
+    }
   }
 
   const moveSectionDown = (index: number) => {
@@ -252,6 +228,11 @@ export default function PageEditorPage() {
       section.order = i
     })
     setSections(updated)
+    if (selectedSectionIndex === index) {
+      setSelectedSectionIndex(index + 1)
+    } else if (selectedSectionIndex === index + 1) {
+      setSelectedSectionIndex(index)
+    }
   }
 
   if (loading) {
@@ -262,8 +243,11 @@ export default function PageEditorPage() {
     )
   }
 
+  const selectedSection = selectedSectionIndex !== null ? sections[selectedSectionIndex] : null
+  const SelectedFormComponent = selectedSection ? sectionRegistry[selectedSection.type].formComponent : null
+
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4">
@@ -275,48 +259,40 @@ export default function PageEditorPage() {
             <ArrowLeft size={20} />
           </Button>
           <div>
-            <h1 className="text-2xl md:text-3xl font-bold text-foreground">
-              {isNew ? 'Create New Page' : 'Edit Page'}
+            <h1 className="text-xl md:text-2xl font-bold text-foreground">
+              {isNew ? 'Create New Page' : `Edit: ${pageData.title}`}
             </h1>
-            <p className="text-muted-foreground mt-1">
-              {isNew ? 'Configure page settings and add sections' : `Editing: ${pageData.title}`}
-            </p>
           </div>
         </div>
         <div className="flex gap-2">
-          {!isNew && pageData.status === 'PUBLISHED' && (
-            <Button
-              variant="outline"
-              onClick={() => window.open(`/${slug}`, '_blank')}
-              size="sm"
-            >
-              <Eye size={18} className="mr-2" />
-              Preview
-            </Button>
-          )}
-          <Button onClick={handleSave} disabled={saving}>
+          <Button
+            variant="outline"
+            onClick={() => setShowPreview(!showPreview)}
+            size="sm"
+          >
+            {showPreview ? <EyeOff size={18} /> : <Eye size={18} />}
+          </Button>
+          <Button onClick={handleSave} disabled={saving} size="sm">
             <Save size={18} className="mr-2" />
-            {saving ? 'Saving...' : 'Save Page'}
+            {saving ? 'Saving...' : 'Save'}
           </Button>
         </div>
       </div>
 
       {/* Page Settings */}
-      <div className="bg-card border border-border rounded-lg p-6 space-y-4">
-        <h2 className="text-xl font-semibold text-foreground mb-4">Page Settings</h2>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="bg-card border border-border rounded-lg p-4 space-y-3">
+        <h2 className="text-lg font-semibold text-foreground">Page Settings</h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
           <Input
-            label="Page Title"
+            label="Title"
             placeholder="About Us"
             value={pageData.title}
             onChange={(e) => setPageData({ ...pageData, title: e.target.value })}
             error={errors.title}
             required
           />
-
           <Input
-            label="URL Slug"
+            label="Slug"
             placeholder="about"
             value={pageData.slug}
             onChange={(e) => setPageData({ ...pageData, slug: e.target.value.toLowerCase() })}
@@ -324,132 +300,174 @@ export default function PageEditorPage() {
             required
             disabled={!isNew}
           />
-        </div>
-
-        <StyledSelect
-          label="Status"
-          value={pageData.status}
-          onChange={(e) => setPageData({ ...pageData, status: e.target.value as 'DRAFT' | 'PUBLISHED' })}
-        >
-          <option value="DRAFT">Draft</option>
-          <option value="PUBLISHED">Published</option>
-        </StyledSelect>
-
-        <Input
-          label="SEO Title"
-          placeholder="About Us - Your Company"
-          value={pageData.seoTitle}
-          onChange={(e) => setPageData({ ...pageData, seoTitle: e.target.value })}
-        />
-
-        <div>
-          <label className="block text-sm font-medium text-foreground mb-2">
-            SEO Description
-          </label>
-          <textarea
-            className="w-full px-4 py-3 bg-card text-foreground border border-border rounded-lg
-              focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition resize-none"
-            rows={3}
-            placeholder="A brief description of this page for search engines..."
-            value={pageData.seoDescription}
-            onChange={(e) => setPageData({ ...pageData, seoDescription: e.target.value })}
-          />
+          <StyledSelect
+            label="Status"
+            value={pageData.status}
+            onChange={(e) => setPageData({ ...pageData, status: e.target.value as 'DRAFT' | 'PUBLISHED' })}
+          >
+            <option value="DRAFT">Draft</option>
+            <option value="PUBLISHED">Published</option>
+          </StyledSelect>
         </div>
       </div>
 
-      {/* Sections */}
-      <div className="bg-card border border-border rounded-lg p-6">
-        <div className="flex items-center justify-between mb-6">
-          <h2 className="text-xl font-semibold text-foreground">Page Sections</h2>
-          <StyledSelect
-            value=""
-            onChange={(e) => {
-              if (e.target.value) {
-                addSection(e.target.value)
-                e.target.value = ''
-              }
-            }}
-          >
-            <option value="">Add Section...</option>
-            {SECTION_TYPES.map((type) => (
-              <option key={type.value} value={type.value}>
-                {type.label}
-              </option>
-            ))}
-          </StyledSelect>
+      {/* 3-Column Layout */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
+        {/* Left: Section List */}
+        <div className="lg:col-span-3 space-y-3">
+          <div className="bg-card border border-border rounded-lg p-4">
+            <div className="flex items-center justify-between mb-3">
+              <h2 className="text-lg font-semibold text-foreground">Sections</h2>
+            </div>
+
+            <StyledSelect
+              value=""
+              onChange={(e) => {
+                if (e.target.value) {
+                  addSection(e.target.value as SectionType)
+                  e.target.value = ''
+                }
+              }}
+            >
+              <option value="">+ Add Section</option>
+              {getAllSectionTypes().map((type) => {
+                const entry = sectionRegistry[type]
+                return (
+                  <option key={type} value={type}>
+                    {entry.icon} {entry.label}
+                  </option>
+                )
+              })}
+            </StyledSelect>
+
+            <div className="mt-3 space-y-2">
+              {sections.length === 0 ? (
+                <p className="text-sm text-muted-foreground text-center py-8">
+                  No sections yet
+                </p>
+              ) : (
+                sections.map((section, index) => {
+                  const entry = sectionRegistry[section.type]
+                  const isSelected = selectedSectionIndex === index
+                  return (
+                    <div
+                      key={index}
+                      className={`border rounded-lg p-3 cursor-pointer transition ${
+                        isSelected
+                          ? 'border-primary bg-primary/5'
+                          : 'border-border hover:border-primary/50'
+                      }`}
+                      onClick={() => setSelectedSectionIndex(index)}
+                    >
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="text-sm font-medium text-foreground flex items-center gap-2">
+                          <span>{entry.icon}</span>
+                          {entry.label}
+                        </span>
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            setDeleteModal({ open: true, sectionIndex: index })
+                          }}
+                          className="text-red-600 dark:text-red-400 hover:text-red-700"
+                        >
+                          <Trash2 size={14} />
+                        </button>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            moveSectionUp(index)
+                          }}
+                          disabled={index === 0}
+                          className="p-1 text-muted-foreground hover:text-foreground disabled:opacity-30"
+                        >
+                          <ChevronUp size={14} />
+                        </button>
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            moveSectionDown(index)
+                          }}
+                          disabled={index === sections.length - 1}
+                          className="p-1 text-muted-foreground hover:text-foreground disabled:opacity-30"
+                        >
+                          <ChevronDown size={14} />
+                        </button>
+                        <span className="text-xs text-muted-foreground ml-2">
+                          Position {index + 1}
+                        </span>
+                      </div>
+                    </div>
+                  )
+                })
+              )}
+            </div>
+          </div>
         </div>
 
-        {sections.length === 0 ? (
-          <div className="text-center py-12 border-2 border-dashed border-border rounded-lg">
-            <Plus size={48} className="mx-auto text-muted-foreground mb-4" />
-            <h3 className="text-lg font-semibold text-foreground mb-2">No sections yet</h3>
-            <p className="text-muted-foreground">
-              Add your first section using the dropdown above
-            </p>
-          </div>
-        ) : (
-          <div className="space-y-4">
-            {sections.map((section, index) => (
-              <div
-                key={index}
-                className="border border-border rounded-lg p-4 bg-background"
-              >
-                <div className="flex items-center justify-between mb-4">
-                  <div className="flex items-center gap-3">
-                    <div className="flex flex-col gap-1">
-                      <button
-                        onClick={() => moveSectionUp(index)}
-                        disabled={index === 0}
-                        className="text-muted-foreground hover:text-foreground disabled:opacity-30 disabled:cursor-not-allowed"
-                      >
-                        ▲
-                      </button>
-                      <button
-                        onClick={() => moveSectionDown(index)}
-                        disabled={index === sections.length - 1}
-                        className="text-muted-foreground hover:text-foreground disabled:opacity-30 disabled:cursor-not-allowed"
-                      >
-                        ▼
-                      </button>
-                    </div>
-                    <GripVertical size={20} className="text-muted-foreground" />
-                    <span className="font-medium text-foreground">
-                      {SECTION_TYPES.find(t => t.value === section.type)?.label || section.type}
-                    </span>
-                  </div>
-                  <button
-                    onClick={() => setDeleteModal({ open: true, sectionIndex: index })}
-                    className="text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300"
-                  >
-                    <Trash2 size={18} />
-                  </button>
-                </div>
-
-                {/* Section-specific editor - simplified for now */}
-                <div className="space-y-3">
-                  <textarea
-                    className="w-full px-4 py-3 bg-card text-foreground border border-border rounded-lg
-                      focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition resize-none font-mono text-sm"
-                    rows={6}
-                    placeholder="Section data (JSON)"
-                    value={JSON.stringify(section.data, null, 2)}
-                    onChange={(e) => {
-                      try {
-                        const parsed = JSON.parse(e.target.value)
-                        updateSection(index, parsed)
-                      } catch (err) {
-                        // Invalid JSON, allow user to keep typing
-                      }
-                    }}
-                  />
+        {/* Middle: Section Form */}
+        <div className="lg:col-span-4 space-y-3">
+          <div className="bg-card border border-border rounded-lg p-4 min-h-[400px]">
+            {selectedSection && SelectedFormComponent ? (
+              <>
+                <h2 className="text-lg font-semibold text-foreground mb-3">
+                  {sectionRegistry[selectedSection.type].label} Settings
+                </h2>
+                <p className="text-sm text-muted-foreground mb-4">
+                  {sectionRegistry[selectedSection.type].description}
+                </p>
+                <SelectedFormComponent
+                  data={selectedSection.data}
+                  onChange={(data) => updateSection(selectedSectionIndex!, data)}
+                />
+              </>
+            ) : (
+              <div className="flex items-center justify-center h-full text-muted-foreground">
+                <div className="text-center">
+                  <p className="text-lg mb-2">No section selected</p>
+                  <p className="text-sm">Select or add a section to edit</p>
                 </div>
               </div>
-            ))}
+            )}
+          </div>
+        </div>
+
+        {/* Right: Live Preview */}
+        {showPreview && (
+          <div className="lg:col-span-5 space-y-3">
+            <div className="bg-card border border-border rounded-lg p-4">
+              <h2 className="text-lg font-semibold text-foreground mb-3">Live Preview</h2>
+              <div className="border border-border rounded-lg overflow-hidden bg-background">
+                {sections.length === 0 ? (
+                  <div className="flex items-center justify-center h-64 text-muted-foreground">
+                    <p>Add sections to see preview</p>
+                  </div>
+                ) : (
+                  <div className="space-y-0">
+                    {sections.map((section, index) => {
+                      const Component = sectionRegistry[section.type].component
+                      return (
+                        <div
+                          key={index}
+                          className={`${
+                            selectedSectionIndex === index ? 'ring-2 ring-primary' : ''
+                          }`}
+                        >
+                          <Component data={section.data} />
+                        </div>
+                      )
+                    })}
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
         )}
       </div>
 
-      {/* Delete Section Confirmation */}
+      {/* Delete Confirmation */}
       <ConfirmModal
         isOpen={deleteModal.open}
         onClose={() => setDeleteModal({ open: false, sectionIndex: null })}
