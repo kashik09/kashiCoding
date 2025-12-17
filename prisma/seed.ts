@@ -28,6 +28,23 @@ async function main() {
   })
 
   console.log('✅ Created calculator project:', calculator.title)
+
+  // Ensure singleton SiteSettings row exists
+  const siteSettings = await prisma.siteSettings.upsert({
+    where: { id: 'site_settings_singleton' },
+    update: {},
+    create: {
+      id: 'site_settings_singleton',
+      maintenanceMode: false,
+      availableForBusiness: true,
+      adsEnabled: false,
+      adsProvider: '',
+      adsClientId: null,
+      adsPlacements: {}
+    }
+  })
+
+  console.log('✅ Ensured site settings singleton:', siteSettings.id)
   console.log('🎉 Seeding complete!')
 }
 
