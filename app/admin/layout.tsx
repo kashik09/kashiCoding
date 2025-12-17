@@ -1,7 +1,8 @@
 'use client'
 
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { LayoutDashboard, FolderKanban, FileText, Users, Settings, LogOut, Tags, FileEdit, Layout, Shield, Megaphone } from 'lucide-react'
+import { LayoutDashboard, FolderKanban, FileText, Users, Settings, LogOut, Tags, FileEdit, Layout, Shield, Megaphone, ArrowUp } from 'lucide-react'
 import AdminHeader from '@/components/AdminHeader'
 import { ToastProvider } from '@/components/ui/Toast'
 import { SessionProvider } from 'next-auth/react'
@@ -11,6 +12,20 @@ export default function AdminLayout({
 }: {
   children: React.ReactNode
 }) {
+  const [showScrollButton, setShowScrollButton] = useState(false)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowScrollButton(window.scrollY > 300)
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
   const navItems = [
     { href: '/admin', icon: LayoutDashboard, label: 'Dashboard' },
     { href: '/admin/pages', icon: Layout, label: 'Pages' },
@@ -34,22 +49,7 @@ export default function AdminLayout({
           {/* Sidebar */}
           <aside className="w-64 min-h-[calc(100vh-73px)] bg-card border-r border-border">
             <div className="p-6">
-              <h2 className="text-lg font-bold text-foreground mb-4">Navigation</h2>
-
-              {/* Progress Bar */}
-              <div className="mb-6 p-3 bg-primary/5 border border-primary/20 rounded-lg">
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-xs font-medium text-foreground">Site Setup</span>
-                  <span className="text-xs font-bold text-primary">75%</span>
-                </div>
-                <div className="w-full bg-muted rounded-full h-2 overflow-hidden">
-                  <div
-                    className="bg-primary h-full rounded-full transition-all duration-500"
-                    style={{ width: '75%' }}
-                  />
-                </div>
-                <p className="text-xs text-muted-foreground mt-2">3 of 4 steps complete</p>
-              </div>
+              <h2 className="text-lg font-bold text-foreground mb-6">Navigation</h2>
 
               <nav className="space-y-2">
                 {navItems.map((item) => (
@@ -81,6 +81,17 @@ export default function AdminLayout({
             {children}
           </main>
         </div>
+
+        {/* Scroll to Top Button */}
+        {showScrollButton && (
+          <button
+            onClick={scrollToTop}
+            className="fixed bottom-8 right-8 p-4 bg-primary text-primary-foreground rounded-full shadow-lg hover:bg-primary/90 transition-all hover:scale-110 active:scale-95 z-50"
+            aria-label="Scroll to top"
+          >
+            <ArrowUp size={24} />
+          </button>
+        )}
       </div>
     </ToastProvider>
     </SessionProvider>
