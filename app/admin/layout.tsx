@@ -47,7 +47,7 @@ export default function AdminLayout({
 
         <div className="flex">
           {/* Sidebar */}
-          <aside className="w-64 min-h-[calc(100vh-73px)] bg-card border-r border-border">
+          <aside className="w-64 min-h-[calc(100vh-73px)] bg-card border-r border-border sticky top-[73px] h-[calc(100vh-73px)] overflow-y-auto">
             <div className="p-6">
               <h2 className="text-lg font-bold text-foreground mb-6">Navigation</h2>
 

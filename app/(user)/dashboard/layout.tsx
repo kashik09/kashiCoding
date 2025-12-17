@@ -114,7 +114,7 @@ export default function DashboardLayout({
 
         <div className="flex">
           {/* Sidebar - Desktop */}
-          <aside className="hidden md:block w-64 min-h-[calc(100vh-73px)] bg-card border-r border-border">
+          <aside className="hidden md:block w-64 min-h-[calc(100vh-73px)] bg-card border-r border-border sticky top-[73px] h-[calc(100vh-73px)] overflow-y-auto">
             <div className="p-6">
               <nav className="space-y-2">
                 {navItems.map((item) => {
