@@ -1,11 +1,11 @@
 'use client'
 
 import Link from 'next/link'
-import Image from 'next/image'
 import { useEffect, useRef, useState } from 'react'
 import { useSession, signOut } from 'next-auth/react'
 import { ThemeSelector } from './ThemeSelector'
 import { Code2, Menu, X, ChevronDown, LogOut, Settings, User as UserIcon } from 'lucide-react'
+import InitialsAvatar from './ui/InitialsAvatar'
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -36,8 +36,6 @@ export default function Header() {
     session?.user?.email?.split('@')[0] ||
     'Account'
 
-  const avatarSrc = session?.user?.image || ''
-
   useEffect(() => {
     const onMouseDown = (e: MouseEvent) => {
       if (!dropdownRef.current) return
@@ -55,35 +53,6 @@ export default function Header() {
       document.removeEventListener('keydown', onKeyDown)
     }
   }, [])
-
-  const Avatar = ({ size = 28 }: { size?: number }) => {
-    const ring = 'border border-border bg-muted'
-    if (!avatarSrc) {
-      return (
-        <span
-          className={`inline-flex items-center justify-center rounded-full ${ring}`}
-          style={{ width: size, height: size }}
-        >
-          <UserIcon size={Math.max(14, Math.floor(size / 2))} className="text-muted-foreground" />
-        </span>
-      )
-    }
-
-    return (
-      <span
-        className={`relative overflow-hidden rounded-full ${ring}`}
-        style={{ width: size, height: size }}
-      >
-        <Image
-          src={avatarSrc}
-          alt="Avatar"
-          fill
-          sizes={`${size}px`}
-          className="object-cover"
-        />
-      </span>
-    )
-  }
 
   return (
     <header className="sticky top-0 z-50 bg-background/90 backdrop-blur-md border-b border-border shadow-sm">
@@ -129,7 +98,7 @@ export default function Header() {
                   aria-haspopup="menu"
                   aria-expanded={dropdownOpen}
                 >
-                  <Avatar size={28} />
+                  <InitialsAvatar name={session?.user?.name} size={28} />
                   <span className="text-sm">{displayName}</span>
                   <ChevronDown
                     size={16}
