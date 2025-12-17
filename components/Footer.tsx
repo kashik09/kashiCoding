@@ -6,7 +6,7 @@ export default function Footer() {
   return (
     <footer className="bg-background-secondary border-t border-border mt-auto">
       <div className="container mx-auto px-4 py-8">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Brand */}
           <div>
             <h3 className="text-xl font-bold text-primary mb-3">Kashi Kweyu</h3>
@@ -37,6 +37,23 @@ export default function Footer() {
               <li>
                 <Link href="/request" className="text-foreground-muted hover:text-primary transition text-sm">
                   Request Service
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Legal */}
+          <div>
+            <h4 className="font-semibold text-foreground mb-3">Legal</h4>
+            <ul className="space-y-2">
+              <li>
+                <Link href="/legal/privacy-policy" className="text-foreground-muted hover:text-primary transition text-sm">
+                  Privacy Policy
+                </Link>
+              </li>
+              <li>
+                <Link href="/legal/terms" className="text-foreground-muted hover:text-primary transition text-sm">
+                  Terms of Service
                 </Link>
               </li>
             </ul>
