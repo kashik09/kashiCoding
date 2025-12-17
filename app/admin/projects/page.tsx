@@ -98,7 +98,7 @@ export default function AdminProjectsPage() {
         </div>
         <Link
           href="/admin/projects/new"
-          className="flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition shadow-sm font-medium"
+          className="flex items-center gap-2 px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition shadow-sm font-medium"
         >
           <Plus size={20} />
           <span>Add Project</span>

@@ -1,10 +1,38 @@
+'use client'
+
+import { useState, useEffect } from 'react'
+
 export default function PrivacyPage() {
-  return (
-    <div className="max-w-4xl mx-auto py-12 px-4">
-      <div className="mb-12">
-        <h1 className="text-4xl font-bold text-foreground mb-4">Privacy Policy</h1>
-        <p className="text-muted-foreground">Last updated: December 16, 2025</p>
+  const [content, setContent] = useState<any>(null)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    fetch('/api/content/privacy-policy')
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          setContent(data.data)
+        }
+        setLoading(false)
+      })
+      .catch(() => setLoading(false))
+  }, [])
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-[60vh]">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
       </div>
+    )
+  }
+
+  if (!content) {
+    return (
+      <div className="max-w-4xl mx-auto py-12 px-4">
+        <div className="mb-12">
+          <h1 className="text-4xl font-bold text-foreground mb-4">Privacy Policy</h1>
+          <p className="text-muted-foreground">Last updated: December 16, 2025</p>
+        </div>
 
       <div className="prose prose-slate dark:prose-invert max-w-none space-y-8">
         <section>
@@ -193,6 +221,26 @@ export default function PrivacyPage() {
             By using our website and services, you acknowledge that you have read and understood this Privacy Policy and agree to its terms.
           </p>
         </div>
+      </div>
+    </div>
+    )
+  }
+
+  return (
+    <div className="max-w-4xl mx-auto py-12 px-4">
+      <div className="mb-12">
+        <h1 className="text-4xl font-bold text-foreground mb-4">{content.title}</h1>
+        <p className="text-muted-foreground">
+          Last updated: {new Date(content.updatedAt).toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+          })}
+        </p>
+      </div>
+
+      <div className="prose prose-slate dark:prose-invert max-w-none space-y-8">
+        <div dangerouslySetInnerHTML={{ __html: content.content.replace(/\n/g, '<br />') }} />
       </div>
     </div>
   )

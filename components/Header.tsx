@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { Code2, Menu, X } from 'lucide-react'
+import { Code2, Menu, X, User } from 'lucide-react'
 import { useState } from 'react'
 import { ThemeSelector } from './ThemeSelector'
 
@@ -38,9 +38,17 @@ export default function Header() {
             ))}
           </div>
 
-          {/* Theme Selector & Mobile Menu */}
+          {/* Theme Selector, Login & Mobile Menu */}
           <div className="flex items-center gap-3">
             <ThemeSelector />
+
+            <Link
+              href="/login"
+              className="hidden md:flex items-center gap-2 px-4 py-2 bg-primary/10 border border-primary/20 rounded-full hover:bg-primary/20 transition font-medium"
+            >
+              <User size={16} className="text-primary" />
+              <span className="text-sm text-primary">Login</span>
+            </Link>
 
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -66,6 +74,13 @@ export default function Header() {
                   {link.label}
                 </Link>
               ))}
+              <Link
+                href="/login"
+                onClick={() => setMobileMenuOpen(false)}
+                className="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition font-medium text-center"
+              >
+                Login
+              </Link>
             </div>
           </div>
         )}

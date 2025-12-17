@@ -37,13 +37,48 @@ export default function AdminSettingsPage() {
 
   const handleSaveEmail = async () => {
     setSaving(true)
-    await new Promise(resolve => setTimeout(resolve, 1000))
-    setSaving(false)
-    showToast('Email settings saved successfully', 'success')
+    try {
+      const response = await fetch('/api/admin/settings/email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(emailSettings)
+      })
+
+      const data = await response.json()
+
+      if (data.success) {
+        showToast('Email settings saved successfully', 'success')
+      } else {
+        showToast(data.error || 'Failed to save email settings', 'error')
+      }
+    } catch (error) {
+      showToast('Failed to save email settings', 'error')
+    } finally {
+      setSaving(false)
+    }
   }
 
   const handleTestEmail = async () => {
-    showToast('Test email sent successfully', 'success')
+    try {
+      const response = await fetch('/api/admin/settings/email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ...emailSettings,
+          testEmail: emailSettings.smtpUsername
+        })
+      })
+
+      const data = await response.json()
+
+      if (data.success) {
+        showToast('Test email sent successfully! Check your inbox.', 'success')
+      } else {
+        showToast(data.error || 'Failed to send test email', 'error')
+      }
+    } catch (error) {
+      showToast('Failed to send test email', 'error')
+    }
   }
 
   const handleSaveSecurity = async () => {
@@ -250,18 +285,15 @@ export default function AdminSettingsPage() {
             </select>
           </div>
 
-          <label className="flex items-center justify-between p-4 bg-muted rounded-lg cursor-not-allowed opacity-60">
+          <label className="flex items-center justify-between p-4 bg-muted rounded-lg cursor-pointer hover:bg-muted/70 transition">
             <div>
-              <div className="flex items-center gap-2">
-                <p className="font-medium text-foreground">Two-Factor Authentication</p>
-                <span className="px-2 py-1 text-xs bg-primary/20 text-primary rounded-full">Coming Soon</span>
-              </div>
+              <p className="font-medium text-foreground">Two-Factor Authentication</p>
               <p className="text-sm text-muted-foreground">Require 2FA for all admin users</p>
             </div>
             <input
               type="checkbox"
               checked={securitySettings.twoFactorEnabled}
-              disabled
+              onChange={(e) => setSecuritySettings({ ...securitySettings, twoFactorEnabled: e.target.checked })}
               className="w-5 h-5 rounded border-border"
             />
           </label>

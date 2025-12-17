@@ -1,7 +1,10 @@
+'use client'
+
 import Link from 'next/link'
-import { LayoutDashboard, FolderKanban, FileText, Users, Settings, LogOut, Tags } from 'lucide-react'
+import { LayoutDashboard, FolderKanban, FileText, Users, Settings, LogOut, Tags, FileEdit } from 'lucide-react'
 import AdminHeader from '@/components/AdminHeader'
 import { ToastProvider } from '@/components/ui/Toast'
+import { SessionProvider } from 'next-auth/react'
 
 export default function AdminLayout({
   children,
@@ -14,12 +17,14 @@ export default function AdminLayout({
     { href: '/admin/tags', icon: Tags, label: 'Tags & Tech' },
     { href: '/admin/requests', icon: FileText, label: 'Requests' },
     { href: '/admin/users', icon: Users, label: 'Users' },
+    { href: '/admin/legal', icon: FileEdit, label: 'Legal Content' },
     { href: '/admin/settings', icon: Settings, label: 'Settings' },
   ]
 
   return (
-    <ToastProvider>
-      <div className="min-h-screen bg-background">
+    <SessionProvider>
+      <ToastProvider>
+        <div className="min-h-screen bg-background">
         <AdminHeader />
 
         <div className="flex">
@@ -60,5 +65,6 @@ export default function AdminLayout({
         </div>
       </div>
     </ToastProvider>
+    </SessionProvider>
   )
 }

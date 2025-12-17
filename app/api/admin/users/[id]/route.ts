@@ -60,11 +60,12 @@ export async function PATCH(
 ) {
   try {
     const body = await request.json()
-    const { name, role, accountStatus } = body
+    const { name, email, role, accountStatus } = body
 
     const updateData: any = {}
 
     if (name !== undefined) updateData.name = name
+    if (email !== undefined) updateData.email = email
     if (role !== undefined) updateData.role = role
     if (accountStatus !== undefined) {
       updateData.accountStatus = accountStatus

@@ -36,6 +36,7 @@ model User {
   isMinor       Boolean   @default(false)
 
   // Security
+  password         String? // For credentials-based auth
   twoFactorEnabled Boolean @default(false)
   twoFactorSecret  String?
 
@@ -651,6 +652,33 @@ model DeviceSession {
 }
 
 // ============================================
+// CONTENT MANAGEMENT MODELS
+// ============================================
+
+model ContentPage {
+  id String @id @default(cuid())
+
+  // Page identification
+  slug  String @unique
+  title String
+  type  ContentPageType
+
+  // Content
+  content String @db.Text
+
+  // Publishing
+  published Boolean @default(true)
+
+  // Timestamps
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([slug])
+  @@index([type])
+  @@map("content_pages")
+}
+
+// ============================================
 // SYSTEM CONFIGURATION MODELS
 // ============================================
 
@@ -935,4 +963,11 @@ enum BackupStatus {
   IN_PROGRESS
   COMPLETED
   FAILED
+}
+
+enum ContentPageType {
+  TERMS
+  PRIVACY_POLICY
+  ABOUT
+  OTHER
 }

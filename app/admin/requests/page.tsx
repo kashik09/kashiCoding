@@ -226,7 +226,7 @@ export default function AdminRequestsPage() {
         <select
           value={filter}
           onChange={(e) => setFilter(e.target.value)}
-          className="min-w-[180px] px-4 py-3 bg-card border border-border rounded-lg focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition"
+          className="min-w-[180px] px-4 py-3 pr-10 bg-card border border-border rounded-lg focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition appearance-none bg-[url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2712%27 height=%278%27 viewBox=%270 0 12 8%27%3e%3cpath fill=%27%23666%27 d=%27M6 8L0 0h12z%27/%3e%3c/svg%3e')] bg-[position:right_1rem_center] bg-no-repeat"
         >
           <option value="all">All Requests</option>
           <option value="PENDING">Pending</option>

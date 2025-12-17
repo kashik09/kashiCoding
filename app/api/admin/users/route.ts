@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
+import { hashPassword } from '@/lib/password'
 
 // GET /api/admin/users - Fetch all users
 export async function GET(request: NextRequest) {
@@ -93,8 +94,8 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // TODO: Hash password before storing
-    // For now, we'll use OAuth-only auth
+    // Hash password if provided
+    const hashedPassword = password ? await hashPassword(password) : null
 
     // Create user
     const user = await prisma.user.create({
@@ -102,6 +103,7 @@ export async function POST(request: NextRequest) {
         name,
         email,
         role,
+        password: hashedPassword,
         accountStatus: 'ACTIVE'
       },
       select: {
