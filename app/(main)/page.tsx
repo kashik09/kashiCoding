@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { Button } from '@/components/ui/Button'
 import { Code2, Palette, Zap, ArrowRight } from 'lucide-react'
+import { AdSlot } from '@/components/AdSlot'
 
 export default function HomePage() {
   return (
@@ -29,6 +30,11 @@ export default function HomePage() {
             </Button>
           </Link>
         </div>
+      </section>
+
+      {/* Optional personalized ad below hero */}
+      <section className="max-w-6xl mx-auto px-4">
+        <AdSlot placement="homepage_hero" />
       </section>
 
       {/* Features */}
