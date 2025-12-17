@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
 import { Upload, X, File } from 'lucide-react'
+import { useSession } from 'next-auth/react'
 
 interface FormConfig {
   header: {
@@ -52,10 +53,15 @@ interface FormConfig {
 export default function RequestPage() {
   const [config, setConfig] = useState<FormConfig | null>(null)
   const router = useRouter()
+
+  const { data: session, status } = useSession()
+  const isAuthed = status === 'authenticated'
+
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [selectedFiles, setSelectedFiles] = useState<File[]>([])
   const fileInputRef = useRef<HTMLInputElement>(null)
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -65,7 +71,6 @@ export default function RequestPage() {
     description: ''
   })
 
-  // Fetch form configuration
   useEffect(() => {
     fetch('/api/content/request-form')
       .then(res => res.json())
@@ -75,9 +80,7 @@ export default function RequestPage() {
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files
-    if (files) {
-      setSelectedFiles(prev => [...prev, ...Array.from(files)])
-    }
+    if (files) setSelectedFiles(prev => [...prev, ...Array.from(files)])
   }
 
   const removeFile = (index: number) => {
@@ -97,12 +100,19 @@ export default function RequestPage() {
     setLoading(true)
     setError('')
 
+    const payload = {
+      ...formData,
+      ...(isAuthed && {
+        name: session?.user?.name ?? formData.name,
+        email: session?.user?.email ?? formData.email
+      })
+    }
+
     try {
-      // 1. Save request to database
       const response = await fetch('/api/requests', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
+        body: JSON.stringify(payload)
       })
 
       if (!response.ok) {
@@ -110,28 +120,22 @@ export default function RequestPage() {
         return
       }
 
-      // 2. Send email/WhatsApp notifications
       try {
         const notifResponse = await fetch('/api/send-notification', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(formData)
+          body: JSON.stringify(payload)
         })
 
         const notifData = await notifResponse.json()
-
-        // If WhatsApp URL is returned, you could open it in a new tab
-        // This would send the notification to your WhatsApp
         if (notifData.whatsappUrl) {
-          // Optionally open WhatsApp in a new tab to notify you
-          // window.open(notifData.whatsappUrl, '_blank')
+          // optional: window.open(notifData.whatsappUrl, '_blank')
         }
       } catch (notifError) {
         console.error('Notification failed:', notifError)
-        // Don't fail the whole request if notification fails
       }
 
-      alert(config?.successMessage || 'Request submitted successfully! I\'ll get back to you within 24 hours.')
+      alert(config?.successMessage || "Request submitted successfully! I'll get back to you within 24 hours.")
       router.push('/services')
     } catch (err) {
       setError('Something went wrong. Please try again.')
@@ -140,7 +144,6 @@ export default function RequestPage() {
     }
   }
 
-  // Show loading while config is being fetched
   if (!config) {
     return (
       <div className="max-w-3xl mx-auto py-12 text-center">
@@ -153,9 +156,7 @@ export default function RequestPage() {
     <div className="max-w-3xl mx-auto py-12">
       <div className="text-center mb-12">
         <h1 className="text-4xl font-bold text-foreground mb-4">{config.header.title}</h1>
-        <p className="text-xl text-foreground-muted">
-          {config.header.subtitle}
-        </p>
+        <p className="text-xl text-foreground-muted">{config.header.subtitle}</p>
       </div>
 
       <form onSubmit={handleSubmit} className="bg-card rounded-2xl p-8 border border-border space-y-6">
@@ -165,25 +166,34 @@ export default function RequestPage() {
           </div>
         )}
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <Input
-            label={config.labels.name}
-            type="text"
-            value={formData.name}
-            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-            placeholder={config.placeholders.name}
-            required
-          />
+        {!isAuthed ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <Input
+              label={config.labels.name}
+              type="text"
+              value={formData.name}
+              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+              placeholder={config.placeholders.name}
+              required
+            />
 
-          <Input
-            label={config.labels.email}
-            type="email"
-            value={formData.email}
-            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-            placeholder={config.placeholders.email}
-            required
-          />
-        </div>
+            <Input
+              label={config.labels.email}
+              type="email"
+              value={formData.email}
+              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+              placeholder={config.placeholders.email}
+              required
+            />
+          </div>
+        ) : (
+          <div className="rounded-lg border border-border bg-muted px-4 py-3 text-sm text-foreground">
+            Requesting as{' '}
+            <span className="font-medium">
+              {session?.user?.name || session?.user?.email}
+            </span>
+          </div>
+        )}
 
         <div>
           <label className="block text-sm font-medium text-foreground mb-2">{config.labels.serviceType}</label>
@@ -247,7 +257,6 @@ export default function RequestPage() {
         <div>
           <label className="block text-sm font-medium text-foreground mb-2">{config.labels.files}</label>
 
-          {/* File Upload Area */}
           <div
             onClick={() => fileInputRef.current?.click()}
             className="border-2 border-dashed border-border rounded-lg p-8 text-center hover:border-primary hover:bg-primary/5 transition-all cursor-pointer group"
@@ -266,7 +275,6 @@ export default function RequestPage() {
             />
           </div>
 
-          {/* Selected Files List */}
           {selectedFiles.length > 0 && (
             <div className="mt-4 space-y-2">
               <p className="text-sm font-medium text-foreground-muted">
@@ -282,12 +290,8 @@ export default function RequestPage() {
                       <File className="text-primary" size={20} />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-foreground truncate">
-                        {file.name}
-                      </p>
-                      <p className="text-xs text-foreground/50">
-                        {formatFileSize(file.size)}
-                      </p>
+                      <p className="text-sm font-medium text-foreground truncate">{file.name}</p>
+                      <p className="text-xs text-foreground/50">{formatFileSize(file.size)}</p>
                     </div>
                   </div>
                   <button
