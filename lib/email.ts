@@ -15,7 +15,7 @@ interface EmailOptions {
 
 export async function sendEmail(config: EmailConfig, options: EmailOptions) {
   try {
-    const transporter = nodemailer.createTransporter({
+    const transporter = nodemailer.createTransport({
       host: config.host,
       port: config.port,
       secure: config.port === 465,

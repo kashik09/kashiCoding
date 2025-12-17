@@ -155,7 +155,7 @@ export async function logDownloadEvent(options: {
         resourceId: options.resourceId,
         ipHash: options.ipHash,
         userAgent: options.userAgent ?? undefined,
-        details: options.details ?? undefined,
+        details: options.details ? JSON.parse(JSON.stringify(options.details)) : undefined,
       },
     })
   } catch (error) {
