@@ -311,7 +311,7 @@ export default function SettingsPage() {
   }
 
   return (
-    <div className="space-y-8 max-w-4xl">
+    <div className="space-y-8">
       <Link
         href="/dashboard"
         className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition"
@@ -561,13 +561,13 @@ export default function SettingsPage() {
       </section>
 
       {/* Danger zone */}
-      <section className="bg-card rounded-2xl border border-border p-6 space-y-4">
+      <section className="bg-destructive/5 rounded-2xl border-2 border-destructive/20 p-6 space-y-4">
         <div className="flex items-center gap-3 mb-2">
-          <div className="p-2 bg-primary/10 rounded-lg">
-            <Shield className="text-primary" size={20} />
+          <div className="p-2 bg-destructive/10 rounded-lg">
+            <Shield className="text-destructive" size={20} />
           </div>
           <div>
-            <h2 className="text-xl font-bold text-foreground">
+            <h2 className="text-xl font-bold text-destructive">
               Delete account
             </h2>
             <p className="text-sm text-muted-foreground">
@@ -580,7 +580,7 @@ export default function SettingsPage() {
         <button
           type="button"
           onClick={() => setShowDeleteModal(true)}
-          className="px-4 py-2 rounded-lg text-sm font-medium bg-muted text-muted-foreground border border-border hover:bg-muted/80 transition"
+          className="px-4 py-2 rounded-lg text-sm font-medium bg-destructive/10 text-destructive border border-destructive/30 hover:bg-destructive/20 transition"
         >
           Delete my account
         </button>

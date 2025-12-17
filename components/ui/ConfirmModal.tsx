@@ -64,36 +64,47 @@ export default function ConfirmModal({
   const currentStyle = styles[type]
 
   return (
-    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4 animate-in fade-in duration-200">
-      <div className="bg-card rounded-2xl border border-border max-w-md w-full animate-in zoom-in-95 duration-200">
-        <div className="p-6">
-          <div className="flex items-center gap-4 mb-4">
-            <div className={`w-12 h-12 ${currentStyle.iconBg} rounded-full flex items-center justify-center flex-shrink-0`}>
+    <div
+      className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4 animate-in fade-in duration-200"
+      onClick={onClose}
+    >
+      <div
+        className="bg-card rounded-2xl border border-border max-w-lg w-full animate-in zoom-in-95 duration-200 shadow-2xl"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="p-8">
+          {/* Icon and Title */}
+          <div className="flex items-start gap-4 mb-6">
+            <div className={`w-14 h-14 ${currentStyle.iconBg} rounded-2xl flex items-center justify-center flex-shrink-0`}>
               <div className={currentStyle.iconColor}>
                 {currentStyle.icon}
               </div>
             </div>
-            <div>
-              <h2 className="text-xl font-bold text-foreground">{title}</h2>
+            <div className="flex-1">
+              <h2 className="text-2xl font-bold text-foreground mb-1">{title}</h2>
               <p className="text-sm text-muted-foreground">This action cannot be undone</p>
             </div>
           </div>
-          
-          <p className="text-foreground mb-6">{message}</p>
 
-          <div className="flex gap-3">
-            <button 
+          {/* Message */}
+          <div className="text-foreground mb-8 leading-relaxed">
+            {message}
+          </div>
+
+          {/* Actions */}
+          <div className="flex flex-col-reverse sm:flex-row gap-3">
+            <button
               onClick={onClose}
-              className="flex-1 px-6 py-3 bg-muted hover:bg-muted/80 border border-border text-foreground rounded-lg transition font-medium"
+              className="flex-1 px-6 py-3.5 bg-background-secondary hover:bg-muted border border-border text-foreground rounded-xl transition-all font-semibold hover:scale-[1.02] active:scale-[0.98]"
             >
               {cancelText}
             </button>
-            <button 
+            <button
               onClick={() => {
                 onConfirm()
                 onClose()
               }}
-              className={`flex-1 px-6 py-3 rounded-lg transition font-medium ${currentStyle.button}`}
+              className={`flex-1 px-6 py-3.5 rounded-xl transition-all font-semibold hover:scale-[1.02] active:scale-[0.98] ${currentStyle.button}`}
             >
               {confirmText}
             </button>
