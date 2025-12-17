@@ -1,143 +1,67 @@
-import { NextRequest, NextResponse } from 'next/server'
-import { PrismaClient } from '@prisma/client'
-import { z } from 'zod'
+import { NextResponse } from 'next/server'
+import { auth } from '@/lib/auth'
+import { prisma } from '/home/kashi-kweyu/projects/portfolio/my-portfolio/lib/prisma'
 
-const prisma = new PrismaClient()
+type IncomingBody = {
+  name?: string
+  email?: string
+  serviceType?: string
+  budget?: string
+  timeline?: string
+  description?: string
+}
 
-// Validation schema for project request
-const projectRequestSchema = z.object({
-  name: z.string().min(2, 'Name must be at least 2 characters'),
-  email: z.string().email('Invalid email address'),
-  phone: z.string().optional(),
-  company: z.string().optional(),
-  projectType: z.string().min(1, 'Project type is required'),
-  budget: z.string().optional(),
-  timeline: z.string().optional(),
-  description: z.string().min(10, 'Description must be at least 10 characters'),
-  requirements: z.string().optional(),
-})
-
-// GET /api/requests - Fetch all project requests (admin only)
-export async function GET(request: NextRequest) {
+export async function POST(req: Request) {
   try {
-    // TODO: Add authentication check
-    // const session = await getServerSession(authOptions)
-    // if (!session || session.user.role !== 'ADMIN') {
-    //   return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-    // }
+    const session = await auth()
+    const body = (await req.json()) as IncomingBody
 
-    const { searchParams } = new URL(request.url)
-    const status = searchParams.get('status')
+    const name = session?.user?.name ?? body.name ?? ''
+    const email = session?.user?.email ?? body.email ?? ''
 
-    const where: any = {}
-    if (status) {
-      where.status = status
+    const serviceType = body.serviceType ?? ''
+    const budget = body.budget ?? ''
+    const timeline = body.timeline ?? ''
+    const description = body.description ?? ''
+
+    // Hard validation (keep it strict)
+    if (!email) {
+      return NextResponse.json({ error: 'Email is required.' }, { status: 400 })
+    }
+    if (!serviceType || !budget || !timeline || !description) {
+      return NextResponse.json(
+        { error: 'Missing required fields.' },
+        { status: 400 }
+      )
     }
 
-    const requests = await prisma.projectRequest.findMany({
-      where,
-      orderBy: {
-        createdAt: 'desc',
-      },
-      select: {
-        id: true,
-        name: true,
-        email: true,
-        phone: true,
-        company: true,
-        projectType: true,
-        budget: true,
-        timeline: true,
-        description: true,
-        status: true,
-        priority: true,
-        createdAt: true,
-        respondedAt: true,
-      },
+    // Create request
+    // NOTE: This assumes your Prisma model has these fields:
+    // name, email, serviceType, budget, timeline, description
+    const created = await prisma.request.create({
+      data: {
+        name,
+        email,
+        serviceType,
+        budget,
+        timeline,
+        description
+      }
     })
 
-    return NextResponse.json({
-      success: true,
-      data: requests,
-      count: requests.length,
-    })
-  } catch (error) {
-    console.error('Error fetching requests:', error)
+    return NextResponse.json({ ok: true, request: created }, { status: 201 })
+  } catch (err) {
+    console.error('POST /api/requests error:', err)
     return NextResponse.json(
-      {
-        success: false,
-        error: 'Failed to fetch requests',
-      },
+      { error: 'Failed to submit request.' },
       { status: 500 }
     )
   }
 }
 
-// POST /api/requests - Create a new project request
-export async function POST(request: NextRequest) {
-  try {
-    const body = await request.json()
-
-    // Validate request body
-    const validatedData = projectRequestSchema.parse(body)
-
-    // Get user ID from session if authenticated
-    // const session = await getServerSession(authOptions)
-    // const userId = session?.user?.id
-
-    // Create project request
-    const projectRequest = await prisma.projectRequest.create({
-      data: {
-        userId: null, // TODO: Add userId when auth is ready: userId || null
-        name: validatedData.name,
-        email: validatedData.email,
-        phone: validatedData.phone || '',
-        company: validatedData.company || '',
-        projectType: validatedData.projectType,
-        budget: validatedData.budget || '',
-        timeline: validatedData.timeline || '',
-        description: validatedData.description,
-        requirements: validatedData.requirements || '',
-        status: 'PENDING',
-        priority: 'MEDIUM',
-      },
-    })
-
-    // TODO: Send email notification
-
-    return NextResponse.json(
-      {
-        success: true,
-        message: 'Request submitted successfully! We will get back to you soon.',
-        data: {
-          id: projectRequest.id,
-          createdAt: projectRequest.createdAt,
-        },
-      },
-      { status: 201 }
-    )
-  } catch (error) {
-    if (error instanceof z.ZodError) {
-      return NextResponse.json(
-        {
-          success: false,
-          error: 'Validation failed',
-          details: error.issues.map((err) => ({
-            field: err.path.join('.'),
-            message: err.message,
-          })),
-        },
-        { status: 400 }
-      )
-    }
-
-    console.error('Error creating request:', error)
-    return NextResponse.json(
-      {
-        success: false,
-        error: 'Failed to submit request',
-      },
-      { status: 500 }
-    )
-  }
+export async function GET() {
+  return NextResponse.json(
+    { error: 'Method not allowed.' },
+    { status: 405 }
+  )
 }
