@@ -44,7 +44,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   const setTheme = (newTheme: ThemeName) => {
     console.log('🔄 Changing theme to:', newTheme)
     setThemeState(newTheme)
-    
+
     // Track theme change with analytics
     if (mounted) {
       track('theme_change', {
@@ -54,11 +54,6 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
       })
       console.log('📊 Analytics: Theme change tracked')
     }
-  }
-
-  // Prevent flash of unstyled content
-  if (!mounted) {
-    return null
   }
 
   return (
