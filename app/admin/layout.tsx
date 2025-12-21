@@ -76,7 +76,9 @@ export default function AdminLayout({
 
           {/* Main Content */}
           <main className="flex-1 p-8 bg-background">
-            {children}
+            <div className="pointer-events-auto">
+              {children}
+            </div>
           </main>
         </div>
 
