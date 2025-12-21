@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { LayoutDashboard, FolderKanban, FileText, Users, Settings, LogOut, Layout, Shield, Megaphone, ArrowUp, Package } from 'lucide-react'
+import { LayoutDashboard, FolderKanban, FileText, Users, Settings, LogOut, Shield, Megaphone, ArrowUp, Package } from 'lucide-react'
 import AdminHeader from '@/components/AdminHeader'
 import { ToastProvider } from '@/components/ui/Toast'
 import { SessionProvider } from 'next-auth/react'
@@ -28,7 +28,6 @@ export default function AdminLayout({
   }
   const navItems = [
     { href: '/admin', icon: LayoutDashboard, label: 'Dashboard' },
-    { href: '/admin/pages', icon: Layout, label: 'Pages' },
     { href: '/admin/projects', icon: FolderKanban, label: 'Projects' },
     { href: '/admin/digital-products', icon: Package, label: 'Digital Products' },
     { href: '/admin/requests', icon: FileText, label: 'Requests' },
