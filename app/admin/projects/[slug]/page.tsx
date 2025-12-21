@@ -38,7 +38,7 @@ export default function ProjectDetailPage({ params }: { params: { slug: string }
 
   const fetchProject = async () => {
     try {
-      const response = await fetch(`/api/projects/${params.slug}`)
+      const response = await fetch(`/api/admin/projects/${params.slug}`)
       if (!response.ok) throw new Error('Failed to fetch project')
 
       const data = await response.json()
@@ -55,7 +55,7 @@ export default function ProjectDetailPage({ params }: { params: { slug: string }
     if (!project) return
 
     try {
-      const response = await fetch(`/api/projects/${project.slug}`, {
+      const response = await fetch(`/api/admin/projects/${project.slug}`, {
         method: 'DELETE'
       })
 
