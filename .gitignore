@@ -45,3 +45,8 @@ next-env.d.ts
 
 https://www.instagram.com/p/DRwh226D0i-/ - Attah and Alfred
 https://www.instagram.com/p/DRzplqIiO3U/ - Alfred
+# Uploads (keep directory structure but ignore uploaded files)
+public/uploads/**/*
+!public/uploads/.gitkeep
+!public/uploads/**/
+!public/uploads/**/.gitkeep
