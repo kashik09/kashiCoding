@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { ArrowLeft, Upload, Plus, X } from 'lucide-react'
+import { ArrowLeft, Upload, Plus, X, FolderOpen } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useToast } from '@/components/ui/Toast'
@@ -30,6 +30,7 @@ export default function EditProjectPage({ params }: { params: { slug: string } }
   const [techStack, setTechStack] = useState<string[]>([])
   const [techInput, setTechInput] = useState('')
   const [imagePreview, setImagePreview] = useState<string | null>(null)
+  const [thumbnailPath, setThumbnailPath] = useState('')
 
   const [formData, setFormData] = useState({
     title: '',
@@ -82,6 +83,7 @@ export default function EditProjectPage({ params }: { params: { slug: string } }
         setTechStack(project.techStack || [])
         if (project.thumbnail) {
           setImagePreview(project.thumbnail)
+          setThumbnailPath(project.thumbnail)
         }
       } else {
         showToast('Project not found', 'error')
@@ -154,7 +156,8 @@ export default function EditProjectPage({ params }: { params: { slug: string } }
         body: JSON.stringify({
           ...formData,
           tags,
-          techStack
+          techStack,
+          thumbnail: thumbnailPath || null
         })
       })
 
@@ -411,8 +414,23 @@ export default function EditProjectPage({ params }: { params: { slug: string } }
           {/* Thumbnail Upload */}
           <div>
             <label className="block text-sm font-medium text-foreground mb-2">
-              Thumbnail Image
+              Thumbnail Image Path
             </label>
+            
+            <p className="text-xs text-muted-foreground mb-3">
+              <FolderOpen size={14} className="inline mr-1" /> Upload your image to <code className="bg-muted px-2 py-1 rounded">public/uploads/projects/</code> then enter the path below
+            </p>
+
+            <input
+              type="text"
+              value={thumbnailPath}
+              onChange={(e) => {
+                setThumbnailPath(e.target.value)
+                setImagePreview(e.target.value)
+              }}
+              className="w-full px-4 py-2 bg-background border border-border rounded-lg focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition text-foreground mb-4"
+              placeholder="/uploads/projects/my-project.png"
+            />
             
             {imagePreview && (
               <div className="mb-4 relative">
@@ -420,28 +438,20 @@ export default function EditProjectPage({ params }: { params: { slug: string } }
                   src={imagePreview} 
                   alt="Preview" 
                   className="w-full h-48 object-cover rounded-lg border border-border"
+                  onError={() => setImagePreview(null)}
                 />
                 <button
                   type="button"
-                  onClick={() => setImagePreview(null)}
+                  onClick={() => {
+                    setImagePreview(null)
+                    setThumbnailPath('')
+                  }}
                   className="absolute top-2 right-2 p-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition"
                 >
                   <X size={16} />
                 </button>
               </div>
             )}
-
-            <label className="border-2 border-dashed border-border rounded-lg p-8 text-center hover:border-primary transition-colors cursor-pointer block">
-              <input 
-                type="file" 
-                accept="image/*" 
-                className="hidden" 
-                onChange={handleImageUpload}
-              />
-              <Upload className="mx-auto mb-4 text-muted-foreground" size={32} />
-              <p className="text-foreground mb-2">Upload project thumbnail</p>
-              <p className="text-muted-foreground text-sm">PNG, JPG up to 5MB</p>
-            </label>
           </div>
 
           {/* Checkboxes */}
