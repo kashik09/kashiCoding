@@ -1,10 +1,11 @@
 'use client'
 
 import { useState } from 'react'
-import { ArrowLeft, Upload, Plus, X } from 'lucide-react'
+import { ArrowLeft, Upload, Plus, X, Camera } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useToast } from '@/components/ui/Toast'
+import { ScreenshotCapture } from '@/components/admin/ScreenshotCapture'
 
 export default function NewProjectPage() {
   const router = useRouter()
@@ -15,6 +16,7 @@ export default function NewProjectPage() {
   const [techStack, setTechStack] = useState<string[]>([])
   const [techInput, setTechInput] = useState('')
   const [imagePreview, setImagePreview] = useState<string | null>(null)
+  const [uploadMode, setUploadMode] = useState<'manual' | 'screenshot'>('manual')
 
   const [formData, setFormData] = useState({
     title: '',
@@ -339,15 +341,43 @@ export default function NewProjectPage() {
 
           {/* Thumbnail Upload */}
           <div>
-            <label className="block text-sm font-medium text-foreground mb-2">
+            <label className="block text-sm font-medium text-foreground mb-4">
               Thumbnail Image
             </label>
-            
+
+            {/* Upload Mode Toggle */}
+            <div className="mb-4 flex gap-2">
+              <button
+                type="button"
+                onClick={() => setUploadMode('manual')}
+                className={`flex items-center gap-2 px-4 py-2 rounded-lg transition ${
+                  uploadMode === 'manual'
+                    ? 'bg-primary text-primary-foreground'
+                    : 'bg-muted text-muted-foreground hover:bg-muted/80'
+                }`}
+              >
+                <Upload size={18} />
+                Manual Upload
+              </button>
+              <button
+                type="button"
+                onClick={() => setUploadMode('screenshot')}
+                className={`flex items-center gap-2 px-4 py-2 rounded-lg transition ${
+                  uploadMode === 'screenshot'
+                    ? 'bg-primary text-primary-foreground'
+                    : 'bg-muted text-muted-foreground hover:bg-muted/80'
+                }`}
+              >
+                <Camera size={18} />
+                Auto-Capture
+              </button>
+            </div>
+
             {imagePreview && (
               <div className="mb-4 relative">
-                <img 
-                  src={imagePreview} 
-                  alt="Preview" 
+                <img
+                  src={imagePreview}
+                  alt="Preview"
                   className="w-full h-48 object-cover rounded-lg border border-border"
                 />
                 <button
@@ -360,17 +390,28 @@ export default function NewProjectPage() {
               </div>
             )}
 
-            <label className="border-2 border-dashed border-border rounded-lg p-8 text-center hover:border-primary transition-colors cursor-pointer block">
-              <input 
-                type="file" 
-                accept="image/*" 
-                className="hidden" 
-                onChange={handleImageUpload}
+            {uploadMode === 'manual' ? (
+              <label className="border-2 border-dashed border-border rounded-lg p-8 text-center hover:border-primary transition-colors cursor-pointer block">
+                <input
+                  type="file"
+                  accept="image/*"
+                  className="hidden"
+                  onChange={handleImageUpload}
+                />
+                <Upload className="mx-auto mb-4 text-muted-foreground" size={32} />
+                <p className="text-foreground mb-2">Upload project thumbnail</p>
+                <p className="text-muted-foreground text-sm">PNG, JPG up to 5MB</p>
+              </label>
+            ) : (
+              <ScreenshotCapture
+                projectUrl={formData.liveUrl}
+                projectSlug={formData.slug}
+                projectTitle={formData.title}
+                onCapture={(imageUrl) => {
+                  setImagePreview(imageUrl)
+                }}
               />
-              <Upload className="mx-auto mb-4 text-muted-foreground" size={32} />
-              <p className="text-foreground mb-2">Upload project thumbnail</p>
-              <p className="text-muted-foreground text-sm">PNG, JPG up to 5MB</p>
-            </label>
+            )}
           </div>
 
           {/* Checkboxes */}

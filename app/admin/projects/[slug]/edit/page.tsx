@@ -1,11 +1,12 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { ArrowLeft, Upload, Plus, X, FolderOpen } from 'lucide-react'
+import { ArrowLeft, Upload, Plus, X, FolderOpen, Camera } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useToast } from '@/components/ui/Toast'
 import { Spinner } from '@/components/ui/Spinner'
+import { ScreenshotCapture } from '@/components/admin/ScreenshotCapture'
 
 interface Project {
   id: number
@@ -31,6 +32,7 @@ export default function EditProjectPage({ params }: { params: { slug: string } }
   const [techInput, setTechInput] = useState('')
   const [imagePreview, setImagePreview] = useState<string | null>(null)
   const [thumbnailPath, setThumbnailPath] = useState('')
+  const [uploadMode, setUploadMode] = useState<'manual' | 'screenshot'>('manual')
 
   const [formData, setFormData] = useState({
     title: '',
@@ -413,46 +415,43 @@ export default function EditProjectPage({ params }: { params: { slug: string } }
 
           {/* Thumbnail Upload */}
           <div>
-            <label className="block text-sm font-medium text-foreground mb-2">
+            <label className="block text-sm font-medium text-foreground mb-4">
               Thumbnail Image
             </label>
-            
-            <div className="mb-4">
-              <input
-                id="thumbnail-upload"
-                type="file"
-                accept="image/*"
-                className="hidden"
-                onChange={async (e) => {
-                  const file = e.target.files?.[0]
-                  if (file) {
-                    const fd = new FormData()
-                    fd.append('file', file)
-                    const res = await fetch('/api/upload', { method: 'POST', body: fd })
-                    const data = await res.json()
-                    if (data.url) {
-                      setThumbnailPath(data.url)
-                      setImagePreview(data.url)
-                      showToast('Uploaded!', 'success')
-                    }
-                  }
-                }}
-              />
-              <label
-                htmlFor="thumbnail-upload"
-                className="inline-flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 cursor-pointer transition"
+
+            {/* Upload Mode Toggle */}
+            <div className="mb-4 flex gap-2">
+              <button
+                type="button"
+                onClick={() => setUploadMode('manual')}
+                className={`flex items-center gap-2 px-4 py-2 rounded-lg transition ${
+                  uploadMode === 'manual'
+                    ? 'bg-primary text-primary-foreground'
+                    : 'bg-muted text-muted-foreground hover:bg-muted/80'
+                }`}
               >
-                <Upload size={16} />
-                Choose File
-              </label>
-              {thumbnailPath && <span className="ml-3 text-sm text-muted-foreground">{thumbnailPath.split('/').pop()}</span>}
+                <Upload size={18} />
+                Manual Upload
+              </button>
+              <button
+                type="button"
+                onClick={() => setUploadMode('screenshot')}
+                className={`flex items-center gap-2 px-4 py-2 rounded-lg transition ${
+                  uploadMode === 'screenshot'
+                    ? 'bg-primary text-primary-foreground'
+                    : 'bg-muted text-muted-foreground hover:bg-muted/80'
+                }`}
+              >
+                <Camera size={18} />
+                Auto-Capture
+              </button>
             </div>
-            
+
             {imagePreview && (
-              <div className="relative">
-                <img 
-                  src={imagePreview} 
-                  alt="Preview" 
+              <div className="mb-4 relative">
+                <img
+                  src={imagePreview}
+                  alt="Preview"
                   className="w-full h-48 object-cover rounded-lg border border-border"
                   onError={() => setImagePreview(null)}
                 />
@@ -467,6 +466,56 @@ export default function EditProjectPage({ params }: { params: { slug: string } }
                   <X size={16} />
                 </button>
               </div>
+            )}
+
+            {uploadMode === 'manual' ? (
+              <div>
+                <input
+                  id="thumbnail-upload"
+                  type="file"
+                  accept="image/*"
+                  className="hidden"
+                  onChange={async (e) => {
+                    const file = e.target.files?.[0]
+                    if (file) {
+                      const fd = new FormData()
+                      fd.append('file', file)
+                      const res = await fetch('/api/upload', {
+                        method: 'POST',
+                        body: fd
+                      })
+                      const data = await res.json()
+                      if (data.url) {
+                        setThumbnailPath(data.url)
+                        setImagePreview(data.url)
+                        showToast('Uploaded!', 'success')
+                      }
+                    }
+                  }}
+                />
+                <label
+                  htmlFor="thumbnail-upload"
+                  className="inline-flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 cursor-pointer transition"
+                >
+                  <Upload size={16} />
+                  Choose File
+                </label>
+                {thumbnailPath && (
+                  <span className="ml-3 text-sm text-muted-foreground">
+                    {thumbnailPath.split('/').pop()}
+                  </span>
+                )}
+              </div>
+            ) : (
+              <ScreenshotCapture
+                projectUrl={formData.liveUrl}
+                projectSlug={formData.slug}
+                projectTitle={formData.title}
+                onCapture={(imageUrl) => {
+                  setImagePreview(imageUrl)
+                  setThumbnailPath(imageUrl)
+                }}
+              />
             )}
           </div>
 
