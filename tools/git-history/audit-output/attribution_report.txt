@@ -1,0 +1,31 @@
+===== ATTRIBUTION AUDIT REPORT =====
+Generated at: Mon Dec 22 05:22:59 PM EAT 2025
+
+== Repo root ==
+/home/kashi-kweyu/projects/portfolio/my-portfolio
+
+== Current branch / status ==
+## rewrite/strip-attribution
+?? audit/
+?? scripts/strip-claude-attribution.py
+?? sh-files/
+
+== Remote branch origin/main not found ==
+
+== Commit counts ==
+local_commits=222
+
+== Attribution totals (all history) ==
+contains_generated_with=0
+contains_coauthored_by=0
+
+== Affected commit hashes (counts) ==
+hashes_with_generated_with=0
+hashes_with_coauthored_by=0
+
+== Latest 280 affected commits (hash | date | subject) ==
+
+== NOTE ==
+This script is read-only. No history was modified.
+Send this report + the error log to decide next steps.
+
