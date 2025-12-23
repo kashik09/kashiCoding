@@ -35,7 +35,7 @@ yarn-error.log*
 .claude
 docs/
 sh-files/
-
+backups/
 
 # vercel
 .vercel
@@ -44,8 +44,6 @@ sh-files/
 *.tsbuildinfo
 next-env.d.ts
 
-https://www.instagram.com/p/DRwh226D0i-/ - Attah and Alfred
-https://www.instagram.com/p/DRzplqIiO3U/ - Alfred
 # Uploads (keep directory structure but ignore uploaded files)
 public/uploads/**/*
 !public/uploads/.gitkeep
