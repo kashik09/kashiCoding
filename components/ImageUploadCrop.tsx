@@ -63,7 +63,7 @@ const createCroppedImage = async (
 export function ImageUploadCrop({
   onImageCropped,
   currentImage,
-  aspectRatio = 1, // Default to square
+  aspectRatio = 1, // Always square for avatars
   label = 'Upload Image'
 }: ImageUploadCropProps) {
   const [isOpen, setIsOpen] = useState(false)
@@ -72,7 +72,6 @@ export function ImageUploadCrop({
   const [zoom, setZoom] = useState(1)
   const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area | null>(null)
   const [uploading, setUploading] = useState(false)
-  const [customAspect, setCustomAspect] = useState(aspectRatio)
   const fileInputRef = useRef<HTMLInputElement>(null)
 
   // Lock body scroll when modal is open
@@ -221,56 +220,18 @@ export function ImageUploadCrop({
             </div>
 
             {/* Modal Body */}
-            <div className="p-6 space-y-4 max-h-[calc(90vh-180px)] overflow-y-auto">
-              {/* Aspect Ratio Selector */}
-              <div className="flex gap-2 items-center">
-                <span className="text-sm font-medium text-foreground">Aspect Ratio:</span>
-                <button
-                  type="button"
-                  onClick={() => setCustomAspect(1)}
-                  className={`px-3 py-1.5 text-sm rounded-lg transition font-medium ${
-                    customAspect === 1
-                      ? 'bg-primary text-primary-foreground'
-                      : 'bg-muted text-foreground hover:bg-muted/70'
-                  }`}
-                >
-                  Square (1:1)
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setCustomAspect(4 / 3)}
-                  className={`px-3 py-1.5 text-sm rounded-lg transition font-medium ${
-                    customAspect === 4 / 3
-                      ? 'bg-primary text-primary-foreground'
-                      : 'bg-muted text-foreground hover:bg-muted/70'
-                  }`}
-                >
-                  4:3
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setCustomAspect(16 / 9)}
-                  className={`px-3 py-1.5 text-sm rounded-lg transition font-medium ${
-                    customAspect === 16 / 9
-                      ? 'bg-primary text-primary-foreground'
-                      : 'bg-muted text-foreground hover:bg-muted/70'
-                  }`}
-                >
-                  16:9
-                </button>
-              </div>
-
+            <div className="p-6 space-y-6 max-h-[calc(90vh-180px)] overflow-y-auto">
               {/* Cropper */}
               <div className="relative w-full h-[500px] bg-background rounded-lg overflow-hidden border border-border">
                 <Cropper
                   image={imageSrc}
                   crop={crop}
                   zoom={zoom}
-                  aspect={customAspect}
+                  aspect={1}
                   onCropChange={setCrop}
                   onZoomChange={setZoom}
                   onCropComplete={onCropComplete}
-                  cropShape={customAspect === 1 ? 'round' : 'rect'}
+                  cropShape="round"
                 />
               </div>
 
