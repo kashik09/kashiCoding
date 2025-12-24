@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic'
+
 import Link from 'next/link'
 import { Button } from '@/components/ui/Button'
 import { Code2, Palette, Zap } from 'lucide-react'
