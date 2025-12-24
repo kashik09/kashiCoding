@@ -6,3 +6,4 @@ export { StyledSelect } from './StyledSelect'
 export { Spinner } from './Spinner'
 export { default as ConfirmModal } from './ConfirmModal'
 export { ToastProvider, useToast } from './Toast'
+export * from "./Badge";
