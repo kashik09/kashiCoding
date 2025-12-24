@@ -1,12 +1,26 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { PrismaClient } from '@prisma/client'
+import { revalidatePath } from 'next/cache'
 import fs from 'fs/promises'
 import path from 'path'
 
-const CONTENT_PATH = path.join(process.cwd(), 'public/content/request-form.json')
+const prisma = new PrismaClient()
+const FALLBACK_PATH = path.join(process.cwd(), 'public/content/request-form.json')
 
 export async function GET() {
   try {
-    const fileContent = await fs.readFile(CONTENT_PATH, 'utf-8')
+    // Try to read from database first
+    const pageContent = await prisma.pageContent.findUnique({
+      where: { slug: 'request-form' }
+    })
+
+    if (pageContent) {
+      return NextResponse.json(pageContent.data)
+    }
+
+    // Fallback to JSON file if DB entry doesn't exist
+    console.warn('Request form content not found in DB, falling back to JSON file')
+    const fileContent = await fs.readFile(FALLBACK_PATH, 'utf-8')
     const data = JSON.parse(fileContent)
 
     return NextResponse.json(data)
@@ -48,12 +62,23 @@ export async function PUT(request: NextRequest) {
       }
     }
 
-    // Write to file with pretty formatting
-    await fs.writeFile(
-      CONTENT_PATH,
-      JSON.stringify(updatedContent, null, 2),
-      'utf-8'
-    )
+    // Write to database
+    const result = await prisma.pageContent.upsert({
+      where: { slug: 'request-form' },
+      create: {
+        slug: 'request-form',
+        data: updatedContent,
+        version: updatedContent.metadata.version
+      },
+      update: {
+        data: updatedContent,
+        version: updatedContent.metadata.version
+      }
+    })
+
+    // Revalidate the request page cache
+    revalidatePath('/request')
+    revalidatePath('/admin/content/request-form')
 
     return NextResponse.json({
       success: true,
@@ -70,5 +95,7 @@ export async function PUT(request: NextRequest) {
       },
       { status: 500 }
     )
+  } finally {
+    await prisma.$disconnect()
   }
 }

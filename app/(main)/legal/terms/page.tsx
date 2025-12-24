@@ -212,7 +212,7 @@ export default function TermsPage() {
       </div>
 
       <div className="prose prose-slate dark:prose-invert max-w-none space-y-8">
-        <div dangerouslySetInnerHTML={{ __html: content.content.replace(/\n/g, '<br />') }} />
+        <div dangerouslySetInnerHTML={{ __html: content.content }} />
       </div>
     </div>
   )

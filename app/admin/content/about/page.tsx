@@ -3,8 +3,9 @@
 import { useState, useEffect } from 'react'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
-import { Plus, Trash2, Save, AlertCircle } from 'lucide-react'
+import { Plus, Trash2, Save, AlertCircle, Briefcase, GraduationCap } from 'lucide-react'
 import { ImageUploadCrop } from '@/components/ImageUploadCrop'
+import { YearPicker } from '@/components/ui/YearPicker'
 
 interface AboutData {
   hero: {
@@ -243,18 +244,18 @@ export default function AboutEditorPage() {
             value={data.hero.nickname}
             onChange={(e) => setData({ ...data, hero: { ...data.hero, nickname: e.target.value } })}
           />
-          <Input
-            label="Title"
-            value={data.hero.title}
-            onChange={(e) => setData({ ...data, hero: { ...data.hero, title: e.target.value } })}
-          />
-          <ImageUploadCrop
-            label="Avatar Image"
-            currentImage={data.hero.avatarUrl}
-            aspectRatio={1}
-            onImageCropped={(url) => setData({ ...data, hero: { ...data.hero, avatarUrl: url } })}
-          />
         </div>
+        <Input
+          label="Title"
+          value={data.hero.title}
+          onChange={(e) => setData({ ...data, hero: { ...data.hero, title: e.target.value } })}
+        />
+        <ImageUploadCrop
+          label="Avatar Image"
+          currentImage={data.hero.avatarUrl}
+          aspectRatio={1}
+          onImageCropped={(url) => setData({ ...data, hero: { ...data.hero, avatarUrl: url } })}
+        />
         <Input
           label="Tagline"
           value={data.hero.tagline}
@@ -354,23 +355,48 @@ export default function AboutEditorPage() {
         </div>
         <div className="space-y-4">
           {data.timeline.map((item) => (
-            <div key={item.id} className="border border-border rounded-lg p-4 space-y-3">
+            <div key={item.id} className="border border-border rounded-xl p-5 space-y-4 bg-card hover:border-border/80 transition-colors">
               <div className="flex items-center justify-between">
-                <select
-                  value={item.type}
-                  onChange={(e) => updateTimelineItem(item.id, 'type', e.target.value)}
-                  className="px-3 py-1 bg-muted border border-border rounded-lg text-sm"
-                >
-                  <option value="work">Work</option>
-                  <option value="education">Education</option>
-                </select>
+                {/* Category Pill Selector */}
+                <div className="flex gap-2">
+                  <button
+                    type="button"
+                    onClick={() => updateTimelineItem(item.id, 'type', 'work')}
+                    className={`
+                      flex items-center gap-2 px-3.5 py-2 rounded-full text-xs font-medium transition-all
+                      ${item.type === 'work'
+                        ? 'bg-primary text-primary-foreground shadow-md shadow-primary/30'
+                        : 'bg-muted text-muted-foreground hover:bg-muted/80 hover:text-foreground'
+                      }
+                    `}
+                  >
+                    <Briefcase size={14} />
+                    Work
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => updateTimelineItem(item.id, 'type', 'education')}
+                    className={`
+                      flex items-center gap-2 px-3.5 py-2 rounded-full text-xs font-medium transition-all
+                      ${item.type === 'education'
+                        ? 'bg-primary text-primary-foreground shadow-md shadow-primary/30'
+                        : 'bg-muted text-muted-foreground hover:bg-muted/80 hover:text-foreground'
+                      }
+                    `}
+                  >
+                    <GraduationCap size={14} />
+                    Education
+                  </button>
+                </div>
+
                 <button
                   onClick={() => removeTimelineItem(item.id)}
-                  className="text-destructive hover:text-destructive/80 p-2"
+                  className="p-2 text-destructive hover:bg-destructive/10 rounded-lg transition-colors"
                 >
-                  <Trash2 size={20} />
+                  <Trash2 size={18} />
                 </button>
               </div>
+
               <div className="grid grid-cols-2 gap-3">
                 <Input
                   label="Title"
@@ -383,19 +409,22 @@ export default function AboutEditorPage() {
                   onChange={(e) => updateTimelineItem(item.id, 'organization', e.target.value)}
                 />
               </div>
-              <Input
+
+              <YearPicker
                 label="Period"
                 value={item.period}
-                onChange={(e) => updateTimelineItem(item.id, 'period', e.target.value)}
-                placeholder="2024 - Present"
+                onChange={(value) => updateTimelineItem(item.id, 'period', value)}
+                placeholder="Select year or range"
+                allowRange={true}
               />
+
               <div>
                 <label className="block text-sm font-medium text-foreground mb-2">Description</label>
                 <textarea
                   value={item.description}
                   onChange={(e) => updateTimelineItem(item.id, 'description', e.target.value)}
                   rows={3}
-                  className="w-full px-4 py-2 bg-muted border border-border rounded-lg focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition resize-none"
+                  className="w-full px-4 py-2.5 bg-muted border border-border rounded-lg focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition resize-none text-sm"
                 />
               </div>
             </div>

@@ -745,6 +745,26 @@ model ContentPage {
   @@map("content_pages")
 }
 
+model PageContent {
+  id String @id @default(cuid())
+
+  // Page identification
+  slug String @unique // 'services', 'request-form', etc.
+
+  // Content stored as JSON
+  data Json
+
+  // Metadata
+  version String @default("1.0")
+
+  // Timestamps
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([slug])
+  @@map("page_contents")
+}
+
 // ============================================
 // SYSTEM CONFIGURATION MODELS
 // ============================================

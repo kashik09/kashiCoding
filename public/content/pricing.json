@@ -1,0 +1,151 @@
+{
+  "version": "1.0",
+  "lastUpdated": "2025-12-24T00:00:00Z",
+  "currency": "USD",
+  "items": {
+    "web-dev": {
+      "id": "web-dev",
+      "name": "Web Development",
+      "value": 500,
+      "prefix": "From",
+      "displayFormat": "From $500",
+      "description": "Base price for web development projects",
+      "category": "service",
+      "active": true
+    },
+    "mobile-dev": {
+      "id": "mobile-dev",
+      "name": "Mobile Development",
+      "value": 1500,
+      "prefix": "From",
+      "displayFormat": "From $1,500",
+      "description": "Base price for mobile development projects",
+      "category": "service",
+      "active": true
+    },
+    "ui-ux": {
+      "id": "ui-ux",
+      "name": "UI/UX Design",
+      "value": 300,
+      "prefix": "From",
+      "displayFormat": "From $300",
+      "description": "Base price for UI/UX design projects",
+      "category": "service",
+      "active": true
+    },
+    "consulting": {
+      "id": "consulting",
+      "name": "Consulting",
+      "value": 100,
+      "prefix": "From",
+      "suffix": "/hr",
+      "displayFormat": "From $100/hr",
+      "description": "Hourly rate for consulting services",
+      "category": "service",
+      "active": true
+    },
+    "membership-basic": {
+      "id": "membership-basic",
+      "name": "Basic Access Membership",
+      "value": 299,
+      "displayFormat": "$299",
+      "description": "Basic membership tier - one-time payment",
+      "category": "membership",
+      "active": true,
+      "metadata": {
+        "tier": "BASIC_ACCESS",
+        "credits": 750,
+        "durationDays": 365
+      }
+    },
+    "membership-pro": {
+      "id": "membership-pro",
+      "name": "Pro Membership",
+      "value": 1499,
+      "displayFormat": "$1,499",
+      "description": "Pro membership tier - 2-year term",
+      "category": "membership",
+      "active": true,
+      "metadata": {
+        "tier": "PRO",
+        "credits": 1500,
+        "durationDays": 730
+      }
+    },
+    "membership-managed": {
+      "id": "membership-managed",
+      "name": "Managed Membership",
+      "value": 499,
+      "displayFormat": "$499",
+      "description": "Managed membership tier - monthly payment",
+      "category": "membership",
+      "active": true,
+      "metadata": {
+        "tier": "MANAGED",
+        "credits": 500,
+        "durationDays": 30
+      }
+    },
+    "budget-under-500": {
+      "id": "budget-under-500",
+      "name": "Budget Range: Under $500",
+      "value": 500,
+      "prefix": "Under",
+      "displayFormat": "Under $500",
+      "description": "Budget range option for request form",
+      "category": "budget-range",
+      "active": true,
+      "metadata": {
+        "rangeValue": "<500"
+      }
+    },
+    "budget-500-1000": {
+      "id": "budget-500-1000",
+      "name": "Budget Range: $500 - $1,000",
+      "value": 1000,
+      "displayFormat": "$500 - $1,000",
+      "description": "Budget range option for request form",
+      "category": "budget-range",
+      "active": true,
+      "metadata": {
+        "rangeValue": "500-1000",
+        "minValue": 500,
+        "maxValue": 1000
+      }
+    },
+    "budget-1000-2500": {
+      "id": "budget-1000-2500",
+      "name": "Budget Range: $1,000 - $2,500",
+      "value": 2500,
+      "displayFormat": "$1,000 - $2,500",
+      "description": "Budget range option for request form",
+      "category": "budget-range",
+      "active": true,
+      "metadata": {
+        "rangeValue": "1000-2500",
+        "minValue": 1000,
+        "maxValue": 2500
+      }
+    },
+    "budget-2500-plus": {
+      "id": "budget-2500-plus",
+      "name": "Budget Range: $2,500+",
+      "value": 2500,
+      "prefix": "",
+      "suffix": "+",
+      "displayFormat": "$2,500+",
+      "description": "Budget range option for request form",
+      "category": "budget-range",
+      "active": true,
+      "metadata": {
+        "rangeValue": "2500+"
+      }
+    }
+  },
+  "notes": [
+    "All prices are in USD unless otherwise specified",
+    "Service prices are base prices and may vary based on project complexity",
+    "Membership prices reflect the total cost for the term duration",
+    "Budget ranges are for estimation purposes only"
+  ]
+}
