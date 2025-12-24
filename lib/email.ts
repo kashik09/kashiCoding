@@ -1,46 +1,194 @@
 import nodemailer from 'nodemailer'
+import { prisma } from './prisma'
 
 interface EmailConfig {
   host: string
   port: number
   user: string
   pass: string
+  secure?: boolean
+  from?: string
+  fromName?: string
 }
 
 interface EmailOptions {
   to: string
   subject: string
   html: string
+  replyTo?: string
+}
+
+/**
+ * Get email configuration from database settings
+ * @returns EmailConfig or null if not configured
+ */
+export async function getEmailConfigFromDB(): Promise<EmailConfig | null> {
+  try {
+    const settings = await prisma.siteSettings.findUnique({
+      where: { id: 'site_settings_singleton' },
+      select: {
+        smtpHost: true,
+        smtpPort: true,
+        smtpUsername: true,
+        smtpPassword: true,
+        smtpSecure: true,
+      },
+    })
+
+    if (
+      !settings?.smtpHost ||
+      typeof settings.smtpPort !== 'number' ||
+      !settings.smtpUsername ||
+      !settings.smtpPassword
+    ) {
+      return null
+    }
+
+    return {
+      host: settings.smtpHost,
+      port: settings.smtpPort,
+      user: settings.smtpUsername,
+      pass: settings.smtpPassword,
+      from: settings.smtpUsername,
+      secure: settings.smtpSecure ?? false,
+    }
+  } catch (error) {
+    console.error('Error loading email config from database:', error)
+    return null
+  }
+}
+
+/**
+ * Get email configuration from environment variables
+ * @throws Error if required environment variables are missing
+ */
+export function getEmailConfigFromEnv(): EmailConfig {
+  const missing: string[] = []
+
+  if (!process.env.EMAIL_HOST) missing.push('EMAIL_HOST')
+  if (!process.env.EMAIL_PORT) missing.push('EMAIL_PORT')
+  if (!process.env.EMAIL_USER) missing.push('EMAIL_USER')
+  if (!process.env.EMAIL_PASS) missing.push('EMAIL_PASS')
+
+  if (missing.length > 0) {
+    throw new Error(`Missing email configuration: ${missing.join(', ')}`)
+  }
+
+  const port = Number(process.env.EMAIL_PORT)
+  if (!Number.isFinite(port) || port <= 0) {
+    throw new Error('EMAIL_PORT must be a valid number')
+  }
+
+  return {
+    host: process.env.EMAIL_HOST!,
+    port,
+    user: process.env.EMAIL_USER!,
+    pass: process.env.EMAIL_PASS!,
+    from: process.env.EMAIL_FROM,
+    fromName: process.env.EMAIL_FROM_NAME,
+  }
+}
+
+/**
+ * Get email configuration, preferring database settings over environment variables
+ * @returns EmailConfig
+ * @throws Error if no configuration is available
+ */
+export async function getEmailConfig(): Promise<EmailConfig> {
+  // Try database settings first
+  const dbConfig = await getEmailConfigFromDB()
+  if (dbConfig) {
+    return dbConfig
+  }
+
+  // Fall back to environment variables
+  try {
+    return getEmailConfigFromEnv()
+  } catch (envError) {
+    throw new Error(
+      'Email not configured. Please configure SMTP settings in Admin Settings or set EMAIL_* environment variables.'
+    )
+  }
 }
 
 export async function sendEmail(config: EmailConfig, options: EmailOptions) {
   try {
+    if (process.env.NEXT_RUNTIME === 'edge') {
+      throw new Error('SMTP transport is not supported in the Edge runtime. Use a Node.js runtime or provider API.')
+    }
+
+    const missing: string[] = []
+    if (!config.host) missing.push('host')
+    if (!config.port) missing.push('port')
+    if (!config.user) missing.push('user')
+    if (!config.pass) missing.push('pass')
+    if (missing.length > 0) {
+      throw new Error(`Missing email configuration: ${missing.join(', ')}`)
+    }
+
     const transporter = nodemailer.createTransport({
       host: config.host,
       port: config.port,
-      secure: config.port === 465,
+      secure: config.secure ?? config.port === 465,
       auth: {
         user: config.user,
         pass: config.pass
       }
     })
 
+    const fromAddress = config.from || config.user
+    const fromName = config.fromName || 'Kashi Kweyu'
+
     const info = await transporter.sendMail({
-      from: `"Kashi Kweyu" <${config.user}>`,
+      from: `"${fromName}" <${fromAddress}>`,
       to: options.to,
       subject: options.subject,
-      html: options.html
+      html: options.html,
+      replyTo: options.replyTo
     })
+
+    if (process.env.NODE_ENV !== 'production') {
+      console.log('Email sent:', {
+        messageId: info.messageId,
+        response: info.response,
+        accepted: info.accepted,
+        rejected: info.rejected,
+      })
+    }
 
     return {
       success: true,
-      messageId: info.messageId
+      messageId: info.messageId,
+      response: info.response
     }
   } catch (error: any) {
+    const rawMessage = error?.message || 'Failed to send email'
+    let friendlyMessage = rawMessage
+
+    if (
+      error?.code === 'EAUTH' ||
+      error?.responseCode === 535 ||
+      /auth|authentication|invalid login|bad credentials/i.test(rawMessage)
+    ) {
+      friendlyMessage = 'Authentication failed'
+    } else if (
+      error?.code === 'ENOTFOUND' ||
+      /getaddrinfo|host not found/i.test(rawMessage)
+    ) {
+      friendlyMessage = 'SMTP host not found'
+    } else if (
+      error?.code === 'ECONNECTION' ||
+      error?.code === 'ETIMEDOUT' ||
+      /connect|timed out/i.test(rawMessage)
+    ) {
+      friendlyMessage = 'Unable to connect to SMTP server'
+    }
+
     console.error('Email error:', error)
     return {
       success: false,
-      error: error.message || 'Failed to send email'
+      error: friendlyMessage,
+      details: error
     }
   }
 }

@@ -17,6 +17,64 @@ interface AdminAdsSettings {
   placements: Record<string, boolean>
 }
 
+type EmailProvider = 'gmail' | 'outlook' | 'yahoo' | 'icloud' | 'custom'
+
+const emailProviders: { value: EmailProvider; label: string }[] = [
+  { value: 'gmail', label: 'Gmail' },
+  { value: 'outlook', label: 'Outlook' },
+  { value: 'yahoo', label: 'Yahoo' },
+  { value: 'icloud', label: 'iCloud' },
+  { value: 'custom', label: 'Custom' },
+]
+
+const providerPresets: Record<
+  EmailProvider,
+  { host: string; port: string; secure: boolean; help: string }
+> = {
+  gmail: {
+    host: 'smtp.gmail.com',
+    port: '587',
+    secure: false,
+    help: 'Gmail requires an app password when 2-step verification is enabled. Create one in Google Account security settings.',
+  },
+  outlook: {
+    host: 'smtp.office365.com',
+    port: '587',
+    secure: false,
+    help: 'Outlook and Office 365 use SMTP auth. If MFA is enabled, create an app password in your Microsoft account.',
+  },
+  yahoo: {
+    host: 'smtp.mail.yahoo.com',
+    port: '587',
+    secure: false,
+    help: 'Yahoo Mail requires an app password. Generate one in Yahoo Account Security.',
+  },
+  icloud: {
+    host: 'smtp.mail.me.com',
+    port: '587',
+    secure: false,
+    help: 'iCloud Mail needs an app-specific password from your Apple ID security settings.',
+  },
+  custom: {
+    host: '',
+    port: '',
+    secure: false,
+    help: 'Enter the SMTP host, port, and security settings provided by your email provider.',
+  },
+}
+
+const detectProvider = (email: string): EmailProvider => {
+  const domain = email.split('@')[1]?.trim().toLowerCase()
+  if (!domain) return 'custom'
+  if (domain === 'gmail.com' || domain === 'googlemail.com') return 'gmail'
+  if (['outlook.com', 'hotmail.com', 'live.com', 'msn.com'].includes(domain)) {
+    return 'outlook'
+  }
+  if (domain === 'yahoo.com') return 'yahoo'
+  if (['icloud.com', 'me.com', 'mac.com'].includes(domain)) return 'icloud'
+  return 'custom'
+}
+
 export default function AdminSettingsPage() {
   const { showToast } = useToast()
   const [saving, setSaving] = useState(false)
@@ -40,8 +98,13 @@ export default function AdminSettingsPage() {
     smtpHost: 'smtp.gmail.com',
     smtpPort: '587',
     smtpUsername: 'your-email@gmail.com',
-    smtpPassword: ''
+    smtpPassword: '',
+    smtpSecure: false,
   })
+  const [emailProvider, setEmailProvider] = useState<EmailProvider>('gmail')
+  const [showEmailAdvanced, setShowEmailAdvanced] = useState(false)
+  const [hasManualHostOverride, setHasManualHostOverride] = useState(false)
+  const [hasManualPortOverride, setHasManualPortOverride] = useState(false)
 
   const [securitySettings, setSecuritySettings] = useState({
     sessionTimeout: '30',
@@ -67,6 +130,11 @@ export default function AdminSettingsPage() {
           adsProvider: string
           adsClientId: string | null
           adsPlacements: Record<string, boolean> | null
+          smtpHost?: string | null
+          smtpPort?: number | null
+          smtpUsername?: string | null
+          smtpPassword?: string | null
+          smtpSecure?: boolean | null
         }
 
         setSiteSettings({
@@ -85,6 +153,39 @@ export default function AdminSettingsPage() {
             ...prev.placements,
           },
         }))
+
+        const resolvedHost = data.smtpHost || emailSettings.smtpHost
+        const resolvedPort =
+          data.smtpPort !== null && data.smtpPort !== undefined
+            ? String(data.smtpPort)
+            : emailSettings.smtpPort
+        const resolvedUsername =
+          data.smtpUsername || emailSettings.smtpUsername
+        const resolvedPassword =
+          data.smtpPassword || emailSettings.smtpPassword
+        const resolvedSecure =
+          data.smtpSecure ?? emailSettings.smtpSecure
+
+        setEmailSettings(prev => ({
+          ...prev,
+          smtpHost: resolvedHost,
+          smtpPort: resolvedPort,
+          smtpUsername: resolvedUsername,
+          smtpPassword: resolvedPassword,
+          smtpSecure: resolvedSecure,
+        }))
+
+        const detectedProvider = detectProvider(resolvedUsername)
+        setEmailProvider(detectedProvider)
+        if (detectedProvider === 'custom') {
+          setHasManualHostOverride(false)
+          setHasManualPortOverride(false)
+        } else {
+          const preset = providerPresets[detectedProvider]
+          setHasManualHostOverride(resolvedHost !== preset.host)
+          setHasManualPortOverride(resolvedPort !== preset.port)
+        }
+        setShowEmailAdvanced(false)
       } catch (error) {
         console.error('Error loading site settings:', error)
         if (!cancelled) {
@@ -99,6 +200,43 @@ export default function AdminSettingsPage() {
       cancelled = true
     }
   }, [showToast])
+
+  useEffect(() => {
+    const detected = detectProvider(emailSettings.smtpUsername)
+    setEmailProvider(prev => (prev === detected ? prev : detected))
+  }, [emailSettings.smtpUsername])
+
+  useEffect(() => {
+    if (emailProvider === 'custom') return
+    const preset = providerPresets[emailProvider]
+    setEmailSettings(prev => ({
+      ...prev,
+      smtpHost: hasManualHostOverride ? prev.smtpHost : preset.host,
+      smtpPort: hasManualPortOverride ? prev.smtpPort : preset.port,
+      smtpSecure: preset.secure,
+    }))
+    if (!hasManualHostOverride && !hasManualPortOverride) {
+      setShowEmailAdvanced(false)
+    }
+  }, [emailProvider, hasManualHostOverride, hasManualPortOverride])
+
+  // Auto-switch port when secure toggle changes (for default ports only)
+  useEffect(() => {
+    setEmailSettings(prev => {
+      const currentPort = prev.smtpPort.trim()
+      const isDefaultPort = currentPort === '587' || currentPort === '465'
+      // Only auto-switch if current port is a default (587 or 465)
+      if (!isDefaultPort) return prev
+
+      if (prev.smtpSecure && currentPort !== '465') {
+        return { ...prev, smtpPort: '465' }
+      }
+      if (!prev.smtpSecure && currentPort !== '587') {
+        return { ...prev, smtpPort: '587' }
+      }
+      return prev
+    })
+  }, [emailSettings.smtpSecure])
 
   const handleSaveSite = async () => {
     try {
@@ -230,6 +368,16 @@ export default function AdminSettingsPage() {
     setActiveModal(null)
     showToast('All data cleared successfully', 'success')
   }
+
+  const handleProviderSelect = (provider: EmailProvider) => {
+    setHasManualHostOverride(false)
+    setHasManualPortOverride(false)
+    setEmailProvider(provider)
+  }
+
+  const isCustomProvider = emailProvider === 'custom'
+  const isEmailLocked = !isCustomProvider && !showEmailAdvanced
+  const providerHelp = providerPresets[emailProvider].help
 
   return (
     <div className="space-y-6">
@@ -425,63 +573,154 @@ export default function AdminSettingsPage() {
       {/* Email Settings */}
       <div className="bg-card rounded-2xl border border-border p-6 space-y-6">
         <div className="flex items-center gap-3">
-          <div className="p-2 bg-primary/10 rounded-lg">
-            <Mail className="text-primary" size={20} />
+          <div className="p-2 bg-[color:rgb(var(--primary)/0.12)] rounded-lg">
+            <Mail className="text-[color:rgb(var(--primary))]" size={20} />
           </div>
           <div>
-            <h2 className="text-xl font-bold text-foreground">Email Settings</h2>
-            <p className="text-sm text-muted-foreground">SMTP configuration for notifications</p>
+            <h2 className="text-xl font-bold text-app">Email Settings</h2>
+            <p className="text-sm text-muted">SMTP configuration for notifications</p>
           </div>
+        </div>
+
+        <div className="space-y-3">
+          <p className="text-xs font-semibold uppercase tracking-wide text-muted">
+            Provider
+          </p>
+          <div className="flex flex-wrap gap-2">
+            {emailProviders.map(option => (
+              <button
+                key={option.value}
+                type="button"
+                onClick={() => handleProviderSelect(option.value)}
+                className={`rounded-full border px-3 py-1.5 text-xs font-semibold transition focus-visible:outline-none focus-visible:ring-2 ring-app ring-offset-2 ring-offset-app ${
+                  emailProvider === option.value
+                    ? 'bg-accent text-white border-accent shadow-sm'
+                    : 'surface-app border-app text-app hover:bg-app'
+                }`}
+                aria-pressed={emailProvider === option.value}
+              >
+                {option.label}
+              </button>
+            ))}
+          </div>
+          <p className="text-sm text-muted">{providerHelp}</p>
+          {!isCustomProvider && (
+            <button
+              type="button"
+              onClick={() => setShowEmailAdvanced(value => !value)}
+              className="text-sm font-medium text-app underline-offset-4 hover:underline"
+              aria-expanded={showEmailAdvanced}
+            >
+              {showEmailAdvanced ? 'Hide advanced settings' : 'Advanced settings'}
+            </button>
+          )}
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-foreground mb-2">
+            <label className="block text-sm font-medium text-app mb-2">
               SMTP Host
             </label>
             <input
               type="text"
               value={emailSettings.smtpHost}
-              onChange={(e) => setEmailSettings({ ...emailSettings, smtpHost: e.target.value })}
-              className="w-full px-4 py-2 bg-muted border border-border rounded-lg focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition"
+              onChange={(e) => {
+                setHasManualHostOverride(true)
+                setEmailSettings({
+                  ...emailSettings,
+                  smtpHost: e.target.value,
+                })
+              }}
+              readOnly={isEmailLocked}
+              aria-readonly={isEmailLocked}
+              className={`w-full px-4 py-2 surface-app border border-app rounded-lg text-sm text-app placeholder:text-[color:rgb(var(--muted)/0.75)] focus:border-[color:rgb(var(--ring)/0.6)] focus:ring-2 focus:ring-[color:rgb(var(--ring)/0.35)] outline-none transition ${
+                isEmailLocked ? 'opacity-60 cursor-not-allowed' : ''
+              }`}
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-foreground mb-2">
+            <label className="block text-sm font-medium text-app mb-2">
               SMTP Port
             </label>
             <input
               type="text"
               value={emailSettings.smtpPort}
-              onChange={(e) => setEmailSettings({ ...emailSettings, smtpPort: e.target.value })}
-              className="w-full px-4 py-2 bg-muted border border-border rounded-lg focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition"
+              onChange={(e) => {
+                const newPort = e.target.value.trim()
+                // Only track as manual override if it's a non-default port
+                const isDefault = newPort === '587' || newPort === '465' || newPort === ''
+                setHasManualPortOverride(!isDefault)
+                setEmailSettings({
+                  ...emailSettings,
+                  smtpPort: e.target.value,
+                })
+              }}
+              readOnly={isEmailLocked}
+              aria-readonly={isEmailLocked}
+              className={`w-full px-4 py-2 surface-app border border-app rounded-lg text-sm text-app placeholder:text-[color:rgb(var(--muted)/0.75)] focus:border-[color:rgb(var(--ring)/0.6)] focus:ring-2 focus:ring-[color:rgb(var(--ring)/0.35)] outline-none transition ${
+                isEmailLocked ? 'opacity-60 cursor-not-allowed' : ''
+              }`}
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-foreground mb-2">
+            <label className="block text-sm font-medium text-app mb-2">
               SMTP Username
             </label>
             <input
               type="email"
               value={emailSettings.smtpUsername}
-              onChange={(e) => setEmailSettings({ ...emailSettings, smtpUsername: e.target.value })}
-              className="w-full px-4 py-2 bg-muted border border-border rounded-lg focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition"
+              onChange={(e) =>
+                setEmailSettings({
+                  ...emailSettings,
+                  smtpUsername: e.target.value,
+                })
+              }
+              className="w-full px-4 py-2 surface-app border border-app rounded-lg text-sm text-app placeholder:text-[color:rgb(var(--muted)/0.75)] focus:border-[color:rgb(var(--ring)/0.6)] focus:ring-2 focus:ring-[color:rgb(var(--ring)/0.35)] outline-none transition"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-foreground mb-2">
+            <label className="block text-sm font-medium text-app mb-2">
               SMTP Password
             </label>
             <input
               type="password"
               value={emailSettings.smtpPassword}
-              onChange={(e) => setEmailSettings({ ...emailSettings, smtpPassword: e.target.value })}
+              onChange={(e) =>
+                setEmailSettings({
+                  ...emailSettings,
+                  smtpPassword: e.target.value,
+                })
+              }
               placeholder="••••••••"
-              className="w-full px-4 py-2 bg-muted border border-border rounded-lg focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition"
+              className="w-full px-4 py-2 surface-app border border-app rounded-lg text-sm text-app placeholder:text-[color:rgb(var(--muted)/0.75)] focus:border-[color:rgb(var(--ring)/0.6)] focus:ring-2 focus:ring-[color:rgb(var(--ring)/0.35)] outline-none transition"
             />
+          </div>
+
+          <div className="md:col-span-2">
+            <label className="flex items-center justify-between gap-4 rounded-lg border border-app surface-app px-4 py-3">
+              <div>
+                <p className="text-sm font-medium text-app">
+                  Secure connection
+                </p>
+                <p className="text-xs text-muted">
+                  Port 587 uses STARTTLS. Port 465 uses SSL or TLS.
+                </p>
+              </div>
+              <input
+                type="checkbox"
+                checked={emailSettings.smtpSecure}
+                onChange={(e) =>
+                  setEmailSettings({
+                    ...emailSettings,
+                    smtpSecure: e.target.checked,
+                  })
+                }
+                className="h-4 w-4 rounded border-app text-[color:rgb(var(--primary))] focus:ring-2 focus:ring-[color:rgb(var(--ring)/0.35)]"
+              />
+            </label>
           </div>
         </div>
 
@@ -489,14 +728,14 @@ export default function AdminSettingsPage() {
           <button
             onClick={handleSaveEmail}
             disabled={saving}
-            className="flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition disabled:opacity-50"
+            className="flex items-center gap-2 px-6 py-3 bg-accent text-white rounded-lg hover:opacity-90 transition disabled:opacity-50"
           >
             <Save size={20} />
             {saving ? 'Saving...' : 'Save Email Settings'}
           </button>
           <button
             onClick={handleTestEmail}
-            className="flex items-center gap-2 px-6 py-3 bg-muted text-foreground rounded-lg hover:bg-muted/70 transition border border-border"
+            className="flex items-center gap-2 px-6 py-3 surface-app text-app rounded-lg hover:bg-app transition border border-app"
           >
             <Mail size={20} />
             Test Email

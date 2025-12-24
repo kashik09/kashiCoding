@@ -778,6 +778,11 @@ model SiteSettings {
   adsProvider          String  @default("")
   adsClientId          String?
   adsPlacements        Json?
+  smtpHost             String?
+  smtpPort             Int?
+  smtpUsername         String?
+  smtpPassword         String?
+  smtpSecure           Boolean @default(false)
 
   updatedAt DateTime @updatedAt
 
