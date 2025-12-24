@@ -61,6 +61,8 @@ model User {
   creditTransactions      CreditTransaction[]
   auditLogs               AuditLog[]
   adConsent               UserAdConsent?
+  cart                    Cart?
+  orders                  Order[]
 
   @@index([email])
   @@index([accountStatus])
@@ -304,8 +306,11 @@ model DigitalProduct {
   tags        String[]
 
   // Pricing
-  price    Decimal @db.Decimal(10, 2)
-  currency String  @default("USD")
+  price       Decimal  @db.Decimal(10, 2)
+  currency    String   @default("USD")
+  usdPrice    Decimal? @db.Decimal(10, 2) // USD price (base currency)
+  ugxPrice    Decimal? @db.Decimal(10, 2) // UGX price
+  creditPrice Int? // Credits required for this product
 
   // Files
   fileUrl       String // Secure download URL
@@ -338,9 +343,11 @@ model DigitalProduct {
   updatedAt DateTime @updatedAt
 
   // Relations
-  purchases DigitalProductPurchase[]
-  licenses  License[]
-  downloads Download[]
+  purchases  DigitalProductPurchase[]
+  licenses   License[]
+  downloads  Download[]
+  cartItems  CartItem[]
+  orderItems OrderItem[]
 
   @@index([slug])
   @@index([category])
@@ -415,6 +422,7 @@ model License {
   // Relations
   downloads       Download[]
   seatAssignments LicenseSeatAssignment[]
+  orderItem       OrderItem?
 
   @@index([userId])
   @@index([productId])
@@ -503,6 +511,109 @@ model DownloadResetRequest {
   @@index([userId])
   @@index([status])
   @@map("download_reset_requests")
+}
+
+// ============================================
+// CART & ORDER MODELS
+// ============================================
+
+model Cart {
+  id        String     @id @default(cuid())
+  userId    String     @unique
+  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  items     CartItem[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+
+  @@map("carts")
+}
+
+model CartItem {
+  id          String         @id @default(cuid())
+  cartId      String
+  cart        Cart           @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  productId   String
+  product     DigitalProduct @relation(fields: [productId], references: [id], onDelete: Cascade)
+  licenseType LicenseType
+  quantity    Int            @default(1)
+  createdAt   DateTime       @default(now())
+
+  @@unique([cartId, productId, licenseType])
+  @@index([cartId])
+  @@index([productId])
+  @@map("cart_items")
+}
+
+model Order {
+  id          String @id @default(cuid())
+  orderNumber String @unique // Format: ORD-YYYYMMDD-XXXXX
+  userId      String
+  user        User   @relation(fields: [userId], references: [id])
+
+  // Financials
+  subtotal Decimal @db.Decimal(10, 2)
+  tax      Decimal @default(0) @db.Decimal(10, 2)
+  total    Decimal @db.Decimal(10, 2)
+  currency String  @default("USD")
+
+  // Payment
+  paymentStatus   PaymentStatus @default(PENDING)
+  paymentMethod   String?
+  paymentProvider String?
+  transactionId   String?
+
+  // Purchase type
+  purchaseType OrderPurchaseType
+  creditsUsed  Int?
+  membershipId String?
+  membership   Membership?       @relation(fields: [membershipId], references: [id])
+
+  // Status
+  status      OrderStatus @default(PENDING)
+  fulfilledAt DateTime?
+
+  // Legal
+  termsAccepted Boolean @default(false)
+  termsVersion  String?
+
+  // Contact snapshot
+  customerEmail String
+  customerName  String?
+
+  items     OrderItem[]
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+
+  @@index([userId])
+  @@index([orderNumber])
+  @@index([paymentStatus])
+  @@index([status])
+  @@map("orders")
+}
+
+model OrderItem {
+  id        String         @id @default(cuid())
+  orderId   String
+  order     Order          @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId String
+  product   DigitalProduct @relation(fields: [productId], references: [id])
+
+  // Product snapshot
+  productName String
+  productSlug String
+  licenseType LicenseType
+  price       Decimal     @db.Decimal(10, 2)
+  currency    String
+
+  // Issued license
+  licenseId String?  @unique
+  license   License? @relation(fields: [licenseId], references: [id])
+
+  createdAt DateTime @default(now())
+
+  @@index([orderId])
+  @@index([productId])
+  @@map("order_items")
 }
 
 // ============================================
@@ -632,6 +743,7 @@ model Membership {
   // Relations
   users        User[]
   transactions CreditTransaction[]
+  orders       Order[]
 
   @@index([status])
   @@map("memberships")
@@ -974,6 +1086,20 @@ enum PaymentStatus {
   PENDING
   COMPLETED
   FAILED
+  REFUNDED
+}
+
+enum OrderPurchaseType {
+  ONE_TIME
+  CREDITS
+}
+
+enum OrderStatus {
+  PENDING
+  PROCESSING
+  COMPLETED
+  FAILED
+  CANCELLED
   REFUNDED
 }
 

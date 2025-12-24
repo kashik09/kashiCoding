@@ -10,7 +10,7 @@ import {
   createDownloadToken,
 } from '@/lib/downloads'
 import { detectDownloadAbuse, flagLicenseAbuse } from '@/lib/license'
-import { getEmailTemplate, sendEmail } from '@/lib/email'
+import { getEmailConfig, getEmailTemplate, sendEmail } from '@/lib/email'
 
 function getClientIp(req: NextRequest): string | null {
   const headerList = headers()
@@ -151,28 +151,23 @@ export async function POST(
       })
 
       // Send abuse detection email
-      if (user && process.env.EMAIL_HOST && process.env.EMAIL_USER && process.env.EMAIL_PASS) {
-        const emailTemplate = getEmailTemplate('license-abuse-detected', {
-          productName: product.name,
-          licenseKey: license.licenseKey,
-          abuseReason: abuseCheck.reason,
-        })
+      if (user) {
+        try {
+          const emailTemplate = getEmailTemplate('license-abuse-detected', {
+            productName: product.name,
+            licenseKey: license.licenseKey,
+            abuseReason: abuseCheck.reason,
+          })
 
-        await sendEmail(
-          {
-            host: process.env.EMAIL_HOST,
-            port: parseInt(process.env.EMAIL_PORT || '587'),
-            user: process.env.EMAIL_USER,
-            pass: process.env.EMAIL_PASS,
-          },
-          {
+          const emailConfig = await getEmailConfig()
+          await sendEmail(emailConfig, {
             to: user.email,
             subject: emailTemplate.subject,
             html: emailTemplate.html,
-          }
-        ).catch((err) => {
+          })
+        } catch (err) {
           console.error('Failed to send abuse detection email:', err)
-        })
+        }
       }
 
       return NextResponse.json(
