@@ -1,11 +1,12 @@
 import Link from 'next/link'
 import { Button } from '@/components/ui/Button'
-import { Code2, Palette, Zap, ArrowRight } from 'lucide-react'
+import { Code2, Palette, Zap } from 'lucide-react'
 import { AdSlot } from '@/components/AdSlot'
 import { FeaturedProjects } from '@/components/FeaturedProjects'
 import { ProjectCardData } from '@/components/ProjectCard'
 import { prisma } from '@/lib/prisma'
 import { MemberHomeTop } from '@/components/home/MemberHomeTop'
+import { HeroSwitch } from '@/components/home/HeroSwitch'
 
 export default async function HomePage() {
   // Fetch featured projects
@@ -50,30 +51,15 @@ export default async function HomePage() {
       {/* Member Dashboard Strip (only shows for logged-in users) */}
       <MemberHomeTop />
 
-      {/* Hero Section */}
-      <section className="max-w-6xl mx-auto px-4">
-        <div className="text-center space-y-6 py-12">
-          <h1 className="text-5xl md:text-7xl font-bold text-foreground">
-            Hi, I'm <span className="text-primary">Kashi</span>
-          </h1>
-          <p className="text-2xl md:text-3xl text-muted-foreground max-w-3xl mx-auto px-4">
-            A Junior Developer building innovative solutions with modern web technologies
-          </p>
-          <div className="flex gap-4 justify-center mt-8">
-            <Link href="/projects">
-              <Button variant="primary" size="lg">
-                View My Work
-                <ArrowRight size={20} />
-              </Button>
-            </Link>
-            <Link href="/request">
-              <Button variant="outline" size="lg">
-                Hire Me
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </section>
+      <HeroSwitch
+        title="Hi, I'm"
+        highlight="Kashi"
+        subtitle="A Junior Developer building innovative solutions with modern web technologies"
+        primaryCtaLabel="View My Work"
+        primaryCtaHref="/projects"
+        secondaryCtaLabel="Hire Me"
+        secondaryCtaHref="/request"
+      />
 
       {/* Optional personalized ad below hero */}
       <section className="max-w-6xl mx-auto px-4">
