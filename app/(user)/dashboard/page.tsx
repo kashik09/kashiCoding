@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { Download, FileText, ArrowRight, Package, Clock } from 'lucide-react'
 import { useToast } from '@/components/ui/Toast'
 import { Spinner } from '@/components/ui/Spinner'
+import { ProgressBar } from '@/components/ui/ProgressBar'
 
 interface DashboardStats {
   totalDownloads: number
@@ -115,15 +116,15 @@ export default function DashboardPage() {
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'PENDING':
-        return 'bg-yellow-500/20 text-yellow-700 dark:text-yellow-300'
+        return 'bg-warning/20 text-warning'
       case 'IN_PROGRESS':
       case 'REVIEWING':
-        return 'bg-blue-500/20 text-blue-700 dark:text-blue-300'
+        return 'bg-info/20 text-info'
       case 'COMPLETED':
-        return 'bg-green-500/20 text-green-700 dark:text-green-300'
+        return 'bg-success/20 text-success'
       case 'REJECTED':
       case 'CANCELLED':
-        return 'bg-red-500/20 text-red-700 dark:text-red-300'
+        return 'bg-destructive/20 text-destructive'
       default:
         return 'bg-primary/20 text-primary'
     }
@@ -195,8 +196,8 @@ export default function DashboardPage() {
 
         <div className="bg-card rounded-2xl border border-border p-6">
           <div className="flex items-center gap-4">
-            <div className="p-3 bg-blue-500/10 rounded-lg">
-              <FileText className="text-blue-600 dark:text-blue-400" size={24} />
+            <div className="p-3 bg-info/10 rounded-lg">
+              <FileText className="text-info" size={24} />
             </div>
             <div>
               <p className="text-sm text-muted-foreground">Requests Submitted</p>
@@ -207,8 +208,8 @@ export default function DashboardPage() {
 
         <div className="bg-card rounded-2xl border border-border p-6">
           <div className="flex items-center gap-4">
-            <div className="p-3 bg-yellow-500/10 rounded-lg">
-              <Clock className="text-yellow-600 dark:text-yellow-400" size={24} />
+            <div className="p-3 bg-warning/10 rounded-lg">
+              <Clock className="text-warning" size={24} />
             </div>
             <div>
               <p className="text-sm text-muted-foreground">Pending Requests</p>
@@ -222,15 +223,15 @@ export default function DashboardPage() {
       <div className="bg-card rounded-2xl border border-border p-6">
         <div className="flex items-center justify-between mb-4">
           <div>
-            <h2 className="text-xl font-bold text-foreground">Usage Limits</h2>
-            <p className="text-sm text-muted-foreground">
+            <h2 className="text-xl font-bold text-app">Usage Limits</h2>
+            <p className="text-sm text-muted">
               Current period credit usage for your membership
             </p>
           </div>
           {membership && (
             <div className="text-right">
-              <p className="text-sm text-muted-foreground">Membership</p>
-              <p className="font-medium text-foreground">
+              <p className="text-sm text-muted">Membership</p>
+              <p className="font-medium text-app">
                 {membership.tier} · {membership.status}
               </p>
             </div>
@@ -239,43 +240,42 @@ export default function DashboardPage() {
 
         {membership ? (
           <div className="space-y-4">
-            <div className="flex items-center justify-between text-sm">
-              <span className="text-muted-foreground">Credits used this period</span>
-              <span className="font-medium text-foreground">
-                {membership.usedCredits} / {membership.totalCredits}
+            <div className="flex flex-wrap items-center justify-between gap-2 text-sm">
+              <span className="text-muted">Credits used this period</span>
+              <span className="font-medium text-app">
+                {membership.usedCredits} / {membership.totalCredits} (
+                {membership.totalCredits > 0
+                  ? Math.round(
+                      (membership.usedCredits / membership.totalCredits) * 100
+                    )
+                  : 0}
+                %)
               </span>
             </div>
-            <div className="w-full bg-muted rounded-full h-2 overflow-hidden">
-              <div
-                className="h-full bg-primary transition-all"
-                style={{
-                  width: `${
-                    membership.totalCredits > 0
-                      ? Math.min(
-                          100,
-                          (membership.usedCredits / membership.totalCredits) * 100
-                        )
-                      : 0
-                  }%`,
-                }}
-              />
-            </div>
-            <div className="flex flex-wrap gap-4 text-sm text-muted-foreground mt-2">
+            <ProgressBar
+              label="Credits used"
+              value={
+                membership.totalCredits > 0
+                  ? (membership.usedCredits / membership.totalCredits) * 100
+                  : 0
+              }
+            />
+            <div className="flex flex-wrap gap-4 text-sm text-muted mt-2">
               <span>
                 Credits remaining:{' '}
-                <span className="font-medium text-foreground">
+                <span className="font-medium text-app">
                   {membership.remainingCredits}
                 </span>
               </span>
               <span>
                 Resets in{' '}
-                <span className="font-medium text-foreground">
+                <span className="font-medium text-app">
                   {formatResetsIn(membership.endDate)}
                 </span>
               </span>
-              <span className="text-muted-foreground">
+              <span>
                 Weekly limits:{' '}
-                <span className="font-medium text-foreground">
+                <span className="font-medium text-app">
                   Not enforced yet
                 </span>
               </span>
@@ -283,7 +283,7 @@ export default function DashboardPage() {
           </div>
         ) : (
           <div className="space-y-4">
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-muted">
               You don&apos;t have an active membership yet. Credits and usage limits will appear here once a membership is assigned to your account.
             </p>
             <Link
@@ -305,7 +305,7 @@ export default function DashboardPage() {
         >
           <FileText size={32} className="mb-4" />
           <h3 className="text-xl font-bold mb-2">Request a Service</h3>
-          <p className="text-white/90 mb-4">
+          <p className="text-white mb-4">
             Need help with a project? Submit a service request and I'll get back to you.
           </p>
           <span className="inline-flex items-center gap-2 text-white font-medium group-hover:gap-3 transition-all">
