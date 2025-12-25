@@ -1,14 +1,17 @@
 export const dynamic = 'force-dynamic'
 
 import Link from 'next/link'
-import { Button } from '@/components/ui/Button'
 import { ArrowRight } from 'lucide-react'
 import { AdSlot } from '@/components/AdSlot'
-import { FeaturedProjectsList } from '@/components/FeaturedProjects'
 import { ProjectCardData } from '@/components/ProjectCard'
 import { prisma } from '@/lib/prisma'
 import { MemberHomeTop } from '@/components/home/MemberHomeTop'
-import { HeroSwitch } from '@/components/home/HeroSwitch'
+import { ProofSnapshot } from '@/components/home/ProofSnapshot'
+import { FeaturedWorkFlow } from '@/components/home/FeaturedWorkFlow'
+import { HowIThink } from '@/components/home/HowIThink'
+import { Container } from '@/components/layout/Container'
+import { Section } from '@/components/layout/Section'
+import { Button } from '@/components/ui/Button'
 
 async function getLandingContent() {
   try {
@@ -67,119 +70,106 @@ export default async function HomePage() {
   const landingContent = await getLandingContent()
 
   // Fallback to hardcoded if CMS content not available
-  const hero = landingContent?.hero || {
-    title: 'hey, i\'m',
-    highlight: 'kashi',
-    subtitle: 'i notice things that could work better, then i build them',
-    primaryCtaLabel: 'see what i\'ve built',
+  const primaryLabel =
+    landingContent?.hero?.primaryCtaHref === '/projects'
+      ? landingContent?.hero?.primaryCtaLabel
+      : undefined
+  const secondaryLabel =
+    landingContent?.hero?.secondaryCtaHref === '/products'
+      ? landingContent?.hero?.secondaryCtaLabel
+      : undefined
+
+  const hero = {
+    title: landingContent?.hero?.title || 'hey, i\'m',
+    highlight: landingContent?.hero?.highlight || 'kashi',
+    subtitle: landingContent?.hero?.subtitle || 'i notice friction, then i build fixes',
+    primaryCtaLabel: primaryLabel || 'view projects',
     primaryCtaHref: '/projects',
-    secondaryCtaLabel: 'get in touch',
-    secondaryCtaHref: '/contact'
+    secondaryCtaLabel: secondaryLabel || 'products',
+    secondaryCtaHref: '/products'
   }
 
-  const proofSnapshot = landingContent?.proofSnapshot || [
-    { id: '1', text: 'this site is fully custom-built (no templates)' },
-    { id: '2', text: 'mode-based theming system with 5+ variants' },
-    { id: '3', text: 'cms-driven content + full e-commerce' },
-    { id: '4', text: 'designed + built end-to-end' }
-  ]
-
-  const philosophy = landingContent?.philosophy || [
-    { id: '1', title: 'notice', description: 'i pay attention to friction. when something feels harder than it should, that\'s a signal.' },
-    { id: '2', title: 'build', description: 'ideas don\'t count until they\'re real. i ship working code, not concepts.' },
-    { id: '3', title: 'iterate', description: 'first version ships. then i learn what actually matters and improve it.' }
-  ]
-
-  const cta = landingContent?.cta || {
-    text: 'view all projects',
-    href: '/projects'
+  const ctaHref = landingContent?.cta?.href
+  const cta = {
+    text: landingContent?.cta?.text || 'view all projects',
+    href: ctaHref === '/projects' || ctaHref === '/products' ? ctaHref : '/projects'
   }
 
   return (
     <div style={{ paddingTop: 'var(--space-block)', paddingBottom: 'var(--space-section)' }}>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-section)' }}>
-        {/* Member Dashboard Strip */}
-        <MemberHomeTop />
+      {/* Member Dashboard Strip */}
+      <MemberHomeTop />
 
-        {/* 1. HERO */}
-        <div className="container-lg">
-          <HeroSwitch
-            title={hero.title}
-            highlight={hero.highlight}
-            subtitle={hero.subtitle}
-            primaryCtaLabel={hero.primaryCtaLabel}
-            primaryCtaHref={hero.primaryCtaHref}
-            secondaryCtaLabel={hero.secondaryCtaLabel}
-            secondaryCtaHref={hero.secondaryCtaHref}
-          />
-        </div>
+      {/* 1. HERO */}
+      <Section className="pt-16 md:pt-20">
+        <Container>
+          <div className="relative overflow-hidden rounded-3xl border border-app bg-gradient-to-br from-primary/10 via-transparent to-primary/30 px-6 py-12 sm:px-10">
+            <div className="absolute -top-20 right-0 h-56 w-56 rounded-full bg-primary/20 blur-3xl" />
+            <div className="absolute -bottom-24 left-0 h-72 w-72 rounded-full bg-primary/10 blur-3xl" />
 
-        {/* Ad slot */}
-        <div className="container-lg">
-          <AdSlot placement="homepage_hero" />
-        </div>
-
-        {/* 2. PROOF SNAPSHOT */}
-        <section className="container-md">
-          <div className="relative border-l-2 border-primary/20 pl-4 sm:pl-6 space-y-2">
-            {proofSnapshot.map((item: any) => (
-              <div key={item.id} className="flex items-start gap-2">
-                <span className="text-primary/40 text-xs font-mono mt-0.5 select-none">→</span>
-                <p className="text-sm sm:text-base text-muted-foreground/90 leading-relaxed">
-                  {item.text}
-                </p>
+            <div className="relative z-10 space-y-6">
+              <p className="text-xs uppercase tracking-[0.35em] text-muted-app">
+                scroll as story
+              </p>
+              <h1 className="text-3xl font-semibold leading-tight text-app sm:text-4xl md:text-5xl">
+                {hero.title} <span className="accent">{hero.highlight}</span>
+              </h1>
+              <p className="max-w-prose text-base leading-relaxed text-muted-app sm:text-lg">
+                {hero.subtitle}
+              </p>
+              <div className="flex flex-wrap gap-3">
+                <Link href={hero.primaryCtaHref} className="no-underline">
+                  <Button
+                    variant="primary"
+                    size="md"
+                    icon={<ArrowRight size={18} />}
+                    iconPosition="right"
+                  >
+                    {hero.primaryCtaLabel}
+                  </Button>
+                </Link>
+                <Link href={hero.secondaryCtaHref} className="no-underline">
+                  <Button variant="outline" size="md">
+                    {hero.secondaryCtaLabel}
+                  </Button>
+                </Link>
               </div>
-            ))}
-          </div>
-        </section>
-
-        {/* 3. FEATURED PROJECTS */}
-        {featuredProjects.length > 0 && (
-          <section className="container-lg">
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-block)' }}>
-              <div>
-                <h2 className="text-h2 font-bold text-foreground mb-2">selected work</h2>
-                <p className="text-body text-muted-foreground">
-                  what it is • why it exists • what it proves
-                </p>
-              </div>
-              <FeaturedProjectsList projects={featuredProjects} />
-            </div>
-          </section>
-        )}
-
-        {/* 4. HOW I WORK */}
-        <section className="container-md">
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-item)' }}>
-            <h2 className="text-h2 font-bold text-foreground">how i work</h2>
-            <div className="grid gap-4 sm:gap-6">
-              {philosophy.map((item: any) => (
-                <div key={item.id} className="group">
-                  <h3 className="text-h3 font-semibold text-foreground mb-1.5 group-hover:text-primary transition-colors">
-                    {item.title}
-                  </h3>
-                  <p className="text-body text-muted-foreground/90 leading-relaxed">
-                    {item.description}
-                  </p>
-                </div>
-              ))}
             </div>
           </div>
-        </section>
 
-        {/* 5. CTA */}
-        <section className="container-lg">
-          <div className="border-t border-border/50 pt-8 sm:pt-12 text-center">
-            <Link
-              href={cta.href}
-              className="inline-flex items-center gap-2 text-foreground/80 hover:text-primary transition-all group text-sm sm:text-base"
-            >
-              <span>{cta.text}</span>
-              <ArrowRight size={16} className="group-hover:translate-x-0.5 transition-transform" />
+          <div className="mt-6">
+            <AdSlot placement="homepage_hero" />
+          </div>
+        </Container>
+      </Section>
+
+      {/* 2. PROOF SNAPSHOT */}
+      <ProofSnapshot />
+
+      {/* 3. FEATURED PROJECTS */}
+      {featuredProjects.length > 0 && (
+        <FeaturedWorkFlow projects={featuredProjects} />
+      )}
+
+      {/* 4. HOW I THINK */}
+      <HowIThink />
+
+      {/* 5. CTA */}
+      <Section className="pt-0">
+        <Container>
+          <div className="border-t border-border/50 pt-6 text-center sm:pt-8">
+            <Link href={cta.href} className="no-underline">
+              <Button
+                variant="ghost"
+                size="sm"
+                className="text-xs uppercase tracking-[0.2em] text-foreground/80"
+              >
+                {cta.text}
+              </Button>
             </Link>
           </div>
-        </section>
-      </div>
+        </Container>
+      </Section>
     </div>
   )
 }
