@@ -52,13 +52,6 @@ export function HeroVibey({
               </Button>
             </Link>
           </div>
-
-          <div className="flex flex-wrap gap-3 text-sm text-muted-app">
-            <span className="rounded-full border border-app bg-app px-3 py-1">Next.js</span>
-            <span className="rounded-full border border-app bg-app px-3 py-1">Tailwind</span>
-            <span className="rounded-full border border-app bg-app px-3 py-1">Product Design</span>
-            <span className="rounded-full border border-app bg-app px-3 py-1">Performance</span>
-          </div>
         </div>
       </div>
     </section>

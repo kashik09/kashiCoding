@@ -2,9 +2,9 @@ export const dynamic = 'force-dynamic'
 
 import Link from 'next/link'
 import { Button } from '@/components/ui/Button'
-import { Code2, Palette, Zap } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
 import { AdSlot } from '@/components/AdSlot'
-import { FeaturedProjects } from '@/components/FeaturedProjects'
+import { FeaturedProjectsList } from '@/components/FeaturedProjects'
 import { ProjectCardData } from '@/components/ProjectCard'
 import { prisma } from '@/lib/prisma'
 import { MemberHomeTop } from '@/components/home/MemberHomeTop'
@@ -20,7 +20,7 @@ export default async function HomePage() {
     orderBy: {
       createdAt: 'desc'
     },
-    take: 6,
+    take: 5,
     select: {
       id: true,
       slug: true,
@@ -48,19 +48,21 @@ export default async function HomePage() {
     featured: project.featured,
     category: project.category
   }))
+
   return (
     <div className="space-y-20 py-12">
       {/* Member Dashboard Strip (only shows for logged-in users) */}
       <MemberHomeTop />
 
+      {/* 1. HERO (VIBEY ONLY) */}
       <HeroSwitch
-        title="Hi, I'm"
-        highlight="Kashi"
-        subtitle="A Junior Developer building innovative solutions with modern web technologies"
-        primaryCtaLabel="View My Work"
+        title="hey, i'm"
+        highlight="kashi"
+        subtitle="i notice things that could work better, then i build them"
+        primaryCtaLabel="see what i've built"
         primaryCtaHref="/projects"
-        secondaryCtaLabel="Hire Me"
-        secondaryCtaHref="/request"
+        secondaryCtaLabel="get in touch"
+        secondaryCtaHref="/contact"
       />
 
       {/* Optional personalized ad below hero */}
@@ -68,57 +70,64 @@ export default async function HomePage() {
         <AdSlot placement="homepage_hero" />
       </section>
 
-      {/* Featured Projects */}
+      {/* 2. PROOF SNAPSHOT */}
+      <section className="max-w-6xl mx-auto px-4">
+        <div className="space-y-3">
+          <p className="text-sm text-muted-foreground">
+            this site is fully custom-built (no templates)
+          </p>
+          <p className="text-sm text-muted-foreground">
+            mode-based theming system with 5+ variants
+          </p>
+          <p className="text-sm text-muted-foreground">
+            cms-driven content + full e-commerce
+          </p>
+          <p className="text-sm text-muted-foreground">
+            designed + built end-to-end
+          </p>
+        </div>
+      </section>
+
+      {/* 3. FEATURED PROJECTS (FLOW, NOT GRID) */}
       {featuredProjects.length > 0 && (
-        <FeaturedProjects projects={featuredProjects} />
+        <section className="max-w-6xl mx-auto px-4">
+          <div className="space-y-6">
+            <div>
+              <h2 className="text-2xl font-bold text-foreground mb-2">work that proves capability</h2>
+              <p className="text-muted-foreground">each project answers: what it is, why it exists, what it proves</p>
+            </div>
+            <FeaturedProjectsList projects={featuredProjects} />
+          </div>
+        </section>
       )}
 
-      {/* Features */}
-      <section className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="vibey-card text-center p-8 bg-card rounded-2xl border border-border shadow-sm hover:shadow-md hover:border-primary transition-all">
-            <div className="inline-block p-4 bg-primary/20 rounded-xl mb-4">
-              <Code2 className="text-primary" size={32} />
+      {/* 4. HOW I THINK / BUILD */}
+      <section className="max-w-6xl mx-auto px-4">
+        <div className="space-y-6">
+          <h2 className="text-2xl font-bold text-foreground">how i work</h2>
+          <div className="space-y-4">
+            <div>
+              <h3 className="text-lg font-semibold text-foreground mb-1">notice</h3>
+              <p className="text-muted-foreground">i pay attention to friction. when something feels harder than it should, that's a signal.</p>
             </div>
-            <h3 className="text-xl font-bold text-foreground mb-2">Clean Code</h3>
-            <p className="text-muted-foreground">
-              Writing maintainable, scalable, and efficient code following best practices
-            </p>
-          </div>
-
-          <div className="vibey-card text-center p-8 bg-card rounded-2xl border border-border shadow-sm hover:shadow-md hover:border-primary transition-all">
-            <div className="inline-block p-4 bg-primary/20 rounded-xl mb-4">
-              <Palette className="text-primary" size={32} />
+            <div>
+              <h3 className="text-lg font-semibold text-foreground mb-1">build</h3>
+              <p className="text-muted-foreground">ideas don't count until they're real. i ship working code, not concepts.</p>
             </div>
-            <h3 className="text-xl font-bold text-foreground mb-2">Modern Design</h3>
-            <p className="text-muted-foreground">
-              Creating beautiful, responsive interfaces that users love
-            </p>
-          </div>
-
-          <div className="vibey-card text-center p-8 bg-card rounded-2xl border border-border shadow-sm hover:shadow-md hover:border-primary transition-all">
-            <div className="inline-block p-4 bg-primary/20 rounded-xl mb-4">
-              <Zap className="text-primary" size={32} />
+            <div>
+              <h3 className="text-lg font-semibold text-foreground mb-1">iterate</h3>
+              <p className="text-muted-foreground">first version ships. then i learn what actually matters and improve it.</p>
             </div>
-            <h3 className="text-xl font-bold text-foreground mb-2">Fast Performance</h3>
-            <p className="text-muted-foreground">
-              Optimized applications that load quickly and run smoothly
-            </p>
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="container mx-auto px-4">
-        <div className="bg-gradient-to-br from-primary via-primary to-primary/80 rounded-3xl p-12 md:p-20 text-center text-white shadow-xl">
-          <h2 className="text-4xl md:text-6xl font-bold mb-6 text-white drop-shadow-lg">Ready to start your project?</h2>
-          <p className="text-xl md:text-2xl mb-10 font-medium max-w-3xl mx-auto text-white drop-shadow-md">
-            Let's work together to bring your ideas to life
-          </p>
-          <Link href="/request" className="no-underline">
-            <Button variant="outline" size="lg" className="bg-white text-primary border-white hover:bg-white/90 hover:scale-105 transition-transform font-semibold">
-              Get Started Today
-            </Button>
+      {/* 5. QUIET CTA */}
+      <section className="max-w-6xl mx-auto px-4">
+        <div className="border-t border-border pt-12 text-center">
+          <Link href="/projects" className="inline-flex items-center gap-2 text-foreground hover:text-primary transition group">
+            <span>view all projects</span>
+            <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
           </Link>
         </div>
       </section>
