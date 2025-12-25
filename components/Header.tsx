@@ -15,19 +15,18 @@ export default function Header() {
   const isAuthed = status === 'authenticated'
 
   const publicLinks = [
-    { href: '/projects', label: 'Projects' },
-    { href: '/services', label: 'Services' },
-    { href: '/memberships', label: 'Pricing' },
-    { href: '/about', label: 'About' },
-    { href: '/request', label: 'Request' },
+    { href: '/projects', label: 'projects' },
+    { href: '/products', label: 'products' },
+    { href: '/about', label: 'about' },
+    { href: '/contact', label: 'contact' },
   ]
 
   const authedLinks = [
-    { href: '/dashboard', label: 'Dashboard' },
-    { href: '/services', label: 'Services' },
-    { href: '/memberships', label: 'Pricing' },
-    { href: '/about-developer', label: 'About Developer' },
-    { href: '/request', label: 'Request' },
+    { href: '/dashboard', label: 'dashboard' },
+    { href: '/projects', label: 'projects' },
+    { href: '/products', label: 'products' },
+    { href: '/about', label: 'about' },
+    { href: '/contact', label: 'contact' },
   ]
 
   const navLinks = isAuthed ? authedLinks : publicLinks
@@ -64,7 +63,7 @@ export default function Header() {
             className="flex items-center gap-2 text-2xl font-bold accent hover:opacity-80 transition"
           >
             <Code2 size={28} className="accent" />
-            <span className="accent">Kashi Kweyu</span>
+            <span className="accent">kashi</span>
           </Link>
 
           <div className="hidden md:flex items-center gap-6">
