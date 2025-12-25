@@ -85,14 +85,15 @@ export default function ProjectsPage() {
   const archiveProjects = projects.filter(p => !p.featured)
 
   return (
-    <div className="space-y-16 py-12">
-      {/* Header */}
-      <div className="space-y-4">
-        <h1 className="text-4xl font-bold text-foreground">projects</h1>
-        <p className="text-muted-foreground max-w-2xl">
-          things i've built to solve real problems or learn something new
-        </p>
-      </div>
+    <div style={{ paddingTop: 'var(--space-block)', paddingBottom: 'var(--space-section)' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-section)' }}>
+        {/* Header */}
+        <div className="container-lg space-y-3">
+          <h1 className="text-h1 font-bold text-foreground">projects</h1>
+          <p className="text-body text-muted-foreground/90 max-w-2xl">
+            things i've built to solve real problems or learn something new
+          </p>
+        </div>
 
       {/* Loading State */}
       {loading && (
@@ -109,83 +110,97 @@ export default function ProjectsPage() {
         </div>
       )}
 
-      {!loading && !error && (
-        <>
-          {/* Featured Projects */}
-          {featuredProjects.length > 0 && (
-            <section>
-              <h2 className="text-2xl font-bold text-foreground mb-6">featured</h2>
-              <FeaturedProjectsList projects={featuredProjects} />
-            </section>
-          )}
-
-          {/* Archive Section */}
-          {archiveProjects.length > 0 && (
-            <section className="space-y-6">
-              <div className="space-y-2">
-                <h2 className="text-2xl font-bold text-foreground">archive</h2>
-                <p className="text-sm text-muted-foreground">
-                  earlier work and experiments. not everything here is polished.
-                </p>
-              </div>
-
-              {/* Filters */}
-              <div className="flex flex-col md:flex-row gap-4 items-start md:items-center justify-between">
-                <div className="flex flex-wrap gap-2">
-                  <Button
-                    variant={filter === 'ALL' ? 'primary' : 'outline'}
-                    onClick={() => handleFilterChange('ALL')}
-                    size="sm"
-                  >
-                    all
-                  </Button>
-                  <Button
-                    variant={filter === 'PERSONAL' ? 'primary' : 'outline'}
-                    onClick={() => handleFilterChange('PERSONAL')}
-                    size="sm"
-                  >
-                    personal
-                  </Button>
-                  <Button
-                    variant={filter === 'CLASS' ? 'primary' : 'outline'}
-                    onClick={() => handleFilterChange('CLASS')}
-                    size="sm"
-                  >
-                    class
-                  </Button>
+        {!loading && !error && (
+          <>
+            {/* Featured */}
+            {featuredProjects.length > 0 && (
+              <section className="container-lg">
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-block)' }}>
+                  <h2 className="text-h2 font-bold text-foreground">featured</h2>
+                  <FeaturedProjectsList projects={featuredProjects} />
                 </div>
+              </section>
+            )}
 
-                <div className="relative w-full md:w-80">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" size={20} />
-                  <input
-                    type="text"
-                    placeholder="search..."
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full pl-10 pr-4 py-2 bg-card border border-border rounded-lg focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition text-foreground"
-                  />
-                </div>
-              </div>
-
-              {/* Archive Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {archiveProjects.map((project) => (
-                  <div key={project.id} onClick={() => handleProjectClick(project)}>
-                    <ProjectCard project={project} variant="public" />
+            {/* Archive */}
+            {archiveProjects.length > 0 && (
+              <section className="container-lg">
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-item)' }}>
+                  <div className="space-y-1.5">
+                    <h2 className="text-h2 font-bold text-foreground">archive</h2>
+                    <p className="text-sm text-muted-foreground/80">
+                      earlier work and experiments • not everything is polished
+                    </p>
                   </div>
-                ))}
-              </div>
-            </section>
-          )}
-        </>
-      )}
 
-      {/* Empty State */}
-      {!loading && !error && projects.length === 0 && (
-        <div className="text-center py-12">
-          <p className="text-muted-foreground">no projects found</p>
-        </div>
-      )}
+                  {/* Filters */}
+                  <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 items-start sm:items-center justify-between">
+                    <div className="flex flex-wrap gap-2">
+                      <button
+                        onClick={() => handleFilterChange('ALL')}
+                        className={`px-3 py-1.5 text-sm rounded-lg transition-all ${
+                          filter === 'ALL'
+                            ? 'bg-primary text-white'
+                            : 'bg-muted/60 text-foreground/70 hover:bg-muted hover:text-foreground'
+                        }`}
+                      >
+                        all
+                      </button>
+                      <button
+                        onClick={() => handleFilterChange('PERSONAL')}
+                        className={`px-3 py-1.5 text-sm rounded-lg transition-all ${
+                          filter === 'PERSONAL'
+                            ? 'bg-primary text-white'
+                            : 'bg-muted/60 text-foreground/70 hover:bg-muted hover:text-foreground'
+                        }`}
+                      >
+                        personal
+                      </button>
+                      <button
+                        onClick={() => handleFilterChange('CLASS')}
+                        className={`px-3 py-1.5 text-sm rounded-lg transition-all ${
+                          filter === 'CLASS'
+                            ? 'bg-primary text-white'
+                            : 'bg-muted/60 text-foreground/70 hover:bg-muted hover:text-foreground'
+                        }`}
+                      >
+                        class
+                      </button>
+                    </div>
+
+                    <div className="relative w-full sm:w-64">
+                      <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground/50" size={16} />
+                      <input
+                        type="text"
+                        placeholder="search..."
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        className="w-full pl-9 pr-3 py-2 text-sm bg-muted/40 border border-border/60 rounded-lg focus:border-primary/50 focus:bg-card focus:ring-2 focus:ring-primary/10 outline-none transition-all text-foreground placeholder:text-muted-foreground/50"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Archive Grid */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 pt-2">
+                    {archiveProjects.map((project) => (
+                      <div key={project.id} onClick={() => handleProjectClick(project)}>
+                        <ProjectCard project={project} variant="public" />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </section>
+            )}
+          </>
+        )}
+
+        {/* Empty State */}
+        {!loading && !error && projects.length === 0 && (
+          <div className="container-md text-center py-12">
+            <p className="text-body text-muted-foreground/70">no projects found</p>
+          </div>
+        )}
+      </div>
     </div>
   )
 }
