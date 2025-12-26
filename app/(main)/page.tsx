@@ -11,7 +11,7 @@ import { HowIThink } from '@/components/home/HowIThink'
 import { Container } from '@/components/layout/Container'
 import { Section } from '@/components/layout/Section'
 import { Button } from '@/components/ui/Button'
-import { truncate } from '@/lib/utils'
+import { normalizePublicPath, truncate } from '@/lib/utils'
 
 async function getLandingContent() {
   try {
@@ -82,7 +82,7 @@ export default async function HomePage() {
       what: project.description ? truncate(project.description, 140) : 'featured build',
       why: whyLine,
       proves: provesLine,
-      thumbnailUrl: project.image
+      thumbnailUrl: normalizePublicPath(project.image)
     }
   })
 

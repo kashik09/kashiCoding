@@ -1,4 +1,5 @@
 // Unified view model for Projects and Digital Products
+import { normalizePublicPath } from '@/lib/utils'
 
 export type PortfolioItemKind = 'PROJECT' | 'DIGITAL_PRODUCT'
 
@@ -32,7 +33,7 @@ export function projectToPortfolioItem(project: any): PortfolioItem {
     slug: project.slug,
     title: project.title,
     description: project.description || '',
-    thumbnail: project.thumbnail,
+    thumbnail: normalizePublicPath(project.thumbnail),
     category: project.category,
     tags: project.tags || [],
     featured: project.featured || false,
@@ -51,7 +52,7 @@ export function digitalProductToPortfolioItem(product: any): PortfolioItem {
     slug: product.slug,
     title: product.name,
     description: product.description || '',
-    thumbnail: product.thumbnailUrl,
+    thumbnail: normalizePublicPath(product.thumbnailUrl),
     category: product.category,
     tags: product.tags || [],
     featured: product.featured || false,

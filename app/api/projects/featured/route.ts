@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
+import { normalizePublicPath } from '@/lib/utils'
 
 export async function GET(request: NextRequest) {
   try {
@@ -33,10 +34,15 @@ export async function GET(request: NextRequest) {
       }
     })
 
+    const normalizedProjects = projects.map((project) => ({
+      ...project,
+      thumbnail: normalizePublicPath(project.thumbnail)
+    }))
+
     return NextResponse.json({
       success: true,
-      data: projects,
-      count: projects.length
+      data: normalizedProjects,
+      count: normalizedProjects.length
     })
   } catch (error) {
     console.error('Error fetching featured projects:', error)

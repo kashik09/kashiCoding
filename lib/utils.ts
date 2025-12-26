@@ -35,3 +35,36 @@ export function slugify(text: string): string {
     .replace(/--+/g, '-')
     .trim()
 }
+
+/**
+ * Normalize stored file paths into public-facing URLs.
+ */
+export function normalizePublicPath(input?: string | null): string | null {
+  if (!input) return null
+
+  if (input.startsWith('http://') || input.startsWith('https://')) {
+    return input
+  }
+
+  const normalized = input.replace(/\\/g, '/')
+
+  if (normalized.includes('/public/')) {
+    return normalized.slice(normalized.indexOf('/public/') + '/public'.length)
+  }
+
+  if (normalized.includes('/uploads/')) {
+    return normalized.slice(normalized.indexOf('/uploads/'))
+  }
+
+  if (normalized.includes('/projects/')) {
+    return normalized.slice(normalized.indexOf('/projects/'))
+  }
+
+  if (normalized.startsWith('public/')) {
+    return `/${normalized.slice('public/'.length)}`
+  }
+
+  if (normalized.startsWith('/')) return normalized
+
+  return `/${normalized}`
+}

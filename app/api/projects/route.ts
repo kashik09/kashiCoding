@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth-options'
 import { prisma } from '@/lib/prisma'
+import { normalizePublicPath } from '@/lib/utils'
 
 // GET /api/projects - Fetch all projects with optional filtering
 export async function GET(request: NextRequest) {
@@ -86,7 +87,7 @@ export async function GET(request: NextRequest) {
       slug: project.slug,
       title: project.title,
       description: project.description,
-      image: project.thumbnail,
+      image: normalizePublicPath(project.thumbnail),
       technologies: project.techStack,
       category: project.category,
       tags: project.tags,
