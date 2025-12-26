@@ -1,9 +1,9 @@
 export const dynamic = 'force-dynamic'
 
-import { ProjectCardData } from '@/components/ProjectCard'
 import { prisma } from '@/lib/prisma'
-import { IntroCollage } from '@/components/home/IntroCollage'
-import { normalizePublicPath, truncate } from '@/lib/utils'
+import { HomeCanvas } from '@/components/home/HomeCanvas'
+import { normalizePublicPath } from '@/lib/utils'
+import type { ProjectCardData } from '@/components/ProjectCard'
 
 export default async function HomePage() {
   const siteSettings = await prisma.siteSettings.findUnique({
@@ -51,24 +51,33 @@ export default async function HomePage() {
     category: project.category
   }))
 
-  const featuredWorkStories = featuredProjects.map((project) => {
-    const detail =
-      project.technologies?.length ? project.technologies.slice(0, 2).join(' / ') : project.category
-    const description = project.description ? truncate(project.description, 120) : 'featured build'
-    const summary = detail ? `${description} · ${detail}` : description
-
-    return {
-      id: project.id,
-      title: project.title,
-      href: `/projects/${project.slug}`,
-      summary,
-      thumbnailUrl: normalizePublicPath(project.image)
-    }
+  const productData = await prisma.digitalProduct.findMany({
+    where: { published: true },
+    orderBy: [{ featured: 'desc' }, { createdAt: 'desc' }],
+    take: 3,
+    select: {
+      id: true,
+      slug: true,
+      name: true,
+      description: true,
+      thumbnailUrl: true,
+      price: true,
+      currency: true,
+    },
   })
+
+  const products = productData.map((product) => ({
+    id: product.id,
+    title: product.name,
+    description: product.description,
+    imageUrl: normalizePublicPath(product.thumbnailUrl),
+    href: `/shop/${product.slug}`,
+    meta: `${product.price.toString()} ${product.currency}`,
+  }))
 
   return (
     <div>
-      <IntroCollage projects={featuredProjects} avatarUrl={avatarUrl} />
+      <HomeCanvas projects={featuredProjects} products={products} avatarUrl={avatarUrl} />
     </div>
   )
 }
