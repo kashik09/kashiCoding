@@ -33,6 +33,7 @@ yarn-error.log*
 
 # Claude Code
 .claude
+.claude-preferences
 docs/
 sh-files/
 backups/
