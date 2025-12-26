@@ -122,6 +122,13 @@ export function FeaturedWorkStory({ projects }: FeaturedWorkStoryProps) {
                     : 1.02 - localT * 0.02
                 const blur = reduceMotion ? 0 : isActive ? localT * 2 : (1 - localT) * 2
 
+                const backgroundUrl = project.thumbnailUrl
+                  ? project.thumbnailUrl.startsWith('http') ||
+                    project.thumbnailUrl.startsWith('/')
+                    ? project.thumbnailUrl
+                    : `/${project.thumbnailUrl}`
+                  : null
+
                 return (
                   <div
                     key={project.id}
@@ -135,13 +142,13 @@ export function FeaturedWorkStory({ projects }: FeaturedWorkStoryProps) {
                   >
                     <div
                       className={`absolute inset-0 bg-cover bg-center ${
-                        project.thumbnailUrl
+                        backgroundUrl
                           ? ''
                           : 'bg-gradient-to-br from-slate-950 via-slate-900 to-slate-800'
                       }`}
                       style={
-                        project.thumbnailUrl
-                          ? { backgroundImage: `url(${project.thumbnailUrl})` }
+                        backgroundUrl
+                          ? { backgroundImage: `url(${backgroundUrl})` }
                           : undefined
                       }
                     />
