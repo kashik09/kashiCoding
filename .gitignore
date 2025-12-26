@@ -37,7 +37,6 @@ yarn-error.log*
 docs/
 sh-files/
 backups/
-CHANGELOG_REBUILD.md
 
 # vercel
 .vercel
