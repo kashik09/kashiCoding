@@ -291,9 +291,9 @@ const layoutObjects: Record<LayoutPreset, SceneObject[]> = {
 }
 
 const overlayLinks = [
+  { href: '/projects', label: 'Projects' },
+  { href: '/products', label: 'Products' },
   { href: '/about', label: 'About' },
-  { href: '/projects', label: 'Archive' },
-  { href: '/login', label: 'Login' },
 ]
 
 const clamp = (value: number, min: number, max: number) =>
@@ -719,34 +719,13 @@ export function HomeCanvas({
               </Link>
             </div>
 
-            <div className="flex flex-wrap gap-2 text-xs uppercase tracking-[0.25em] text-white/70">
-              <Link
-                href="/projects"
-                onClick={(event) => handleModeLink(event, 'projects')}
-                className={`rounded-full border border-white/15 bg-white/5 px-3 py-1 transition ${
-                  mode === 'projects' ? 'border-primary/60 text-white' : 'hover:bg-white/10'
-                }`}
-              >
-                projects
-              </Link>
-              <Link
-                href="/products"
-                onClick={(event) => handleModeLink(event, 'products')}
-                className={`rounded-full border border-white/15 bg-white/5 px-3 py-1 transition ${
-                  mode === 'products' ? 'border-primary/60 text-white' : 'hover:bg-white/10'
-                }`}
-              >
-                products
-              </Link>
-              <a
-                href={contactHref}
-                onClick={(event) => handleModeLink(event, 'contact')}
-                className={`rounded-full border border-white/15 bg-white/5 px-3 py-1 transition ${
-                  mode === 'contact' ? 'border-primary/60 text-white' : 'hover:bg-white/10'
-                }`}
-              >
-                contact
-              </a>
+            <div className="flex flex-wrap gap-2">
+              <span className="inline-flex items-center rounded-full border border-white/10 bg-white/10 px-3 py-1 text-[0.65rem] font-semibold uppercase tracking-[0.2em] text-white/70">
+                component-driven
+              </span>
+              <span className="inline-flex items-center rounded-full border border-white/10 bg-white/10 px-3 py-1 text-[0.65rem] font-semibold uppercase tracking-[0.2em] text-white/70">
+                calm delivery
+              </span>
             </div>
           </div>
         </div>
@@ -840,6 +819,24 @@ export function HomeCanvas({
                     {link.label}
                   </Link>
                 ))}
+                {contactHref.startsWith('http') ? (
+                  <a
+                    href={contactHref}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="block text-2xl font-semibold tracking-tight text-white/90 hover:text-white"
+                  >
+                    Contact
+                  </a>
+                ) : (
+                  <Link
+                    href={contactHref}
+                    className="block text-2xl font-semibold tracking-tight text-white/90 hover:text-white"
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    Contact
+                  </Link>
+                )}
                 <button
                   type="button"
                   className="block w-full text-2xl font-semibold tracking-tight text-white/90 hover:text-white"
