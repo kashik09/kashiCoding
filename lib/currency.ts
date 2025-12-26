@@ -102,20 +102,6 @@ export function formatPriceShort(amount: number, currency: SupportedCurrency): s
 }
 
 /**
- * Get currency symbol
- */
-export function getCurrencySymbol(currency: SupportedCurrency): string {
-  return CURRENCY_INFO[currency].symbol
-}
-
-/**
- * Get currency name
- */
-export function getCurrencyName(currency: SupportedCurrency): string {
-  return CURRENCY_INFO[currency].name
-}
-
-/**
  * Check if a currency is supported
  */
 export function isSupportedCurrency(currency: string): currency is SupportedCurrency {
@@ -129,58 +115,3 @@ export function getDefaultCurrency(): SupportedCurrency {
   return DEFAULT_CURRENCY
 }
 
-/**
- * Parse currency string to number
- */
-export function parseCurrency(value: string): number {
-  // Remove currency symbols and spaces
-  const cleaned = value.replace(/[^0-9.-]/g, '')
-  return parseFloat(cleaned) || 0
-}
-
-/**
- * Calculate price in multiple currencies
- */
-export function getPriceInMultipleCurrencies(
-  amount: number,
-  baseCurrency: SupportedCurrency
-): Record<SupportedCurrency, number> {
-  const prices: Record<string, number> = {}
-
-  for (const currency of SUPPORTED_CURRENCIES) {
-    prices[currency] = convertPrice(amount, baseCurrency, currency)
-  }
-
-  return prices as Record<SupportedCurrency, number>
-}
-
-/**
- * Format price with both currencies (e.g., "$10 (UGX 37,000)")
- */
-export function formatPriceWithConversion(
-  amount: number,
-  currency: SupportedCurrency,
-  showCurrency?: SupportedCurrency
-): string {
-  const primaryPrice = formatPriceShort(amount, currency)
-
-  if (!showCurrency || showCurrency === currency) {
-    return primaryPrice
-  }
-
-  const convertedAmount = convertPrice(amount, currency, showCurrency)
-  const secondaryPrice = formatPriceShort(convertedAmount, showCurrency)
-
-  return `${primaryPrice} (${secondaryPrice})`
-}
-
-/**
- * Get exchange rate between two currencies
- */
-export function getExchangeRate(
-  from: SupportedCurrency,
-  to: SupportedCurrency
-): number {
-  if (from === to) return 1
-  return EXCHANGE_RATES[to] / EXCHANGE_RATES[from]
-}
