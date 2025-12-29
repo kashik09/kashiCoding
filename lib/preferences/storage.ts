@@ -3,7 +3,7 @@ import { Appearance, DEFAULT_PREFERENCES, Preferences, ThemeKey } from './types'
 const APPEARANCE_KEY = 'appearance'
 const THEME_KEY = 'theme'
 const APPEARANCES: Appearance[] = ['system', 'light', 'dark']
-const THEMES: ThemeKey[] = ['forest', 'obsidian', 'synthwave', 'night', 'cyberpunk', 'black']
+const THEMES: ThemeKey[] = ['forest', 'night', 'charcoal']
 
 const isBrowser = () => typeof window !== 'undefined'
 

@@ -9,22 +9,22 @@ type ResolvedAppearance = 'light' | 'dark'
 const getSystemAppearance = (media: MediaQueryList): ResolvedAppearance =>
   media.matches ? 'dark' : 'light'
 
+export const THEME_PAIRS = {
+  forest:   { dark: 'forest',   light: 'moss' },
+  night:    { dark: 'night',    light: 'skyline' },
+  charcoal: { dark: 'charcoal', light: 'linen' },
+} as const
+
 const DARK_THEME_MAP: Record<ThemeKey, string> = {
-  forest: 'forest',
-  obsidian: 'dracula',
-  synthwave: 'synthwave',
-  night: 'night',
-  cyberpunk: 'cyberpunk',
-  black: 'black',
+  forest: THEME_PAIRS.forest.dark,
+  night: THEME_PAIRS.night.dark,
+  charcoal: THEME_PAIRS.charcoal.dark,
 }
 
 const LIGHT_THEME_MAP: Record<ThemeKey, string> = {
-  forest: 'moss',
-  obsidian: 'pearl',
-  synthwave: 'aurora',
-  night: 'skyline',
-  cyberpunk: 'prism',
-  black: 'white',
+  forest: THEME_PAIRS.forest.light,
+  night: THEME_PAIRS.night.light,
+  charcoal: THEME_PAIRS.charcoal.light,
 }
 
 export function PreferencesGate() {

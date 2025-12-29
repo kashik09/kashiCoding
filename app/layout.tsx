@@ -21,10 +21,8 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      data-appearance="light"
-      data-theme="forest"
     >
-      <body className={inter.className}>
+      <body className={`${inter.className} bg-base-100 text-base-content`}>
         <Providers>{children}</Providers>
         <Analytics />
         <CookieNotice />

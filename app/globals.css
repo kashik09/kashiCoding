@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import './themes.css';
 
 @layer base {
   /* ============================================
@@ -95,14 +96,17 @@
 
   body {
     @apply bg-background text-foreground antialiased;
-    background-color: hsl(var(--b1));
-    color: hsl(var(--bc));
-    caret-color: hsl(var(--p));
+    background-color: oklch(var(--b1));
+    color: oklch(var(--bc));
+    caret-color: oklch(var(--p));
     transition: background-color 220ms ease, color 220ms ease;
   }
 
   html {
     transition: background-color 220ms ease, color 220ms ease;
+    /* Firefox scrollbar styling */
+    scrollbar-width: thin;
+    scrollbar-color: oklch(var(--p) / 0.6) oklch(var(--b2));
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -114,12 +118,12 @@
   }
 
   a {
-    color: hsl(var(--p));
+    color: oklch(var(--p));
     @apply hover:underline transition-colors;
   }
 
   a:hover {
-    color: hsl(var(--s));
+    color: oklch(var(--s));
   }
 
   button,
@@ -163,9 +167,9 @@
   [data-theme] .vibey-zone .vibey-backdrop {
     opacity: 0.5;
     background:
-      radial-gradient(620px 460px at 12% 8%, color-mix(in srgb, hsl(var(--s)) 18%, transparent) 0%, transparent 70%),
-      radial-gradient(520px 380px at 85% 12%, color-mix(in srgb, hsl(var(--p)) 14%, transparent) 0%, transparent 70%),
-      radial-gradient(760px 560px at 35% 92%, color-mix(in srgb, hsl(var(--s)) 10%, transparent) 0%, transparent 75%);
+      radial-gradient(620px 460px at 12% 8%, color-mix(in srgb, oklch(var(--s)) 18%, transparent) 0%, transparent 70%),
+      radial-gradient(520px 380px at 85% 12%, color-mix(in srgb, oklch(var(--p)) 14%, transparent) 0%, transparent 70%),
+      radial-gradient(760px 560px at 35% 92%, color-mix(in srgb, oklch(var(--s)) 10%, transparent) 0%, transparent 75%);
   }
 
   [data-theme] .vibey-zone .vibey-noise {
@@ -191,13 +195,13 @@
 
   [data-theme] .vibey-zone .vibey-card:hover {
     transform: translateY(-4px);
-    filter: drop-shadow(0 16px 28px hsl(var(--b3) / 0.35));
-    border-color: hsl(var(--b3));
+    filter: drop-shadow(0 16px 28px oklch(var(--b3) / 0.35));
+    border-color: oklch(var(--b3));
   }
 
   [data-theme] .vibey-zone main a:not(.no-underline) {
     text-decoration: none;
-    background-image: linear-gradient(transparent, transparent), linear-gradient(hsl(var(--p)), hsl(var(--p)));
+    background-image: linear-gradient(transparent, transparent), linear-gradient(oklch(var(--p)), oklch(var(--p)));
     background-size: 100% 0.12em, 0% 0.12em;
     background-position: 0 100%, 0 100%;
     background-repeat: no-repeat;
@@ -240,17 +244,17 @@
   }
 
   ::-webkit-scrollbar-track {
-    background: hsl(var(--b2));
+    background: oklch(var(--b2));
   }
 
   ::-webkit-scrollbar-thumb {
-    background: hsl(var(--p) / 0.6);
+    background: oklch(var(--p) / 0.6);
     border-radius: 10px;
     transition: background 180ms ease;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: hsl(var(--p) / 0.85);
+    background: oklch(var(--p) / 0.85);
   }
 
   ::selection {
@@ -278,58 +282,58 @@
   }
 
   .bg-app {
-    background-color: hsl(var(--b1) / 1);
+    background-color: oklch(var(--b1) / 1);
   }
 
   .surface-app {
-    background-color: hsl(var(--b2) / 1);
+    background-color: oklch(var(--b2) / 1);
   }
 
   .border-app {
-    border-color: hsl(var(--b3) / 1);
+    border-color: oklch(var(--b3) / 1);
   }
 
   .text-app {
-    color: hsl(var(--bc) / 1);
+    color: oklch(var(--bc) / 1);
   }
 
   .text-muted {
-    color: hsl(var(--bc) / 0.7);
+    color: oklch(var(--bc) / 0.7);
   }
 
   .text-muted-app {
-    color: hsl(var(--bc) / 0.7);
+    color: oklch(var(--bc) / 0.7);
   }
 
   .accent {
-    color: hsl(var(--p) / 1);
+    color: oklch(var(--p) / 1);
   }
 
   .accent-2 {
-    color: hsl(var(--s) / 1);
+    color: oklch(var(--s) / 1);
   }
 
   .bg-accent {
-    background-color: hsl(var(--p) / 1);
+    background-color: oklch(var(--p) / 1);
   }
 
   .bg-accent-soft {
-    background-color: color-mix(in srgb, hsl(var(--p)) 15%, transparent);
+    background-color: color-mix(in srgb, oklch(var(--p)) 15%, transparent);
   }
 
   .border-accent {
-    border-color: hsl(var(--p) / 1);
+    border-color: oklch(var(--p) / 1);
   }
 
   .border-accent-2 {
-    border-color: hsl(var(--s) / 1);
+    border-color: oklch(var(--s) / 1);
   }
 
   .ring-app {
-    --tw-ring-color: hsl(var(--p) / 0.35);
+    --tw-ring-color: oklch(var(--p) / 0.35);
   }
 
   .ring-offset-app {
-    --tw-ring-offset-color: hsl(var(--b1) / 1);
+    --tw-ring-offset-color: oklch(var(--b1) / 1);
   }
 }

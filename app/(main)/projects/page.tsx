@@ -140,7 +140,7 @@ export default function ProjectsPage() {
                         onClick={() => handleFilterChange('ALL')}
                         className={`px-3 py-1.5 text-sm rounded-lg transition-all ${
                           filter === 'ALL'
-                            ? 'bg-primary text-white'
+                            ? 'bg-primary text-primary-content'
                             : 'bg-muted/60 text-foreground/70 hover:bg-muted hover:text-foreground'
                         }`}
                       >
@@ -150,7 +150,7 @@ export default function ProjectsPage() {
                         onClick={() => handleFilterChange('PERSONAL')}
                         className={`px-3 py-1.5 text-sm rounded-lg transition-all ${
                           filter === 'PERSONAL'
-                            ? 'bg-primary text-white'
+                            ? 'bg-primary text-primary-content'
                             : 'bg-muted/60 text-foreground/70 hover:bg-muted hover:text-foreground'
                         }`}
                       >
@@ -160,7 +160,7 @@ export default function ProjectsPage() {
                         onClick={() => handleFilterChange('CLASS')}
                         className={`px-3 py-1.5 text-sm rounded-lg transition-all ${
                           filter === 'CLASS'
-                            ? 'bg-primary text-white'
+                            ? 'bg-primary text-primary-content'
                             : 'bg-muted/60 text-foreground/70 hover:bg-muted hover:text-foreground'
                         }`}
                       >

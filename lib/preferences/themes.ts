@@ -2,29 +2,20 @@ import type { ResolvedAppearance, ThemeKey } from './types'
 
 export const THEME_KEYS: ThemeKey[] = [
   'forest',
-  'obsidian',
-  'synthwave',
   'night',
-  'cyberpunk',
-  'black'
+  'charcoal'
 ]
 
 const DARK_LABELS: Record<ThemeKey, string> = {
   forest: 'Forest',
-  obsidian: 'Obsidian',
-  synthwave: 'Synthwave',
   night: 'Night',
-  cyberpunk: 'Cyberpunk',
-  black: 'Black'
+  charcoal: 'Charcoal'
 }
 
 const LIGHT_LABELS: Record<ThemeKey, string> = {
   forest: 'Moss',
-  obsidian: 'Pearl',
-  synthwave: 'Aurora',
   night: 'Skyline',
-  cyberpunk: 'Prism',
-  black: 'White'
+  charcoal: 'Linen'
 }
 
 export function getThemeLabel(appearance: ResolvedAppearance, key: ThemeKey) {

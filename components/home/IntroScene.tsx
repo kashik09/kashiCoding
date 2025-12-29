@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
 import { ArrowRight } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
-import { StickerField } from '@/components/home/StickerField'
+import { StickerField } from './StickerField'
 import { normalizePublicPath, truncate } from '@/lib/utils'
 import type { ProjectCardData } from '@/components/ProjectCard'
 

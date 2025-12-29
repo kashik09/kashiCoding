@@ -45,8 +45,8 @@ export function ProjectCard({ project, variant = 'public', onEdit }: ProjectCard
             <span
               className={`px-3 py-1 text-xs font-medium rounded-full ${
                 project.status === 'PUBLISHED'
-                  ? 'bg-green-500/20 text-green-700 dark:text-green-300'
-                  : 'bg-yellow-500/20 text-yellow-700 dark:text-yellow-300'
+                  ? 'bg-success/20 text-success'
+                  : 'bg-warning/20 text-warning'
               }`}
             >
               {project.status}

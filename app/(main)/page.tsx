@@ -1,7 +1,7 @@
 export const dynamic = 'force-dynamic'
 
 import { prisma } from '@/lib/prisma'
-import { HomeCanvas } from '@/components/home/HomeCanvas'
+import { HomeCanvas } from '@/components/home'
 import { normalizePublicPath } from '@/lib/utils'
 import type { ProjectCardData } from '@/components/ProjectCard'
 
@@ -76,8 +76,6 @@ export default async function HomePage() {
   }))
 
   return (
-    <div>
-      <HomeCanvas projects={featuredProjects} products={products} avatarUrl={avatarUrl} />
-    </div>
+    <HomeCanvas projects={featuredProjects} products={products} avatarUrl={avatarUrl} />
   )
 }

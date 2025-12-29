@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { ArrowRight, Menu, X } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
+import { StickerChip } from '@/components/ui/StickerChip'
 import { PreferencesPanel } from '@/components/preferences/PreferencesPanel'
 import { normalizePublicPath, truncate } from '@/lib/utils'
 import type { ProjectCardData } from '@/components/ProjectCard'
@@ -35,6 +36,7 @@ interface SceneObject {
   cardIndex?: number
   group?: string
   zIndex?: number
+  treatment?: 'solid' | 'outline' | 'glass' | 'easter-egg'
 }
 
 const desktopObjects: SceneObject[] = [
@@ -85,84 +87,75 @@ const desktopObjects: SceneObject[] = [
     kind: 'chip',
     top: '14%',
     left: '10%',
-    rotate: -6,
-    scale: 1,
-    lane: 'ambient',
-    size: 'md',
-    variant: 'primary',
-    label: 'ship in beats',
-    group: 'left',
-    zIndex: 18,
-  },
-  {
-    id: 'chip-2',
-    kind: 'chip',
-    top: '32%',
-    left: '18%',
-    rotate: 4,
-    scale: 1,
-    lane: 'ambient',
-    size: 'sm',
-    variant: 'secondary',
-    label: 'keep it calm',
-    group: 'left',
-    zIndex: 17,
-  },
-  {
-    id: 'chip-3',
-    kind: 'chip',
-    top: '58%',
-    left: '12%',
     rotate: -2,
     scale: 1,
     lane: 'ambient',
     size: 'md',
     variant: 'primary',
-    label: 'clean handoff',
+    label: 'calm 😌 is a performance feature 😙😝',
     group: 'left',
-    zIndex: 16,
+    zIndex: 18,
+    treatment: 'solid',
   },
   {
-    id: 'chip-4',
+    id: 'chip-2',
     kind: 'chip',
-    top: '22%',
-    left: '68%',
-    rotate: 5,
+    top: '56%',
+    left: '12%',
+    rotate: 3,
     scale: 1,
     lane: 'ambient',
-    size: 'sm',
+    size: 'md',
     variant: 'secondary',
-    label: 'design with rhythm',
-    group: 'right',
-    zIndex: 16,
+    label: 'boring code 🥱, interesting results 💅✨',
+    group: 'left',
+    zIndex: 17,
+    treatment: 'outline',
   },
   {
-    id: 'chip-5',
+    id: 'chip-3',
     kind: 'chip',
-    top: '70%',
-    left: '46%',
-    rotate: -4,
+    top: '38%',
+    left: '36%',
+    rotate: -3,
     scale: 1,
     lane: 'ambient',
     size: 'md',
     variant: 'primary',
-    label: 'tiny details',
+    label: "if it's confusing 🤔, it's unfinished ✨💅",
     group: 'center',
-    zIndex: 15,
+    zIndex: 16,
+    treatment: 'glass',
   },
   {
-    id: 'chip-6',
+    id: 'chip-4',
     kind: 'chip',
-    top: '40%',
-    left: '36%',
-    rotate: 3,
+    top: '24%',
+    left: '70%',
+    rotate: 2,
     scale: 1,
     lane: 'ambient',
-    size: 'sm',
+    size: 'md',
     variant: 'secondary',
-    label: 'quiet but sharp',
+    label: 'i hate fragile systems 😤😒',
+    group: 'right',
+    zIndex: 16,
+    treatment: 'solid',
+  },
+  {
+    id: 'chip-5',
+    kind: 'chip',
+    top: '68%',
+    left: '48%',
+    rotate: -2,
+    scale: 1,
+    lane: 'ambient',
+    size: 'md',
+    variant: 'primary',
+    label: '👀 yes, i ✨ obsessed ✨ over this 😭😭',
     group: 'center',
-    zIndex: 14,
+    zIndex: 15,
+    treatment: 'easter-egg',
   },
 ]
 
@@ -198,44 +191,77 @@ const tabletObjects: SceneObject[] = [
   {
     id: 'chip-1',
     kind: 'chip',
-    top: '18%',
+    top: '16%',
     left: '8%',
-    rotate: -6,
+    rotate: -3,
     scale: 1,
     lane: 'ambient',
     size: 'md',
     variant: 'primary',
-    label: 'ship in beats',
+    label: 'calm 😌 is a performance feature 😙😝',
     group: 'left',
     zIndex: 16,
+    treatment: 'solid',
   },
   {
     id: 'chip-2',
     kind: 'chip',
-    top: '46%',
-    left: '12%',
-    rotate: 3,
+    top: '68%',
+    left: '10%',
+    rotate: 2,
     scale: 1,
     lane: 'ambient',
-    size: 'sm',
+    size: 'md',
     variant: 'secondary',
-    label: 'component-driven',
+    label: 'boring code 🥱, interesting results 💅✨',
     group: 'left',
     zIndex: 15,
+    treatment: 'outline',
   },
   {
     id: 'chip-3',
     kind: 'chip',
-    top: '72%',
-    left: '18%',
-    rotate: -3,
+    top: '44%',
+    left: '14%',
+    rotate: -2,
     scale: 1,
     lane: 'ambient',
-    size: 'sm',
+    size: 'md',
     variant: 'primary',
-    label: 'clean handoff',
+    label: "if it's confusing 🤔, it's unfinished ✨💅",
     group: 'left',
     zIndex: 14,
+    treatment: 'glass',
+  },
+  {
+    id: 'chip-4',
+    kind: 'chip',
+    top: '32%',
+    left: '72%',
+    rotate: 3,
+    scale: 1,
+    lane: 'ambient',
+    size: 'md',
+    variant: 'secondary',
+    label: 'i hate fragile systems 😤😒',
+    group: 'right',
+    zIndex: 14,
+    treatment: 'solid',
+  },
+  {
+    id: 'chip-5',
+    kind: 'chip',
+    top: '78%',
+    left: '48%',
+    rotate: -2,
+    scale: 1,
+    lane: 'ambient',
+    size: 'md',
+    variant: 'primary',
+    label: '👀 yes, i ✨ obsessed ✨ over this 😭😭',
+    group: 'center',
+    zIndex: 13,
+    treatment: 'easter-egg',
   },
 ]
 
@@ -257,30 +283,47 @@ const mobileObjects: SceneObject[] = [
   {
     id: 'chip-1',
     kind: 'chip',
-    top: '18%',
+    top: '16%',
     left: '10%',
-    rotate: -4,
+    rotate: -2,
     scale: 1,
     lane: 'ambient',
     size: 'md',
     variant: 'primary',
-    label: 'ship in beats',
+    label: 'calm 😌 is a performance feature 😙😝',
     group: 'left',
     zIndex: 14,
+    treatment: 'solid',
   },
   {
     id: 'chip-2',
     kind: 'chip',
-    top: '78%',
-    left: '14%',
+    top: '76%',
+    left: '12%',
     rotate: 2,
     scale: 1,
     lane: 'ambient',
-    size: 'sm',
+    size: 'md',
     variant: 'secondary',
-    label: 'quiet but sharp',
+    label: 'boring code 🥱, interesting results 💅✨',
     group: 'left',
     zIndex: 13,
+    treatment: 'outline',
+  },
+  {
+    id: 'chip-3',
+    kind: 'chip',
+    top: '36%',
+    left: '14%',
+    rotate: -3,
+    scale: 1,
+    lane: 'ambient',
+    size: 'md',
+    variant: 'primary',
+    label: '👀 yes, i ✨ obsessed ✨ over this 😭😭',
+    group: 'left',
+    zIndex: 12,
+    treatment: 'easter-egg',
   },
 ]
 
@@ -559,11 +602,11 @@ export function HomeCanvas({
         data-layout={layout}
         data-reduced={reduceMotion ? 'true' : 'false'}
       >
-        <div className="absolute inset-0 bg-gradient-to-br from-black/30 via-black/50 to-black/70" />
+        <div className="absolute inset-0 bg-gradient-to-br from-base-200/30 via-base-200/50 to-base-200/70" />
         <div className="absolute inset-0">
           <div className="absolute -left-20 top-10 h-56 w-56 rounded-full bg-primary/15 blur-[120px]" />
           <div className="absolute bottom-[-25%] right-[-10%] h-72 w-72 rounded-full bg-primary/10 blur-[140px]" />
-          <div className="absolute right-[18%] top-[18%] h-40 w-40 rounded-full bg-white/5 blur-[90px]" />
+          <div className="absolute right-[18%] top-[18%] h-40 w-40 rounded-full bg-base-100/5 blur-[90px]" />
         </div>
 
         <div className="absolute inset-0">
@@ -580,9 +623,9 @@ export function HomeCanvas({
                     lg: 'w-[min(22rem,calc(100vw-3rem))] sm:w-[320px]',
                   }[object.size]
                 : {
-                    sm: 'px-3 py-2 text-[0.6rem] tracking-[0.25em]',
-                    md: 'px-4 py-2 text-[0.65rem] tracking-[0.28em]',
-                    lg: 'px-5 py-3 text-[0.75rem] tracking-[0.3em]',
+                    sm: 'px-3 py-2 text-[0.6rem] tracking-[0.25em] leading-relaxed',
+                    md: 'px-4 py-2.5 text-[0.7rem] tracking-[0.15em] leading-relaxed',
+                    lg: 'px-5 py-3 text-[0.75rem] tracking-[0.2em] leading-relaxed',
                   }[object.size]
 
             const isCard = object.kind === 'card'
@@ -619,14 +662,14 @@ export function HomeCanvas({
                 {object.kind === 'card' && cardData ? (
                   <Link
                     href={cardData.href}
-                    className="pointer-events-auto block rounded-3xl border border-white/10 bg-black/50 p-4 shadow-xl shadow-black/30 backdrop-blur-xl transition focus:outline-none focus:ring-2 focus:ring-primary/60"
+                    className="pointer-events-auto block rounded-3xl border border-base-300 bg-base-200/50 p-4 shadow-xl shadow-base-300/30 backdrop-blur-xl transition focus:outline-none focus:ring-2 focus:ring-primary/60"
                     onMouseEnter={() => setHoveredCard(cardData.id)}
                     onMouseLeave={() => setHoveredCard(null)}
                     onFocus={() => setHoveredCard(cardData.id)}
                     onBlur={() => setHoveredCard(null)}
                   >
                     <div
-                      className="h-36 w-full rounded-2xl bg-white/5 bg-cover bg-center"
+                      className="h-36 w-full rounded-2xl bg-base-100/5 bg-cover bg-center"
                       style={
                         cardData.imageUrl
                           ? { backgroundImage: `url('${cardData.imageUrl}')` }
@@ -634,34 +677,41 @@ export function HomeCanvas({
                       }
                     >
                       {!cardData.imageUrl && (
-                        <div className="flex h-full items-center justify-center text-sm font-semibold text-white/70">
+                        <div className="flex h-full items-center justify-center text-sm font-semibold text-base-content/70">
                           {cardData.title.slice(0, 1)}
                         </div>
                       )}
                     </div>
-                    <div className="mt-3 space-y-2 text-white">
+                    <div className="mt-3 space-y-2 text-base-content">
                       <div className="flex items-center justify-between gap-3">
                         <h3 className="text-sm font-semibold uppercase tracking-wide">
                           {cardData.title}
                         </h3>
                         {cardData.meta && (
-                          <span className="text-[0.6rem] uppercase tracking-[0.25em] text-white/60">
+                          <span className="text-[0.6rem] uppercase tracking-[0.25em] text-base-content/60">
                             {cardData.meta}
                           </span>
                         )}
                       </div>
-                      <p className="text-xs text-white/70">
+                      <p className="text-xs text-base-content/70">
                         {truncate(cardData.description, 90)}
                       </p>
-                      <div className="text-[0.6rem] uppercase tracking-[0.3em] text-white/70">
+                      <div className="text-[0.6rem] uppercase tracking-[0.3em] text-base-content/70">
                         open →
                       </div>
                     </div>
                   </Link>
                 ) : (
-                  <div className="pointer-events-auto rounded-full border border-white/15 bg-black/50 text-white/80 shadow-lg shadow-black/20 backdrop-blur-md">
-                    <span className="block uppercase">{object.label}</span>
-                  </div>
+                  <StickerChip
+                    label={object.label || ''}
+                    treatment={
+                      object.treatment === 'easter-egg'
+                        ? 'egg'
+                        : (object.treatment as 'solid' | 'outline' | 'glass' | undefined)
+                    }
+                    tone={object.variant as 'primary' | 'secondary'}
+                    size={object.size === 'lg' ? 'md' : 'sm'}
+                  />
                 )}
               </div>
             )
@@ -669,9 +719,9 @@ export function HomeCanvas({
         </div>
 
         <div className="relative z-20 mx-auto flex h-full w-full max-w-6xl items-center px-6 sm:px-10">
-          <div className="canvas-anchor max-w-xl space-y-6 text-white">
+          <div className="canvas-anchor max-w-xl space-y-6 text-base-content">
             <div className="flex items-center gap-4">
-              <div className="relative flex size-12 sm:size-14 lg:size-16 items-center justify-center rounded-full border border-white/15 bg-white/10 text-lg font-semibold">
+              <div className="relative flex size-18 sm:size-20 lg:size-24 items-center justify-center rounded-full border border-base-300 bg-base-100/10 text-lg font-semibold">
                 {avatarSrc && hasAvatar ? (
                   <img
                     src={avatarSrc}
@@ -680,23 +730,24 @@ export function HomeCanvas({
                     onError={() => setHasAvatar(false)}
                   />
                 ) : (
-                  <span className="text-white">K</span>
+                  <span className="text-base-content">K</span>
                 )}
-                <div className="absolute inset-0 rounded-full ring-2 ring-base-300/60 ring-offset-2 ring-offset-black/40" />
               </div>
-              <p className="text-xs uppercase tracking-[0.4em] text-white/70">
-                hey, i&apos;m kashi
+              <p className="text-sm sm:text-base uppercase tracking-[0.4em] text-base-content/70">
+                hey 👋🏾
+                <br />
+                i&apos;m kashi ✨
               </p>
             </div>
 
             <div className="space-y-4">
               <h1 className="text-4xl font-semibold leading-tight sm:text-5xl">
                 i notice friction,
-                <span className="block text-white/70">
+                <span className="block text-base-content/70">
                   then i build fixes.
                 </span>
               </h1>
-              <p className="max-w-prose text-base leading-relaxed text-white/70 sm:text-lg">
+              <p className="max-w-prose text-base leading-relaxed text-base-content/70 sm:text-lg">
                 calm, premium experiences that keep momentum without the noise.
               </p>
             </div>
@@ -720,10 +771,10 @@ export function HomeCanvas({
             </div>
 
             <div className="flex flex-wrap gap-2">
-              <span className="inline-flex items-center rounded-full border border-white/10 bg-white/10 px-3 py-1 text-[0.65rem] font-semibold uppercase tracking-[0.2em] text-white/70">
+              <span className="inline-flex items-center rounded-full border border-base-300 bg-base-100/10 px-3 py-1 text-[0.65rem] font-semibold uppercase tracking-[0.2em] text-base-content/70">
                 component-driven
               </span>
-              <span className="inline-flex items-center rounded-full border border-white/10 bg-white/10 px-3 py-1 text-[0.65rem] font-semibold uppercase tracking-[0.2em] text-white/70">
+              <span className="inline-flex items-center rounded-full border border-base-300 bg-base-100/10 px-3 py-1 text-[0.65rem] font-semibold uppercase tracking-[0.2em] text-base-content/70">
                 calm delivery
               </span>
             </div>
@@ -735,14 +786,14 @@ export function HomeCanvas({
             showContactPanel ? 'opacity-100' : 'pointer-events-none opacity-0'
           }`}
         >
-          <div className="rounded-3xl border border-white/15 bg-black/60 p-6 text-white shadow-2xl shadow-black/40 backdrop-blur-xl">
-            <p className="text-xs uppercase tracking-[0.3em] text-white/60">
+          <div className="rounded-3xl border border-base-300 bg-base-200/60 p-6 text-base-content shadow-2xl shadow-base-300/40 backdrop-blur-xl">
+            <p className="text-xs uppercase tracking-[0.3em] text-base-content/60">
               contact
             </p>
             <h2 className="mt-3 text-2xl font-semibold">
               let&apos;s build the calm version.
             </h2>
-            <p className="mt-2 text-sm text-white/70">
+            <p className="mt-2 text-sm text-base-content/70">
               share the scope, timeline, and what feels broken. i&apos;ll reply
               with the cleanest next step.
             </p>
@@ -752,7 +803,7 @@ export function HomeCanvas({
                   href={contactHref}
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-black"
+                  className="inline-flex items-center gap-2 rounded-full bg-primary px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-primary-content"
                 >
                   whatsapp
                   <ArrowRight size={14} />
@@ -760,7 +811,7 @@ export function HomeCanvas({
               ) : (
                 <Link
                   href={contactHref}
-                  className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-black"
+                  className="inline-flex items-center gap-2 rounded-full bg-primary px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-primary-content"
                 >
                   contact
                   <ArrowRight size={14} />
@@ -777,7 +828,7 @@ export function HomeCanvas({
             setMenuOpen(true)
             setShowPreferences(false)
           }}
-          className="fixed bottom-6 right-6 z-[60] flex items-center gap-2 rounded-full border border-white/20 bg-black/60 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white backdrop-blur-md transition"
+          className="fixed bottom-6 right-6 z-[60] flex items-center gap-2 rounded-full border border-base-300 bg-base-200/60 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-base-content backdrop-blur-md transition"
           aria-haspopup="dialog"
           aria-expanded={menuOpen}
           aria-controls="cinema-menu"
@@ -788,7 +839,7 @@ export function HomeCanvas({
 
         {menuOpen && (
           <div
-            className="fixed inset-0 z-[70] flex items-center justify-center bg-black/70 backdrop-blur-lg"
+            className="fixed inset-0 z-[70] flex items-center justify-center bg-base-200/70 backdrop-blur-lg"
             role="dialog"
             aria-modal="true"
             id="cinema-menu"
@@ -796,13 +847,13 @@ export function HomeCanvas({
           >
             <div
               ref={overlayRef}
-              className="relative w-full max-w-xl rounded-3xl border border-white/10 bg-black/70 px-8 py-10 text-white shadow-2xl"
+              className="relative w-full max-w-xl rounded-3xl border border-base-300 bg-base-200/70 px-8 py-10 text-base-content shadow-2xl"
               onClick={(event) => event.stopPropagation()}
             >
               <button
                 type="button"
                 onClick={() => setMenuOpen(false)}
-                className="absolute right-5 top-5 rounded-full border border-white/20 p-2 text-white hover:bg-white/10"
+                className="absolute right-5 top-5 rounded-full border border-base-300 p-2 text-base-content hover:bg-base-100/10"
                 aria-label="Close menu"
               >
                 <X size={16} />
@@ -813,7 +864,7 @@ export function HomeCanvas({
                   <Link
                     key={link.href}
                     href={link.href}
-                    className="block text-2xl font-semibold tracking-tight text-white/90 hover:text-white"
+                    className="block text-2xl font-semibold tracking-tight text-base-content/90 hover:text-base-content"
                     onClick={() => setMenuOpen(false)}
                   >
                     {link.label}
@@ -824,14 +875,14 @@ export function HomeCanvas({
                     href={contactHref}
                     target="_blank"
                     rel="noreferrer"
-                    className="block text-2xl font-semibold tracking-tight text-white/90 hover:text-white"
+                    className="block text-2xl font-semibold tracking-tight text-base-content/90 hover:text-base-content"
                   >
                     Contact
                   </a>
                 ) : (
                   <Link
                     href={contactHref}
-                    className="block text-2xl font-semibold tracking-tight text-white/90 hover:text-white"
+                    className="block text-2xl font-semibold tracking-tight text-base-content/90 hover:text-base-content"
                     onClick={() => setMenuOpen(false)}
                   >
                     Contact
@@ -839,7 +890,7 @@ export function HomeCanvas({
                 )}
                 <button
                   type="button"
-                  className="block w-full text-2xl font-semibold tracking-tight text-white/90 hover:text-white"
+                  className="block w-full text-2xl font-semibold tracking-tight text-base-content/90 hover:text-base-content"
                   onClick={() => setShowPreferences((prev) => !prev)}
                 >
                   Preferences
@@ -847,8 +898,8 @@ export function HomeCanvas({
               </nav>
 
               {showPreferences && (
-                <div className="mt-8 rounded-2xl border border-white/10 bg-white/5 p-5 text-left">
-                  <p className="text-xs uppercase tracking-[0.3em] text-white/60">
+                <div className="mt-8 rounded-2xl border border-base-300 bg-base-100/5 p-5 text-left">
+                  <p className="text-xs uppercase tracking-[0.3em] text-base-content/60">
                     Preferences
                   </p>
                   <div className="mt-4">

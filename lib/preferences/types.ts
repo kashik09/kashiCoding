@@ -1,6 +1,6 @@
 export type Appearance = 'system' | 'light' | 'dark'
 export type ResolvedAppearance = Exclude<Appearance, 'system'>
-export type ThemeKey = 'forest' | 'obsidian' | 'synthwave' | 'night' | 'cyberpunk' | 'black'
+export type ThemeKey = 'forest' | 'night' | 'charcoal'
 
 export interface Preferences {
   appearance: Appearance
