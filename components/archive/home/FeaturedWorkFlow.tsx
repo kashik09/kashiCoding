@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { ArrowDown, ArrowRight } from 'lucide-react'
-import { ProjectCardData } from '@/components/ProjectCard'
+import { ProjectCardData } from '@/components/shared/ProjectCard'
 import { Container } from '@/components/layout/Container'
 import { Section } from '@/components/layout/Section'
 import { StoryReveal } from '@/components/motion/StoryReveal'

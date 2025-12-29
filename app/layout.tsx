@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-import { CookieNotice } from '@/components/CookieNotice'
+import { CookieNotice } from '@/components/shared/CookieNotice'
 import './globals.css'
 import { Analytics } from "@vercel/analytics/next"
 import { Providers } from './Providers'

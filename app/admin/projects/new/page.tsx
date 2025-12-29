@@ -6,7 +6,7 @@ import { ArrowLeft, Upload, Plus, X, Camera } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useToast } from '@/components/ui/Toast'
-import { ScreenshotCapture } from '@/components/admin/ScreenshotCapture'
+import { ScreenshotCapture } from '@/components/features/admin/ScreenshotCapture'
 export default function NewProjectPage() {
   const router = useRouter()
   const { showToast } = useToast()

@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { PreferencesPanel } from '@/components/preferences/PreferencesPanel'
+import { PreferencesPanel } from '@/components/features/preferences/PreferencesPanel'
 
 export default function Footer() {
   const currentYear = new Date().getFullYear()

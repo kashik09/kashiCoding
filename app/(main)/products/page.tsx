@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
-import { ProductGrid } from '@/components/shop/ProductGrid'
+import { ProductGrid } from '@/components/features/shop/ProductGrid'
 import { Search } from 'lucide-react'
 import { useToast } from '@/components/ui/Toast'
 

@@ -3,7 +3,7 @@
 import { useState, useCallback, useRef, useEffect } from 'react'
 import Cropper from 'react-easy-crop'
 import { Upload, Crop, X, Check } from 'lucide-react'
-import { Spinner } from './ui/Spinner'
+import { Spinner } from '@/components/ui/Spinner'
 
 interface Point {
   x: number

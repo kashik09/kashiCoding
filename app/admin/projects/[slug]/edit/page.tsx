@@ -7,7 +7,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useToast } from '@/components/ui/Toast'
 import { Spinner } from '@/components/ui/Spinner'
-import { ScreenshotCapture } from '@/components/admin/ScreenshotCapture'
+import { ScreenshotCapture } from '@/components/features/admin/ScreenshotCapture'
 interface Project {
   id: number
   title: string

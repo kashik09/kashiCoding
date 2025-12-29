@@ -15,7 +15,7 @@ import { useState, useEffect } from 'react'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
 import { Plus, Trash2, Save, AlertCircle, Briefcase, GraduationCap } from 'lucide-react'
-import { ImageUploadCrop } from '@/components/ImageUploadCrop'
+import { ImageUploadCrop } from '@/components/shared/ImageUploadCrop'
 import { YearPicker } from '@/components/ui/YearPicker'
 interface AboutData {
   hero: {

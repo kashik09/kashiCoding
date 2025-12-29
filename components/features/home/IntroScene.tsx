@@ -6,7 +6,7 @@ import { ArrowRight } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
 import { StickerField } from './StickerField'
 import { normalizePublicPath, truncate } from '@/lib/utils'
-import type { ProjectCardData } from '@/components/ProjectCard'
+import type { ProjectCardData } from '@/components/shared/ProjectCard'
 
 interface IntroSceneProps {
   hero: {

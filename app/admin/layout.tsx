@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { LayoutDashboard, FolderKanban, FileText, Users, Settings, LogOut, Shield, Megaphone, ArrowUp, Package, ShoppingBag } from 'lucide-react'
-import AdminHeader from '@/components/AdminHeader'
+import AdminHeader from '@/components/features/admin/AdminHeader'
 
 export default function AdminLayout({
   children,

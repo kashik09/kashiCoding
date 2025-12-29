@@ -5,9 +5,9 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { ArrowRight, Menu, X } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
 import { StickerField } from './StickerField'
-import { PreferencesPanel } from '@/components/preferences/PreferencesPanel'
+import { PreferencesPanel } from '@/components/features/preferences/PreferencesPanel'
 import { normalizePublicPath, truncate } from '@/lib/utils'
-import type { ProjectCardData } from '@/components/ProjectCard'
+import type { ProjectCardData } from '@/components/shared/ProjectCard'
 
 interface IntroCollageProps {
   projects: ProjectCardData[]

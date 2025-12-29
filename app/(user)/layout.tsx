@@ -1,6 +1,6 @@
 'use client'
 
-import { VibeyBackdrop } from '@/components/VibeyBackdrop'
+import { VibeyBackdrop } from '@/components/shared/VibeyBackdrop'
 
 export default function UserLayout({
   children,

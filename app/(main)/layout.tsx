@@ -1,8 +1,8 @@
 'use client'
 
-import Header from '@/components/Header'
-import Footer from '@/components/Footer'
-import { VibeyBackdrop } from '@/components/VibeyBackdrop'
+import Header from '@/components/layout/Header'
+import Footer from '@/components/layout/Footer'
+import { VibeyBackdrop } from '@/components/shared/VibeyBackdrop'
 import { usePathname } from 'next/navigation'
 
 export default function MainLayout({

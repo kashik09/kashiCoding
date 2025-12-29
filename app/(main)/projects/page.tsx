@@ -4,8 +4,8 @@ import { useState, useEffect } from 'react'
 import { Search } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
 import { Spinner } from '@/components/ui/Spinner'
-import { ProjectCard, ProjectCardData } from '@/components/ProjectCard'
-import { FeaturedProjectsList } from '@/components/FeaturedProjects'
+import { ProjectCard, ProjectCardData } from '@/components/shared/ProjectCard'
+import { FeaturedProjectsList } from '@/components/shared/FeaturedProjects'
 import { usePageTracking, useAnalytics } from '@/lib/useAnalytics'
 
 export default function ProjectsPage() {

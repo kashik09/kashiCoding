@@ -1,9 +1,9 @@
 export const dynamic = 'force-dynamic'
 
 import { prisma } from '@/lib/prisma'
-import { HomeCanvas } from '@/components/home'
+import { HomeCanvas } from '@/components/features/home'
 import { normalizePublicPath } from '@/lib/utils'
-import type { ProjectCardData } from '@/components/ProjectCard'
+import type { ProjectCardData } from '@/components/shared/ProjectCard'
 
 export default async function HomePage() {
   const siteSettings = await prisma.siteSettings.findUnique({

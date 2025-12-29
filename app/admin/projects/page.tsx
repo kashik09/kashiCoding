@@ -6,11 +6,11 @@ import { Plus, Search, Package, Star } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useToast } from '@/components/ui/Toast'
-import { ProjectCard, ProjectCardData } from '@/components/ProjectCard'
+import { ProjectCard, ProjectCardData } from '@/components/shared/ProjectCard'
 import { StyledSelect } from '@/components/ui/StyledSelect'
 import { Spinner } from '@/components/ui/Spinner'
 import ConfirmModal from '@/components/ui/ConfirmModal'
-import { FeaturedCheckbox } from '@/components/admin/FeaturedToggle'
+import { FeaturedCheckbox } from '@/components/features/admin/FeaturedToggle'
 export default function AdminProjectsPage() {
   const router = useRouter()
   const [searchQuery, setSearchQuery] = useState('')

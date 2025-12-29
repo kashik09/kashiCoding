@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
 import { useSession, signOut } from 'next-auth/react'
 import { Code2, Menu, X, ChevronDown, LogOut, Settings, User as UserIcon } from 'lucide-react'
-import { UserAvatar } from './ui/UserAvatar'
+import { UserAvatar } from '@/components/ui/UserAvatar'
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
