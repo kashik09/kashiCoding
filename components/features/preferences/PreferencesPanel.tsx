@@ -74,7 +74,7 @@ export function PreferencesPanel() {
         <p className="text-xs font-semibold uppercase tracking-[0.25em] text-muted">
           Appearance
         </p>
-        <div className="flex items-center gap-1 rounded-full border border-app surface-app p-1">
+        <div className="inline-flex items-center gap-1 rounded-full border border-app surface-app p-1">
           {appearanceOptions.map((option) => (
             <button
               key={option.value}
@@ -99,7 +99,7 @@ export function PreferencesPanel() {
         <p className="text-xs font-semibold uppercase tracking-[0.25em] text-muted">
           Theme
         </p>
-        <div className="flex flex-wrap items-center gap-1 rounded-3xl border border-app surface-app p-1">
+        <div className="inline-flex flex-wrap items-center gap-1 rounded-3xl border border-app surface-app p-1">
           {THEME_KEYS.map((key, index) => {
             const shouldAnimate = !reduceMotion && phase !== 'idle'
             const animationStyle = shouldAnimate
