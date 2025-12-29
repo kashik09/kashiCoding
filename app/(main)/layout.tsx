@@ -18,7 +18,7 @@ export default function MainLayout({
     : 'flex-1 container mx-auto px-6 md:px-8 lg:px-12 py-8'
 
   return (
-    <VibeyBackdrop className="min-h-screen flex flex-col">
+    <VibeyBackdrop className="min-h-screen flex flex-col bg-base-100 text-base-content">
       {!cinemaActive && <Header />}
       <main className={mainClassName}>
         {children}

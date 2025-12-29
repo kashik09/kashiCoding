@@ -49,7 +49,7 @@ export default function DashboardLayout({
   }, [])
   if (status === 'loading') {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-background">
+      <div className="flex items-center justify-center min-h-screen bg-base-100 text-base-content">
         <Spinner size="lg" />
       </div>
     )
@@ -58,7 +58,7 @@ export default function DashboardLayout({
     return null
   }
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-base-100 text-base-content">
         {/* Header */}
         <header className="sticky top-0 z-50 bg-card border-b border-border backdrop-blur-sm">
           <div className="px-4 md:px-6 py-4">
@@ -132,7 +132,7 @@ export default function DashboardLayout({
           </aside>
           {/* Mobile Sidebar */}
           {sidebarOpen && (
-            <div className="md:hidden fixed inset-0 z-40 bg-black/50 backdrop-blur-sm" onClick={() => setSidebarOpen(false)}>
+            <div className="md:hidden fixed inset-0 z-40 bg-base-content/50 backdrop-blur-sm" onClick={() => setSidebarOpen(false)}>
               <aside
                 className="absolute left-0 top-0 bottom-0 w-64 bg-card border-r border-border p-6"
                 onClick={(e) => e.stopPropagation()}
@@ -171,7 +171,7 @@ export default function DashboardLayout({
             </div>
           )}
           {/* Main Content */}
-          <main className="flex-1 p-4 md:p-8 bg-background">
+          <main className="flex-1 p-4 md:p-8 bg-base-100">
             {maintenanceMode && (
               <div className="mb-4 flex items-start gap-2 rounded-lg border border-border bg-muted px-4 py-3 text-sm text-muted-foreground">
                 <AlertTriangle className="mt-0.5 text-primary" size={16} />

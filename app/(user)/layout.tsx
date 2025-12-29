@@ -8,7 +8,7 @@ export default function UserLayout({
   children: React.ReactNode
 }) {
   return (
-    <VibeyBackdrop className="min-h-screen">
+    <VibeyBackdrop className="min-h-screen bg-base-100 text-base-content">
       {children}
     </VibeyBackdrop>
   )
