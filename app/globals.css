@@ -105,8 +105,8 @@
   html {
     transition: background-color 220ms ease, color 220ms ease;
     /* Firefox scrollbar styling */
-    scrollbar-width: thin;
-    scrollbar-color: oklch(var(--p) / 0.6) oklch(var(--b2));
+    scrollbar-width: auto;
+    scrollbar-color: oklch(var(--p) / 0.8) oklch(var(--b2));
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -240,7 +240,11 @@
      SCROLLBAR
      ============================================ */
   ::-webkit-scrollbar {
-    width: 10px;
+    width: 12px;
+  }
+
+  ::-webkit-scrollbar-button {
+    display: none;
   }
 
   ::-webkit-scrollbar-track {
@@ -248,13 +252,14 @@
   }
 
   ::-webkit-scrollbar-thumb {
-    background: oklch(var(--p) / 0.6);
+    background: oklch(var(--p) / 0.8);
     border-radius: 10px;
+    border: 2px solid oklch(var(--b2));
     transition: background 180ms ease;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: oklch(var(--p) / 0.85);
+    background: oklch(var(--p));
   }
 
   ::selection {
