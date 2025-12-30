@@ -85,7 +85,7 @@ export default async function HomePage() {
     title: product.name,
     description: product.description,
     imageUrl: normalizePublicPath(product.thumbnailUrl),
-    href: `/shop/${product.slug}`,
+    href: `/products/${product.slug}`,
     meta: `${product.price.toString()} ${product.currency}`,
   }))
 

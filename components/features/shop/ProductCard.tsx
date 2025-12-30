@@ -45,7 +45,7 @@ export function ProductCard({ product, onAddToCart, showQuickAdd = true }: Produ
       )}
 
       {/* Thumbnail */}
-      <Link href={`/shop/${product.slug}`} className="block relative aspect-video bg-muted overflow-hidden">
+      <Link href={`/products/${product.slug}`} className="block relative aspect-video bg-muted overflow-hidden">
         {product.thumbnailUrl ? (
           <Image
             src={product.thumbnailUrl}
@@ -71,7 +71,7 @@ export function ProductCard({ product, onAddToCart, showQuickAdd = true }: Produ
         </div>
 
         {/* Title */}
-        <Link href={`/shop/${product.slug}`}>
+        <Link href={`/products/${product.slug}`}>
           <h3 className="font-semibold text-lg text-foreground mb-2 line-clamp-1 group-hover:text-primary transition-colors">
             {product.name}
           </h3>
@@ -118,7 +118,7 @@ export function ProductCard({ product, onAddToCart, showQuickAdd = true }: Produ
               </button>
             )}
             <Link
-              href={`/shop/${product.slug}`}
+              href={`/products/${product.slug}`}
               className="px-4 py-2 rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-colors text-sm font-medium"
             >
               View Details
