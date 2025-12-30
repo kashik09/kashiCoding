@@ -221,6 +221,35 @@
     background-size: 100% 0.12em, 100% 0.12em;
   }
 
+  /* ============================================
+     HOME CANVAS STYLES
+     ============================================ */
+  .canvas-item {
+    position: absolute;
+    will-change: transform, opacity;
+    transform:
+      translate(calc(var(--drift-x) * 1px), calc(var(--drift-y) * 1px))
+      rotate(var(--rotate))
+      scale(var(--scale));
+    opacity: var(--opacity);
+    transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+                opacity 0.4s ease,
+                filter 0.3s ease;
+  }
+
+  .canvas-item.is-hovered {
+    transform:
+      translate(calc(var(--drift-x) * 1px), calc(var(--drift-y) * 1px))
+      rotate(var(--rotate))
+      scale(var(--hover-scale));
+    z-index: 999;
+  }
+
+  .canvas-item.is-dimmed {
+    opacity: 0.4;
+    filter: blur(1px);
+  }
+
   @media (prefers-reduced-motion: reduce) {
     html,
     body,
@@ -234,8 +263,13 @@
     .bg-background-secondary,
     .border-app,
     .border-border,
-    .vibey-card {
+    .vibey-card,
+    .canvas-item {
       transition: none !important;
+    }
+
+    .canvas-item {
+      transform: rotate(var(--rotate)) scale(var(--scale));
     }
   }
 
