@@ -1,10 +1,59 @@
 import { withAuth } from "next-auth/middleware"
-import { NextResponse } from "next/server"
+import { NextResponse, type NextRequest } from "next/server"
+
+const SAFE_METHODS = new Set(["GET", "HEAD", "OPTIONS"])
+const allowedOrigins = new Set(
+  (process.env.CSRF_ALLOWED_ORIGINS ?? "")
+    .split(",")
+    .map(origin => origin.trim())
+    .filter(Boolean)
+)
+
+function isAllowedOrigin(origin: string, requestOrigin: string): boolean {
+  return origin === requestOrigin || allowedOrigins.has(origin)
+}
+
+function isAllowedReferer(referer: string, requestOrigin: string): boolean {
+  try {
+    return isAllowedOrigin(new URL(referer).origin, requestOrigin)
+  } catch {
+    return false
+  }
+}
+
+function hasSameSiteSignal(req: NextRequest): boolean {
+  const secFetchSite = req.headers.get("sec-fetch-site")
+  return secFetchSite === "same-origin" || secFetchSite === "same-site"
+}
 
 export default withAuth(
   function middleware(req) {
     const token = req.nextauth.token
     const path = req.nextUrl.pathname
+
+    if (path.startsWith("/api")) {
+      if (!SAFE_METHODS.has(req.method)) {
+        const origin = req.headers.get("origin")
+        const referer = req.headers.get("referer")
+        const requestOrigin = req.nextUrl.origin
+        const hasSameSite = hasSameSiteSignal(req)
+        const originAllowed = origin
+          ? isAllowedOrigin(origin, requestOrigin)
+          : false
+        const refererAllowed = referer
+          ? isAllowedReferer(referer, requestOrigin)
+          : false
+
+        if (!(originAllowed || refererAllowed || hasSameSite)) {
+          return NextResponse.json(
+            { error: "Invalid CSRF origin" },
+            { status: 403 }
+          )
+        }
+      }
+
+      return NextResponse.next()
+    }
 
     // Protect Admin
     if (path.startsWith("/admin")) {
@@ -57,11 +106,17 @@ export default withAuth(
   },
   {
     callbacks: {
-      authorized: ({ token }) => !!token,
+      authorized: ({ req, token }) => {
+        if (req.nextUrl.pathname.startsWith("/api")) {
+          return true
+        }
+
+        return !!token
+      },
     },
   }
 )
 
 export const config = {
-  matcher: ["/admin/:path*", "/dashboard/:path*"],
+  matcher: ["/admin/:path*", "/dashboard/:path*", "/api/:path*"],
 }
