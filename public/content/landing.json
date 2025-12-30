@@ -1,0 +1,50 @@
+{
+  "hero": {
+    "title": "hey, i'm",
+    "highlight": "kashi",
+    "subtitle": "i notice things that could work better, then i build them",
+    "primaryCtaLabel": "see what i've built",
+    "primaryCtaHref": "/projects",
+    "secondaryCtaLabel": "get in touch",
+    "secondaryCtaHref": "/contact"
+  },
+  "proofSnapshot": [
+    {
+      "id": "1",
+      "text": "this site is fully custom-built (no templates)"
+    },
+    {
+      "id": "2",
+      "text": "theme palette system with 6 variants"
+    },
+    {
+      "id": "3",
+      "text": "cms-driven content + full e-commerce"
+    },
+    {
+      "id": "4",
+      "text": "designed + built end-to-end"
+    }
+  ],
+  "philosophy": [
+    {
+      "id": "1",
+      "title": "notice",
+      "description": "i pay attention to friction. when something feels harder than it should, that's a signal."
+    },
+    {
+      "id": "2",
+      "title": "build",
+      "description": "ideas don't count until they're real. i ship working code, not concepts."
+    },
+    {
+      "id": "3",
+      "title": "iterate",
+      "description": "first version ships. then i learn what actually matters and improve it."
+    }
+  ],
+  "cta": {
+    "text": "view all projects",
+    "href": "/projects"
+  }
+}
