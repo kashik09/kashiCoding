@@ -29,7 +29,7 @@ export function CartItem({ item, currency = 'USD', onRemove }: CartItemProps) {
   return (
     <div className="flex gap-4 p-4 bg-card rounded-lg border border-border">
       {/* Thumbnail */}
-      <Link href={`/shop/${item.product.slug}`} className="flex-shrink-0">
+      <Link href={`/products/${item.product.slug}`} className="flex-shrink-0">
         <div className="relative w-24 h-24 rounded-lg overflow-hidden bg-muted border border-border">
           {item.product.thumbnailUrl ? (
             <Image
@@ -48,7 +48,7 @@ export function CartItem({ item, currency = 'USD', onRemove }: CartItemProps) {
 
       {/* Details */}
       <div className="flex-1 min-w-0">
-        <Link href={`/shop/${item.product.slug}`}>
+        <Link href={`/products/${item.product.slug}`}>
           <h3 className="font-semibold text-foreground hover:text-primary transition-colors line-clamp-1">
             {item.product.name}
           </h3>

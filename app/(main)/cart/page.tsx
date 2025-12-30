@@ -90,7 +90,7 @@ export default function CartPage() {
             <h2 className="text-2xl font-semibold text-foreground mb-2">Your cart is empty</h2>
             <p className="text-muted-foreground mb-8">Add some products to get started</p>
             <Link
-              href="/shop"
+              href="/products"
               className="px-6 py-3 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors font-medium"
             >
               Browse Products
@@ -153,7 +153,7 @@ export default function CartPage() {
                 </Link>
 
                 <Link
-                  href="/shop"
+                  href="/products"
                   className="block text-center text-sm text-muted-foreground hover:text-foreground mt-4"
                 >
                   Continue Shopping
