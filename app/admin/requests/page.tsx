@@ -161,7 +161,7 @@ export default function AdminRequestsPage() {
       IN_PROGRESS: 'bg-cyan-500/20 text-cyan-700 dark:text-cyan-300',
       COMPLETED: 'bg-blue-500/20 text-blue-700 dark:text-blue-300',
       REJECTED: 'bg-red-500/20 text-red-700 dark:text-red-300',
-      CANCELLED: 'bg-gray-500/20 text-gray-700 dark:text-gray-300'
+      CANCELLED: 'bg-muted/50 text-muted-foreground'
     }
     return styles[status] || styles.PENDING
   }
