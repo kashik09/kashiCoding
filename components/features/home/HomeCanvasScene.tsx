@@ -3,14 +3,8 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { StickerChip } from '@/components/ui/StickerChip'
-import { truncate } from '@/lib/utils'
+import { isLocalImageUrl, normalizePublicPath, truncate } from '@/lib/utils'
 import type { CanvasCard, SceneObject } from './homeCanvasTypes'
-
-const remoteImageLoader = ({ src }: { src: string }) => src
-
-function isRemoteImage(src?: string | null) {
-  return !!src && src.startsWith('http')
-}
 
 export function HomeCanvasScene({
   objects,
@@ -82,17 +76,27 @@ export function HomeCanvasScene({
               >
                 <div className="relative h-36 w-full overflow-hidden rounded-2xl bg-base-100/5">
                   {cardData.imageUrl ? (
-                    <Image
-                      src={cardData.imageUrl}
-                      alt={cardData.title}
-                      fill
-                      sizes="(max-width: 640px) 70vw, (max-width: 1024px) 40vw, 320px"
-                      className="object-cover"
-                      unoptimized={isRemoteImage(cardData.imageUrl)}
-                      loader={
-                        isRemoteImage(cardData.imageUrl) ? remoteImageLoader : undefined
-                      }
-                    />
+                    (() => {
+                      const imageSrc = normalizePublicPath(cardData.imageUrl)
+                      if (!imageSrc) return null
+
+                      return isLocalImageUrl(imageSrc) ? (
+                        <Image
+                          src={imageSrc}
+                          alt={cardData.title}
+                          fill
+                          sizes="(max-width: 640px) 70vw, (max-width: 1024px) 40vw, 320px"
+                          className="object-cover"
+                        />
+                      ) : (
+                        <img
+                          src={imageSrc}
+                          alt={cardData.title}
+                          className="h-full w-full object-cover"
+                          loading="lazy"
+                        />
+                      )
+                    })()
                   ) : (
                     <div className="flex h-full items-center justify-center text-sm font-semibold text-base-content/70">
                       {cardData.title.slice(0, 1)}

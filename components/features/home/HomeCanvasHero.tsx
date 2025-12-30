@@ -4,12 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
-
-const remoteImageLoader = ({ src }: { src: string }) => src
-
-function isRemoteImage(src?: string | null) {
-  return !!src && src.startsWith('http')
-}
+import { isLocalImageUrl, normalizePublicPath } from '@/lib/utils'
 
 export function HomeCanvasHero({
   avatarSrc,
@@ -20,22 +15,36 @@ export function HomeCanvasHero({
   hasAvatar: boolean
   onAvatarError: () => void
 }) {
+  const resolvedAvatarSrc =
+    avatarSrc && (avatarSrc.startsWith('blob:') || avatarSrc.startsWith('data:'))
+      ? avatarSrc
+      : normalizePublicPath(avatarSrc)
+  const isLocalAvatar = isLocalImageUrl(resolvedAvatarSrc)
+
   return (
     <div className="relative z-20 mx-auto flex h-full w-full max-w-6xl items-center px-6 sm:px-10">
       <div className="canvas-anchor max-w-xl space-y-6 text-base-content">
         <div className="flex items-center gap-4">
           <div className="relative flex size-18 sm:size-20 lg:size-24 items-center justify-center overflow-hidden rounded-full border border-base-300 bg-base-100/10 text-lg font-semibold">
-            {avatarSrc && hasAvatar ? (
-              <Image
-                src={avatarSrc}
-                alt="Kashi avatar"
-                fill
-                sizes="96px"
-                className="rounded-full object-cover"
-                onError={onAvatarError}
-                unoptimized={isRemoteImage(avatarSrc)}
-                loader={isRemoteImage(avatarSrc) ? remoteImageLoader : undefined}
-              />
+            {resolvedAvatarSrc && hasAvatar ? (
+              isLocalAvatar ? (
+                <Image
+                  src={resolvedAvatarSrc}
+                  alt="Kashi avatar"
+                  fill
+                  sizes="96px"
+                  className="rounded-full object-cover"
+                  onError={onAvatarError}
+                />
+              ) : (
+                <img
+                  src={resolvedAvatarSrc}
+                  alt="Kashi avatar"
+                  className="h-full w-full rounded-full object-cover"
+                  onError={onAvatarError}
+                  loading="lazy"
+                />
+              )
             ) : (
               <span className="text-base-content">K</span>
             )}
