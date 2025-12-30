@@ -1,5 +1,25 @@
 {
   "extends": ["next/core-web-vitals", "prettier"],
+  "plugins": ["./.eslint/rules"],
+  "overrides": [
+    {
+      "files": [
+        "app/admin/**/*.{ts,tsx}",
+        "app/api/admin/**/*.{ts,tsx}",
+        "app/api/**/orders/**/*.{ts,tsx}",
+        "app/api/**/checkout/**/*.{ts,tsx}",
+        "app/api/**/payment/**/*.{ts,tsx}",
+        "app/api/**/payments/**/*.{ts,tsx}",
+        "app/api/**/cart/**/*.{ts,tsx}",
+        "lib/cart.ts",
+        "lib/order-fulfillment.ts",
+        "lib/credits.ts"
+      ],
+      "rules": {
+        "no-decimal-arithmetic": "error"
+      }
+    }
+  ],
   "rules": {
     "react/no-unescaped-entities": "off",
     "react/prop-types": "off",
