@@ -102,7 +102,7 @@ export default function OrdersPage() {
             <h2 className="text-2xl font-semibold text-foreground mb-2">No orders found</h2>
             <p className="text-muted-foreground mb-8">You haven't placed any orders yet</p>
             <Link
-              href="/shop"
+              href="/products"
               className="px-6 py-3 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors font-medium"
             >
               Browse Products

@@ -2,6 +2,13 @@ import { OrderStatus, PaymentStatus, AuditAction } from '@prisma/client'
 import { prisma } from '@/lib/prisma'
 import { generateLicenseKey } from '@/lib/license'
 import { refundCredits } from '@/lib/credits'
+import { createAuditLog } from '@/lib/audit-logger'
+
+type AuditContext = {
+  actorId?: string
+  ipHash?: string
+  userAgent?: string
+}
 
 /**
  * Check if an order can be fulfilled
@@ -77,7 +84,10 @@ export async function canFulfillOrder(orderId: string): Promise<{
 /**
  * Fulfill an order by issuing licenses for all order items
  */
-export async function fulfillOrder(orderId: string): Promise<{
+export async function fulfillOrder(
+  orderId: string,
+  auditContext?: AuditContext
+): Promise<{
   success: boolean
   error?: string
   licenseIds?: string[]
@@ -113,6 +123,12 @@ export async function fulfillOrder(orderId: string): Promise<{
     }
 
     const licenseIds: string[] = []
+
+    const auditActorId = auditContext?.actorId || order.userId || undefined
+    const auditMeta = {
+      ipHash: auditContext?.ipHash,
+      userAgent: auditContext?.userAgent,
+    }
 
     // Fulfill order in a transaction
     await prisma.$transaction(async (tx) => {
@@ -221,6 +237,38 @@ export async function fulfillOrder(orderId: string): Promise<{
       })
     })
 
+    if (order.status !== OrderStatus.PROCESSING) {
+      await createAuditLog({
+        userId: auditActorId,
+        action: AuditAction.SETTINGS_CHANGED,
+        resource: 'Order',
+        resourceId: order.id,
+        details: {
+          event: 'ORDER_STATUS_CHANGED',
+          orderNumber: order.orderNumber,
+          oldStatus: order.status,
+          newStatus: OrderStatus.PROCESSING,
+          orderUserId: order.userId,
+        },
+        ...auditMeta,
+      })
+    }
+
+    await createAuditLog({
+      userId: auditActorId,
+      action: AuditAction.SETTINGS_CHANGED,
+      resource: 'Order',
+      resourceId: order.id,
+      details: {
+        event: 'ORDER_STATUS_CHANGED',
+        orderNumber: order.orderNumber,
+        oldStatus: OrderStatus.PROCESSING,
+        newStatus: OrderStatus.COMPLETED,
+        orderUserId: order.userId,
+      },
+      ...auditMeta,
+    })
+
     // TODO: Send license issued email
     // await sendLicenseIssuedEmail(orderId)
 
@@ -243,7 +291,8 @@ export async function fulfillOrder(orderId: string): Promise<{
 export async function cancelOrder(
   orderId: string,
   reason: string,
-  cancelledBy: string
+  cancelledBy: string,
+  auditContext?: AuditContext
 ): Promise<{
   success: boolean
   error?: string
@@ -320,6 +369,23 @@ export async function cancelOrder(
           },
         },
       })
+    })
+
+    await createAuditLog({
+      userId: cancelledBy,
+      action: AuditAction.SETTINGS_CHANGED,
+      resource: 'Order',
+      resourceId: order.id,
+      details: {
+        event: 'ORDER_STATUS_CHANGED',
+        orderNumber: order.orderNumber,
+        oldStatus: order.status,
+        newStatus: OrderStatus.CANCELLED,
+        orderUserId: order.userId,
+        reason,
+      },
+      ipHash: auditContext?.ipHash,
+      userAgent: auditContext?.userAgent,
     })
 
     // TODO: Send cancellation email

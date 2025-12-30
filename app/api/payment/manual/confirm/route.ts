@@ -3,6 +3,7 @@ import { requireAdmin } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
 import { fulfillOrder } from '@/lib/order-fulfillment'
 import { sendLicenseIssuedEmail } from '@/lib/email/order-emails'
+import { getIpHash, getUserAgent } from '@/lib/audit-logger'
 import { PaymentStatus, AuditAction } from '@prisma/client'
 
 /**
@@ -81,7 +82,11 @@ export async function POST(request: NextRequest) {
     })
 
     // Fulfill order (issue licenses)
-    const fulfillmentResult = await fulfillOrder(order.id)
+    const fulfillmentResult = await fulfillOrder(order.id, {
+      actorId: session.user.id,
+      ipHash: getIpHash(request),
+      userAgent: getUserAgent(request),
+    })
 
     if (!fulfillmentResult.success) {
       return NextResponse.json(
