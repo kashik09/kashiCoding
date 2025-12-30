@@ -16,7 +16,7 @@ export default function CheckoutSuccessPage() {
 
   useEffect(() => {
     if (!orderNumber) {
-      router.push('/shop')
+      router.push('/products')
       return
     }
 
@@ -36,7 +36,7 @@ export default function CheckoutSuccessPage() {
       setOrder(data.order)
     } catch (error) {
       console.error('Error fetching order:', error)
-      router.push('/shop')
+      router.push('/products')
     } finally {
       setIsLoading(false)
     }
@@ -97,12 +97,32 @@ export default function CheckoutSuccessPage() {
             <div className="flex items-start gap-3">
               <Mail className="w-6 h-6 text-yellow-600 flex-shrink-0 mt-0.5" />
               <div>
-                <h3 className="font-semibold text-yellow-900 mb-1">Payment Instructions Sent</h3>
-                <p className="text-sm text-yellow-800 mb-3">
-                  We've sent payment instructions to your email. Please complete the payment to receive your licenses.
+                <h3 className="font-semibold text-yellow-900 mb-2">Payment Instructions</h3>
+                <p className="text-sm text-yellow-800 mb-4">
+                  To complete your order, please send payment via one of the following methods:
+                </p>
+
+                <div className="space-y-3 mb-4">
+                  <div className="bg-white/50 rounded-lg p-3">
+                    <p className="text-xs font-semibold text-yellow-900 mb-1">Mobile Money (Preferred)</p>
+                    <p className="text-sm text-yellow-800">Send <strong>${order.total}</strong> to:</p>
+                    <p className="text-sm font-mono text-yellow-900">+256 XXX XXX XXX</p>
+                    <p className="text-xs text-yellow-700 mt-1">Reference: {order.orderNumber}</p>
+                  </div>
+
+                  <div className="bg-white/50 rounded-lg p-3">
+                    <p className="text-xs font-semibold text-yellow-900 mb-1">Bank Transfer</p>
+                    <p className="text-sm text-yellow-800">Amount: <strong>${order.total}</strong></p>
+                    <p className="text-xs text-yellow-700">Account details sent to {order.customerEmail}</p>
+                    <p className="text-xs text-yellow-700 mt-1">Reference: {order.orderNumber}</p>
+                  </div>
+                </div>
+
+                <p className="text-xs text-yellow-700 mb-2">
+                  <strong>Important:</strong> Include order number {order.orderNumber} in payment reference
                 </p>
                 <p className="text-xs text-yellow-700">
-                  Once we confirm your payment, we'll issue your licenses and send you another email with download instructions.
+                  Once payment is confirmed (usually within 1-2 hours), we'll issue your licenses and send download instructions to {order.customerEmail}.
                 </p>
               </div>
             </div>
@@ -150,7 +170,7 @@ export default function CheckoutSuccessPage() {
           </Link>
 
           <Link
-            href="/shop"
+            href="/products"
             className="w-full py-3 px-6 text-muted-foreground hover:text-foreground transition-colors text-center"
           >
             Continue Shopping

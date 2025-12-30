@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
@@ -13,6 +13,8 @@ export default function ContactPage() {
 
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+  const [isAvailable, setIsAvailable] = useState(true)
+  const [checkingAvailability, setCheckingAvailability] = useState(true)
 
   const [formData, setFormData] = useState({
     name: '',
@@ -22,6 +24,20 @@ export default function ContactPage() {
     timeline: '',
     description: ''
   })
+
+  useEffect(() => {
+    fetch('/api/site/status')
+      .then((r) => r.json())
+      .then((data) => {
+        setIsAvailable(data.data?.availableForBusiness !== false)
+      })
+      .catch((error) => {
+        console.error('Error checking availability:', error)
+      })
+      .finally(() => {
+        setCheckingAvailability(false)
+      })
+  }, [])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -57,12 +73,20 @@ export default function ContactPage() {
 
       if (!response.ok) {
         const errorData = await response.json().catch(() => null)
-        setError(errorData?.error || 'something went wrong. try again?')
+        if (response.status === 503) {
+          setError(errorData?.error || 'Not accepting new requests at this time')
+        } else {
+          setError(errorData?.error || 'something went wrong. try again?')
+        }
         setLoading(false)
         return
       }
 
-      alert("got it. i'll get back to you soon.")
+      alert(
+        isAvailable
+          ? "got it. i'll get back to you soon."
+          : "thanks for reaching out. i'll contact you when availability opens up."
+      )
       router.push('/')
     } catch (err) {
       setError('something went wrong. try again?')
@@ -80,6 +104,17 @@ export default function ContactPage() {
             working on something interesting? need help building a product? let's talk.
           </p>
         </div>
+
+        {!checkingAvailability && !isAvailable && (
+          <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+            <p className="text-sm text-yellow-900 font-medium mb-1">
+              Currently at capacity
+            </p>
+            <p className="text-sm text-yellow-800">
+              I'm not accepting new projects right now, but feel free to send your inquiry. I'll reach out when availability opens up.
+            </p>
+          </div>
+        )}
 
         <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-item)' }}>
           {error && (

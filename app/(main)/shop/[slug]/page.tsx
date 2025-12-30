@@ -42,7 +42,7 @@ export default function ProductDetailPage({ params }: { params: { slug: string }
     } catch (error: any) {
       console.error('Error fetching product:', error)
       showToast(error.message || 'Failed to load product', 'error')
-      router.push('/shop')
+      router.push('/products')
     } finally {
       setIsLoading(false)
     }
@@ -51,7 +51,7 @@ export default function ProductDetailPage({ params }: { params: { slug: string }
   async function handleAddToCart() {
     if (!session) {
       showToast('Please login to add items to cart', 'error')
-      router.push(`/login?callbackUrl=/shop/${params.slug}`)
+      router.push(`/login?callbackUrl=/products/${params.slug}`)
       return
     }
 
