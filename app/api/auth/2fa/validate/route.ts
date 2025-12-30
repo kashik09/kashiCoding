@@ -1,10 +1,23 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import { authenticator } from 'otplib'
+import { checkRateLimit, getRateLimitHeaders, getRateLimitKey } from '@/lib/rate-limit'
 
 // POST /api/auth/2fa/validate - Validate TOTP during login
 export async function POST(request: NextRequest) {
   try {
+    const rateLimit = checkRateLimit(
+      getRateLimitKey(request, 'auth:2fa:validate'),
+      10,
+      10 * 60 * 1000
+    )
+    if (!rateLimit.allowed) {
+      return NextResponse.json(
+        { success: false, error: 'Too many 2FA validation attempts' },
+        { status: 429, headers: getRateLimitHeaders(rateLimit) }
+      )
+    }
+
     const body = await request.json()
     const { email, token } = body
 

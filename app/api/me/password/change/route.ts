@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import { getServerSession } from '@/lib/auth'
 import { hashPassword, verifyPassword } from '@/lib/password'
+import { checkRateLimit, getRateLimitHeaders, getRateLimitKey } from '@/lib/rate-limit'
 
 export async function POST(request: NextRequest) {
   const session = await getServerSession()
@@ -16,6 +17,18 @@ export async function POST(request: NextRequest) {
   const userId = session.user.id
 
   try {
+    const rateLimit = checkRateLimit(
+      getRateLimitKey(request, 'auth:password-change'),
+      5,
+      15 * 60 * 1000
+    )
+    if (!rateLimit.allowed) {
+      return NextResponse.json(
+        { success: false, error: 'Too many password change attempts' },
+        { status: 429, headers: getRateLimitHeaders(rateLimit) }
+      )
+    }
+
     const body = await request.json()
     const { currentPassword, newPassword } = body as {
       currentPassword?: string
@@ -79,4 +92,3 @@ export async function POST(request: NextRequest) {
     )
   }
 }
-

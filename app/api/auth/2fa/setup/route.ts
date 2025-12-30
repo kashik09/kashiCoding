@@ -4,10 +4,23 @@ import { authOptions } from '@/lib/auth-options'
 import { prisma } from '@/lib/prisma'
 import { authenticator } from 'otplib'
 import QRCode from 'qrcode'
+import { checkRateLimit, getRateLimitHeaders, getRateLimitKey } from '@/lib/rate-limit'
 
 // POST /api/auth/2fa/setup - Generate 2FA secret and QR code
 export async function POST(request: NextRequest) {
   try {
+    const rateLimit = checkRateLimit(
+      getRateLimitKey(request, 'auth:2fa:setup'),
+      5,
+      10 * 60 * 1000
+    )
+    if (!rateLimit.allowed) {
+      return NextResponse.json(
+        { success: false, error: 'Too many 2FA setup attempts' },
+        { status: 429, headers: getRateLimitHeaders(rateLimit) }
+      )
+    }
+
     const session = await getServerSession(authOptions)
 
     if (!session?.user?.email) {
