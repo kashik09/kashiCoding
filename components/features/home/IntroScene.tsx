@@ -103,12 +103,15 @@ export function IntroScene({ hero, projects }: IntroSceneProps) {
             >
               <div className="relative flex size-12 sm:size-14 lg:size-16 items-center justify-center rounded-full border border-base-100/20 bg-base-100/10 text-lg font-semibold">
                 {hasAvatar ? (
-                  <img
-                    src="/avatar.png"
-                    alt="Kashi avatar"
-                    className="h-full w-full rounded-full object-cover"
-                    onError={() => setHasAvatar(false)}
-                  />
+                  <>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src="/avatar.png"
+                      alt="Kashi avatar"
+                      className="h-full w-full rounded-full object-cover"
+                      onError={() => setHasAvatar(false)}
+                    />
+                  </>
                 ) : (
                   <span className="text-base-100">K</span>
                 )}

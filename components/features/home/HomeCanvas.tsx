@@ -265,7 +265,7 @@ export function HomeCanvas({
             </div>
 
             <div className="flex flex-wrap gap-3">
-              <Link href="/projects" className="no-underline">
+              <Link href="/projects" className="no-underline text-base-content">
                 <Button
                   variant="primary"
                   size="md"
@@ -283,10 +283,10 @@ export function HomeCanvas({
             </div>
 
             <div className="flex flex-wrap gap-2">
-              <span className="inline-flex items-center rounded-full border border-base-300 bg-base-100/10 px-3 py-1 text-[0.65rem] font-semibold uppercase tracking-[0.2em] text-base-content/80">
+              <span className="inline-flex items-center rounded-full border border-base-300 bg-base-100/10 px-3 py-1 text-[0.65rem] font-semibold uppercase tracking-[0.2em] text-primary/80">
                 component-driven
               </span>
-              <span className="inline-flex items-center rounded-full border border-base-300 bg-base-100/10 px-3 py-1 text-[0.65rem] font-semibold uppercase tracking-[0.2em] text-base-content/80">
+              <span className="inline-flex items-center rounded-full border border-base-300 bg-base-100/10 px-3 py-1 text-[0.65rem] font-semibold uppercase tracking-[0.2em] text-primary/80">
                 calm delivery
               </span>
             </div>

@@ -37,13 +37,16 @@ export function HomeCanvasHero({
                   onError={onAvatarError}
                 />
               ) : (
-                <img
-                  src={resolvedAvatarSrc}
-                  alt="Kashi avatar"
-                  className="h-full w-full rounded-full object-cover"
-                  onError={onAvatarError}
-                  loading="lazy"
-                />
+                <>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={resolvedAvatarSrc}
+                    alt="Kashi avatar"
+                    className="h-full w-full rounded-full object-cover"
+                    onError={onAvatarError}
+                    loading="lazy"
+                  />
+                </>
               )
             ) : (
               <span className="text-base-content">K</span>

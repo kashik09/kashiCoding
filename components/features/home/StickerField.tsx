@@ -189,11 +189,14 @@ export function StickerField({ projects, notes, isVisible, reduceMotion }: Stick
                 <div className="space-y-2">
                   <div className="h-20 w-full overflow-hidden rounded-2xl bg-base-100/10">
                     {item.imageUrl ? (
-                      <img
-                        src={item.imageUrl}
-                        alt={item.title}
-                        className="h-full w-full object-cover"
-                      />
+                      <>
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={item.imageUrl}
+                          alt={item.title}
+                          className="h-full w-full object-cover"
+                        />
+                      </>
                     ) : (
                       <div className="flex h-full items-center justify-center text-xs uppercase tracking-[0.3em] text-base-100/60">
                         {item.title.slice(0, 1)}

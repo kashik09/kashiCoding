@@ -24,7 +24,7 @@ export function HomeCanvasObjects({
   setHoveredCard,
 }: HomeCanvasObjectsProps) {
   return (
-    <div className="absolute inset-0">
+    <div className="absolute inset-0 pointer-events-none">
       {objects.map((object, index) => {
         const laneBase = object.lane === 'anchor' ? 4 : object.lane === 'ambient' ? 10 : 16
         const driftX = (index % 2 === 0 ? 1 : -1) * (laneBase + index * 2)

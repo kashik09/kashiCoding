@@ -89,6 +89,7 @@ export function HomeCanvasScene({
                           className="object-cover"
                         />
                       ) : (
+                        // eslint-disable-next-line @next/next/no-img-element
                         <img
                           src={imageSrc}
                           alt={cardData.title}

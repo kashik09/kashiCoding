@@ -6,19 +6,12 @@ import type { MutableRefObject } from 'react'
 import { useEffect, useRef, useState } from 'react'
 import { X } from 'lucide-react'
 
-const PreferencesPanel = dynamic(
+const PreferencesModal = dynamic(
   () =>
-    import('@/components/features/preferences/PreferencesPanel').then(
-      (mod) => mod.PreferencesPanel
+    import('@/components/features/preferences/PreferencesModal').then(
+      (mod) => mod.PreferencesModal
     ),
-  {
-    ssr: false,
-    loading: () => (
-      <p className="text-xs uppercase tracking-[0.3em] text-base-content/60">
-        loading preferences...
-      </p>
-    ),
-  }
+  { ssr: false }
 )
 
 const overlayLinks = [
@@ -154,23 +147,16 @@ export function HomeCanvasMenuOverlay({
           <button
             type="button"
             className="block w-full text-2xl font-semibold tracking-tight text-base-content/90 hover:text-base-content"
-            onClick={() => setShowPreferences((prev) => !prev)}
+            onClick={() => setShowPreferences(true)}
           >
             Preferences
           </button>
         </nav>
-
-        {showPreferences && (
-          <div className="mt-8 rounded-2xl border border-base-300 bg-base-100/5 p-5 text-left">
-            <p className="text-xs uppercase tracking-[0.3em] text-base-content/60">
-              Preferences
-            </p>
-            <div className="mt-4">
-              <PreferencesPanel />
-            </div>
-          </div>
-        )}
       </div>
+
+      {showPreferences && (
+        <PreferencesModal onClose={() => setShowPreferences(false)} />
+      )}
     </div>
   )
 }
