@@ -129,12 +129,6 @@
     cursor: default;
   }
 
-  /* Hide cursor on home page */
-  .hide-cursor-page,
-  .hide-cursor-page * {
-    cursor: none !important;
-  }
-
   /* Interactive elements - pointer */
   a,
   button,

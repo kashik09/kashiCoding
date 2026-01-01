@@ -60,7 +60,7 @@ export default async function HomePage() {
   }))
 
   return (
-    <div className="hide-cursor-page hide-scrollbar">
+    <div className="hide-scrollbar">
       <HomeCanvas projects={featuredProjects} products={products} avatarUrl={avatarUrl} />
     </div>
   )
