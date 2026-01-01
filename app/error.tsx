@@ -19,21 +19,21 @@ export default function Error({
     <div className="flex min-h-screen items-center justify-center px-4">
       <div className="max-w-md text-center">
         <div className="mb-8">
-          <div className="mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-destructive/10">
-            <svg
-              className="h-10 w-10 text-destructive"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
+          <div className="mb-6 flex justify-center">
+            <img
+              src="/illustrations/500/500-error-cuate.svg"
+              className="themed-illustration theme-illustration inline-illustration block w-full max-w-xs sm:max-w-sm"
+              data-variant="light"
+              alt=""
               aria-hidden="true"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
-              />
-            </svg>
+            />
+            <img
+              src="/illustrations/500/500-error-pana.svg"
+              className="themed-illustration theme-illustration inline-illustration block w-full max-w-xs sm:max-w-sm"
+              data-variant="dark"
+              alt=""
+              aria-hidden="true"
+            />
           </div>
           <h1 className="mb-2 text-3xl font-bold text-foreground">
             Something went wrong
