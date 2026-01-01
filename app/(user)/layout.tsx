@@ -1,6 +1,6 @@
 'use client'
 
-import { VibeyBackdrop } from '@/components/shared/VibeyBackdrop'
+import { AmbientBackdrop } from '@/components/shared/AmbientBackdrop'
 
 export default function UserLayout({
   children,
@@ -8,8 +8,8 @@ export default function UserLayout({
   children: React.ReactNode
 }) {
   return (
-    <VibeyBackdrop className="min-h-screen bg-base-100 text-base-content">
+    <AmbientBackdrop className="min-h-screen bg-base-100 text-base-content">
       {children}
-    </VibeyBackdrop>
+    </AmbientBackdrop>
   )
 }

@@ -3,7 +3,7 @@
 import { usePathname } from 'next/navigation'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
-import { VibeyBackdrop } from '@/components/shared/VibeyBackdrop'
+import { AmbientBackdrop } from '@/components/shared/AmbientBackdrop'
 
 export default function ClientChrome({
   children,
@@ -18,10 +18,10 @@ export default function ClientChrome({
     : 'flex-1 container mx-auto px-6 md:px-8 lg:px-12 py-8'
 
   return (
-    <VibeyBackdrop className="min-h-screen flex flex-col bg-base-100 text-base-content">
+    <AmbientBackdrop className="min-h-screen flex flex-col bg-base-100 text-base-content">
       {!cinemaActive && <Header />}
       <main className={mainClassName}>{children}</main>
       {!cinemaActive && <Footer pathname={pathname} />}
-    </VibeyBackdrop>
+    </AmbientBackdrop>
   )
 }

@@ -28,7 +28,7 @@ export function ProjectCard({ project, variant = 'public', onEdit }: ProjectCard
   const isLocalImage = isLocalImageUrl(imageSrc)
 
   return (
-    <div className="group vibey-card bg-card rounded-2xl border border-border overflow-hidden hover:shadow-lg hover:border-accent-2 transition-all">
+    <div className="group ambient-card bg-card rounded-2xl border border-border overflow-hidden hover:shadow-lg hover:border-accent-2 transition-all">
       {/* Image */}
       <div className="aspect-video bg-gradient-to-br from-primary/20 to-primary/5 relative overflow-hidden">
         {imageSrc ? (

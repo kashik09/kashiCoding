@@ -1,5 +1,5 @@
 export { CookieNotice } from './CookieNotice'
-export { VibeyBackdrop } from './VibeyBackdrop'
+export { AmbientBackdrop } from './AmbientBackdrop'
 export { ImageUploadCrop } from './ImageUploadCrop'
 export { FeaturedProjects } from './FeaturedProjects'
 export { ProjectCard } from './ProjectCard'
