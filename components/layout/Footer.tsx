@@ -35,7 +35,7 @@ export default function Footer({ pathname }: { pathname?: string }) {
           <div className="space-y-3">
             <div className="flex items-center gap-2 mb-3 group">
                 <Code2 size={28} className="accent" />
-              <h3 className="text-xl font-bold accent bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent animate-gradient bg-[length:200%_auto]">
+              <h3 className="text-xl font-bold text-app">
                 kashi kweyu
               </h3>
             </div>
@@ -157,7 +157,7 @@ export default function Footer({ pathname }: { pathname?: string }) {
         <div className="mt-8 pt-8 border-t border-app/50 text-center">
           <p className="text-muted text-sm">
             © {currentYear}{' '}
-            <span className="font-semibold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+            <span className="font-semibold text-app">
               Kashi Kweyu
             </span>
             . Built with Next.js & Tailwind CSS.{' '}

@@ -65,7 +65,8 @@ export default function ProjectsPage() {
     } finally {
       setLoading(false)
     }
-  }, [filter, searchQuery, trackEvent])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [filter, searchQuery])
 
   // Fetch projects from API
   useEffect(() => {
