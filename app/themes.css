@@ -39,7 +39,7 @@
 }
 
 
-[data-theme='charcoal'] {
+[data-theme='copper'] {
   color-scheme: dark;
   --color-base-100: 21% 0.012 260;
   --color-base-200: 19% 0.01 260;
@@ -97,8 +97,8 @@
 }
 
 
-/* 🟡 Amber - Charcoal Light */
-[data-theme='linen'] {
+/* 🟠 Amber - Copper Light */
+[data-theme='amber'] {
   color-scheme: light;
   --color-base-100: 98% 0.012 50;
   --color-base-200: 94% 0.018 50;

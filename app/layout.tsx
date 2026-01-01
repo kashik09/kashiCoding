@@ -12,13 +12,14 @@ const THEME_BOOTSTRAP = `(() => {
   const themePairs = {
     forest: { dark: 'forest', light: 'moss' },
     night: { dark: 'night', light: 'skyline' },
-    charcoal: { dark: 'charcoal', light: 'linen' },
+    copper: { dark: 'copper', light: 'amber' },
   }
   const themeKeys = Object.keys(themePairs)
   const appearanceKeys = ['light', 'dark', 'system']
   const legacyThemeMap = {
-    obsidian: 'charcoal',
-    pearl: 'charcoal',
+    obsidian: 'copper',
+    pearl: 'copper',
+    charcoal: 'copper',
   }
 
   const getSystemAppearance = () => {
