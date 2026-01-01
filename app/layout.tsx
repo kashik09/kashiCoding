@@ -13,7 +13,6 @@ const THEME_BOOTSTRAP = `(() => {
     forest: { dark: 'forest', light: 'moss' },
     night: { dark: 'night', light: 'skyline' },
     charcoal: { dark: 'charcoal', light: 'linen' },
-    lemonade: { dark: 'lemonade-dark', light: 'lemonade' },
   }
   const themeKeys = Object.keys(themePairs)
   const appearanceKeys = ['light', 'dark', 'system']

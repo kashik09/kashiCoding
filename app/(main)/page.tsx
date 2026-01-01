@@ -59,5 +59,9 @@ export default async function HomePage() {
     category: project.category,
   }))
 
-  return <HomeCanvas projects={featuredProjects} products={products} avatarUrl={avatarUrl} />
+  return (
+    <div className="hide-cursor-page">
+      <HomeCanvas projects={featuredProjects} products={products} avatarUrl={avatarUrl} />
+    </div>
+  )
 }
