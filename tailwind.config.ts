@@ -82,8 +82,8 @@ const config: Config = {
     // Only include themes actually used by the app (reduced from 13 to 6 for better performance)
     // forest → Forest (dark) / Moss (light)
     // night → Night (dark) / Skyline (light)
-    // charcoal → Charcoal (dark) / Linen (light)
-    themes: ['forest', 'moss', 'night', 'skyline', 'charcoal', 'linen'],
+    // copper → Copper (dark) / Amber (light)
+    themes: ['forest', 'moss', 'night', 'skyline', 'copper', 'amber'],
     darkTheme: 'forest',
     base: true,
     styled: true,

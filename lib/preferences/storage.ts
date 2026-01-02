@@ -3,10 +3,11 @@ import { Appearance, DEFAULT_PREFERENCES, Preferences, ThemeKey } from './types'
 const APPEARANCE_KEY = 'appearance'
 const THEME_KEY = 'theme'
 const APPEARANCES: Appearance[] = ['system', 'light', 'dark']
-const THEMES: ThemeKey[] = ['forest', 'night', 'charcoal']
+const THEMES: ThemeKey[] = ['forest', 'night', 'copper']
 const LEGACY_THEME_MAP: Record<string, ThemeKey> = {
-  obsidian: 'charcoal',
-  pearl: 'charcoal',
+  obsidian: 'copper',
+  pearl: 'copper',
+  charcoal: 'copper',
 }
 
 const isBrowser = () => typeof window !== 'undefined'

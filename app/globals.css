@@ -373,13 +373,13 @@
 
   html[data-theme='forest'] .themed-illustration,
   html[data-theme='night'] .themed-illustration,
-  html[data-theme='charcoal'] .themed-illustration {
+  html[data-theme='copper'] .themed-illustration {
     filter: brightness(1.08) saturate(1.12) contrast(1.03);
   }
 
   html[data-theme='moss'] .themed-illustration,
   html[data-theme='skyline'] .themed-illustration,
-  html[data-theme='linen'] .themed-illustration {
+  html[data-theme='amber'] .themed-illustration {
     filter: brightness(0.98) saturate(0.92) contrast(0.98);
   }
 
