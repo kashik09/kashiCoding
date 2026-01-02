@@ -9,10 +9,10 @@ export default function Footer({ pathname }: { pathname?: string }) {
     pathname === href || (href !== '/' && pathname?.startsWith(href))
 
   const linkClass = (href: string) =>
-    `transition-all duration-300 text-sm relative group ${
+    `transition-colors duration-200 text-sm relative group ${
       isActive(href)
         ? 'text-primary font-medium'
-        : 'text-muted hover:text-primary hover:translate-x-2'
+        : 'text-muted hover:text-primary'
     }`
 
   return (
@@ -27,8 +27,8 @@ export default function Footer({ pathname }: { pathname?: string }) {
              style={{ animationDelay: '10s' }} />
       </div>
 
-      <div className="container mx-auto px-4 py-8 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+      <div className="container mx-auto px-6 sm:px-8 py-8 relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
           {/* Brand */}
           <div className="space-y-3">
             <div className="flex items-center gap-2 mb-3 group">
@@ -44,7 +44,7 @@ export default function Footer({ pathname }: { pathname?: string }) {
             <h4 className="font-semibold text-app mb-4 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
               Quick Links
             </h4>
-            <ul className="space-y-3">
+            <ul className="space-y-2">
               {[
                 { href: '/projects', label: 'Projects' },
                 { href: '/services', label: 'Services' },
@@ -53,12 +53,7 @@ export default function Footer({ pathname }: { pathname?: string }) {
               ].map((link) => (
                 <li key={link.href}>
                   <Link href={link.href} className={linkClass(link.href)}>
-                    <span className="relative">
-                      <span className="absolute -left-4 opacity-0 group-hover:opacity-100 transition-opacity text-primary">
-                        ▸
-                      </span>
-                      {link.label}
-                    </span>
+                    {link.label}
                   </Link>
                 </li>
               ))}
@@ -70,19 +65,14 @@ export default function Footer({ pathname }: { pathname?: string }) {
             <h4 className="font-semibold text-app mb-4 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
               Legal
             </h4>
-            <ul className="space-y-3">
+            <ul className="space-y-2">
               {[
                 { href: '/legal/privacy-policy', label: 'Privacy Policy' },
                 { href: '/legal/terms', label: 'Terms of Service' },
               ].map((link) => (
                 <li key={link.href}>
                   <Link href={link.href} className={linkClass(link.href)}>
-                    <span className="relative">
-                      <span className="absolute -left-4 opacity-0 group-hover:opacity-100 transition-opacity text-primary">
-                        ▸
-                      </span>
-                      {link.label}
-                    </span>
+                    {link.label}
                   </Link>
                 </li>
               ))}
@@ -130,7 +120,7 @@ export default function Footer({ pathname }: { pathname?: string }) {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group relative p-3 bg-primary/10 rounded-xl border border-primary/20 hover:bg-primary hover:border-primary transition-all duration-300 text-primary hover:text-primary-content hover:-translate-y-2 hover:rotate-3 hover:shadow-lg hover:shadow-primary/50"
+                  className="group relative p-3 bg-primary/10 rounded-xl border border-primary/20 hover:bg-primary hover:border-primary transition-colors duration-200 text-primary hover:text-primary-content"
                   aria-label={social.label}
                 >
                   <svg className="w-5 h-5 relative z-10" fill="currentColor" viewBox="0 0 24 24">
