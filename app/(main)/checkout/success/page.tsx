@@ -62,8 +62,8 @@ export default function CheckoutSuccessPage() {
       <div className="container mx-auto px-4 max-w-2xl">
         {/* Success Icon */}
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-20 h-20 bg-green-100 rounded-full mb-4">
-            <CheckCircle className="w-12 h-12 text-green-600" />
+          <div className="inline-flex items-center justify-center w-20 h-20 bg-success/10 rounded-full mb-4">
+            <CheckCircle className="w-12 h-12 text-success" />
           </div>
           <h1 className="text-4xl font-bold text-foreground mb-2">
             {isCompleted ? 'Order Complete!' : 'Order Placed!'}
@@ -81,47 +81,47 @@ export default function CheckoutSuccessPage() {
 
         {/* Status Message */}
         {isCompleted ? (
-          <div className="bg-green-50 border border-green-200 rounded-xl p-6 mb-6">
+          <div className="bg-success/10 border border-success/20 rounded-xl p-6 mb-6">
             <div className="flex items-start gap-3">
-              <Download className="w-6 h-6 text-green-600 flex-shrink-0 mt-0.5" />
+              <Download className="w-6 h-6 text-success flex-shrink-0 mt-0.5" />
               <div>
-                <h3 className="font-semibold text-green-900 mb-1">Your licenses are ready!</h3>
-                <p className="text-sm text-green-800">
+                <h3 className="font-semibold text-success mb-1">Your licenses are ready!</h3>
+                <p className="text-sm text-success/80">
                   Your order has been fulfilled and licenses have been issued. You can download your products now!
                 </p>
               </div>
             </div>
           </div>
         ) : isPending ? (
-          <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-6 mb-6">
+          <div className="bg-warning/10 border border-warning/20 rounded-xl p-6 mb-6">
             <div className="flex items-start gap-3">
-              <Mail className="w-6 h-6 text-yellow-600 flex-shrink-0 mt-0.5" />
+              <Mail className="w-6 h-6 text-warning flex-shrink-0 mt-0.5" />
               <div>
-                <h3 className="font-semibold text-yellow-900 mb-2">Payment Instructions</h3>
-                <p className="text-sm text-yellow-800 mb-4">
+                <h3 className="font-semibold text-warning mb-2">Payment Instructions</h3>
+                <p className="text-sm text-warning/80 mb-4">
                   To complete your order, please send payment via one of the following methods:
                 </p>
 
                 <div className="space-y-3 mb-4">
                   <div className="bg-white/50 rounded-lg p-3">
-                    <p className="text-xs font-semibold text-yellow-900 mb-1">Mobile Money (Preferred)</p>
-                    <p className="text-sm text-yellow-800">Send <strong>${order.total}</strong> to:</p>
-                    <p className="text-sm font-mono text-yellow-900">+256 XXX XXX XXX</p>
-                    <p className="text-xs text-yellow-700 mt-1">Reference: {order.orderNumber}</p>
+                    <p className="text-xs font-semibold text-warning mb-1">Mobile Money (Preferred)</p>
+                    <p className="text-sm text-warning/80">Send <strong>${order.total}</strong> to:</p>
+                    <p className="text-sm font-mono text-warning">+256 XXX XXX XXX</p>
+                    <p className="text-xs text-warning/70 mt-1">Reference: {order.orderNumber}</p>
                   </div>
 
                   <div className="bg-white/50 rounded-lg p-3">
-                    <p className="text-xs font-semibold text-yellow-900 mb-1">Bank Transfer</p>
-                    <p className="text-sm text-yellow-800">Amount: <strong>${order.total}</strong></p>
-                    <p className="text-xs text-yellow-700">Account details sent to {order.customerEmail}</p>
-                    <p className="text-xs text-yellow-700 mt-1">Reference: {order.orderNumber}</p>
+                    <p className="text-xs font-semibold text-warning mb-1">Bank Transfer</p>
+                    <p className="text-sm text-warning/80">Amount: <strong>${order.total}</strong></p>
+                    <p className="text-xs text-warning/70">Account details sent to {order.customerEmail}</p>
+                    <p className="text-xs text-warning/70 mt-1">Reference: {order.orderNumber}</p>
                   </div>
                 </div>
 
-                <p className="text-xs text-yellow-700 mb-2">
+                <p className="text-xs text-warning/70 mb-2">
                   <strong>Important:</strong> Include order number {order.orderNumber} in payment reference
                 </p>
-                <p className="text-xs text-yellow-700">
+                <p className="text-xs text-warning/70">
                   Once payment is confirmed (usually within 1-2 hours), we'll issue your licenses and send download instructions to {order.customerEmail}.
                 </p>
               </div>
@@ -140,7 +140,7 @@ export default function CheckoutSuccessPage() {
                   <p className="text-sm text-muted-foreground">{item.licenseType} License</p>
                 </div>
                 {item.license && (
-                  <span className="text-xs bg-green-100 text-green-800 px-2 py-1 rounded">
+                  <span className="text-xs bg-success/10 text-success px-2 py-1 rounded">
                     License Issued
                   </span>
                 )}

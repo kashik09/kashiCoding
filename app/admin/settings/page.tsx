@@ -933,13 +933,13 @@ export default function AdminSettingsPage() {
         </button>
       </div>
       {/* Danger Zone */}
-      <div className="bg-card rounded-2xl border border-red-500/30 p-6 space-y-6">
+      <div className="bg-card rounded-2xl border border-error/30 p-6 space-y-6">
         <div className="flex items-center gap-3">
-          <div className="p-2 bg-red-500/10 rounded-lg">
-            <AlertTriangle className="text-red-600 dark:text-red-400" size={20} />
+          <div className="p-2 bg-error/10 rounded-lg">
+            <AlertTriangle className="text-error" size={20} />
           </div>
           <div>
-            <h2 className="text-xl font-bold text-red-600 dark:text-red-400">Danger Zone</h2>
+            <h2 className="text-xl font-bold text-error">Danger Zone</h2>
             <p className="text-sm text-muted-foreground">Irreversible and destructive actions</p>
           </div>
         </div>
@@ -954,12 +954,12 @@ export default function AdminSettingsPage() {
               Reset Settings
             </button>
           </div>
-          <div className="p-4 border border-red-500/30 rounded-lg bg-red-500/5">
-            <h3 className="font-medium text-red-600 dark:text-red-400 mb-1">Clear All Data</h3>
+          <div className="p-4 border border-error/30 rounded-lg bg-error/5">
+            <h3 className="font-medium text-error mb-1">Clear All Data</h3>
             <p className="text-sm text-muted-foreground mb-3">Permanently delete all projects, requests, and user data</p>
             <button
               onClick={() => setActiveModal('clear')}
-              className="px-4 py-2 bg-red-500/10 text-red-600 dark:text-red-400 rounded-lg hover:bg-red-500/20 transition border border-red-500/30 text-sm"
+              className="px-4 py-2 bg-error/10 text-error rounded-lg hover:bg-error/20 transition border border-error/20 text-sm"
             >
               Clear All Data
             </button>

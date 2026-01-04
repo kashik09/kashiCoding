@@ -92,7 +92,7 @@ export default function Setup2FAPage() {
           Protect your admin account with an extra layer of security
         </p>
         {error && (
-          <div className="mb-6 p-4 bg-red-500/10 border border-red-500/20 rounded-lg text-red-600 dark:text-red-400 text-sm">
+          <div className="mb-6 p-4 bg-error/10 border border-error/20 rounded-lg text-error text-sm">
             {error}
           </div>
         )}
@@ -154,8 +154,8 @@ export default function Setup2FAPage() {
                 </Button>
               </div>
             </div>
-            <div className="bg-yellow-500/10 border border-yellow-500/20 rounded-lg p-4">
-              <h4 className="font-semibold text-yellow-600 dark:text-yellow-400 mb-2 text-sm">
+            <div className="bg-warning/10 border border-warning/20 rounded-lg p-4">
+              <h4 className="font-semibold text-warning mb-2 text-sm">
                 Backup Codes
               </h4>
               <p className="text-xs text-muted-foreground mb-3">

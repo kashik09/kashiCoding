@@ -103,11 +103,11 @@ export default function AdminProjectsPage() {
           <div className="text-sm text-muted-foreground">Total Projects</div>
         </div>
         <div className="bg-card border border-border rounded-xl p-4">
-          <div className="text-2xl font-bold text-green-600">{stats.published}</div>
+          <div className="text-2xl font-bold text-success">{stats.published}</div>
           <div className="text-sm text-muted-foreground">Published</div>
         </div>
         <div className="bg-card border border-border rounded-xl p-4">
-          <div className="text-2xl font-bold text-yellow-600">{stats.drafts}</div>
+          <div className="text-2xl font-bold text-warning">{stats.drafts}</div>
           <div className="text-sm text-muted-foreground">Drafts</div>
         </div>
         <div className="bg-card border border-border rounded-xl p-4">

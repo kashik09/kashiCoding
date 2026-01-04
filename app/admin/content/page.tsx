@@ -228,9 +228,9 @@ export default function ContentEditorPage() {
   return (
     <div className="max-w-6xl mx-auto p-6 space-y-8">
       {/* Deprecation Warning */}
-      <div className="p-5 bg-yellow-50 dark:bg-yellow-900/20 border-2 border-yellow-400 dark:border-yellow-600 rounded-xl">
-        <h3 className="text-lg font-bold text-yellow-900 dark:text-yellow-200 mb-2">⚠️ Deprecated CMS</h3>
-        <p className="text-sm text-yellow-800 dark:text-yellow-300 leading-relaxed">
+      <div className="p-5 bg-warning/10 border-2 border-warning/30 rounded-xl">
+        <h3 className="text-lg font-bold text-warning mb-2">⚠️ Deprecated CMS</h3>
+        <p className="text-sm text-warning/80 leading-relaxed">
           This About page editor is no longer actively used. The /about page is now hardcoded with a mindset-focused approach.
           For editing landing page content, use <strong>/admin/content/landing</strong> instead.
         </p>

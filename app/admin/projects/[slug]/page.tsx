@@ -103,7 +103,7 @@ export default function ProjectDetailPage({ params }: { params: { slug: string }
           </Link>
           <button
             onClick={() => setShowDeleteModal(true)}
-            className="flex items-center gap-2 px-4 py-2 bg-red-500/10 text-red-600 dark:text-red-400 border border-red-500/30 rounded-lg hover:bg-red-500/20 transition"
+            className="flex items-center gap-2 px-4 py-2 bg-error/10 text-error border border-error/20 rounded-lg hover:bg-error/20 transition"
           >
             <Trash2 size={18} />
             Delete
@@ -185,8 +185,8 @@ export default function ProjectDetailPage({ params }: { params: { slug: string }
                 <span className="text-foreground-muted text-sm">Status</span>
                 <span className={`px-3 py-1 rounded-full text-sm font-medium ${
                   project.published
-                    ? 'bg-blue-500/20 text-blue-700 dark:text-blue-300'
-                    : 'bg-yellow-500/20 text-yellow-700 dark:text-yellow-300'
+                    ? 'bg-info/10 text-info'
+                    : 'bg-warning/10 text-warning'
                 }`}>
                   {project.published ? 'Published' : 'Draft'}
                 </span>
@@ -195,7 +195,7 @@ export default function ProjectDetailPage({ params }: { params: { slug: string }
                 <span className="text-foreground-muted text-sm">Featured</span>
                 <span className={`px-3 py-1 rounded-full text-sm font-medium ${
                   project.featured 
-                    ? 'bg-blue-500/20 text-blue-700 dark:text-blue-300' 
+                    ? 'bg-info/10 text-info' 
                     : 'bg-card-hover text-foreground'
                 }`}>
                   {project.featured ? 'Yes' : 'No'}

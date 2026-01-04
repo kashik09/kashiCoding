@@ -115,10 +115,10 @@ export default function AdminUsersPage() {
   }
   const getStatusBadge = (status: string) => {
     const styles = {
-      ACTIVE: 'bg-blue-500/20 text-blue-700 dark:text-blue-300',
-      LOCKED: 'bg-red-500/20 text-red-700 dark:text-red-300',
-      BANNED: 'bg-red-500/30 text-red-800 dark:text-red-200',
-      SUSPENDED: 'bg-yellow-500/20 text-yellow-700 dark:text-yellow-300'
+      ACTIVE: 'bg-success/10 text-success',
+      LOCKED: 'bg-error/10 text-error',
+      BANNED: 'bg-error/20 text-error',
+      SUSPENDED: 'bg-warning/10 text-warning'
     }
     return styles[status as keyof typeof styles] || styles.ACTIVE
   }
@@ -250,7 +250,7 @@ export default function AdminUsersPage() {
                       <div className="flex items-center justify-end gap-2">
                         <button
                           onClick={() => handleToggleLock(user.id, user.accountStatus)}
-                          className="p-2 hover:bg-yellow-500/10 text-yellow-600 dark:text-yellow-400 rounded-lg transition"
+                          className="p-2 hover:bg-warning/10 text-warning rounded-lg transition"
                           title={user.accountStatus === 'LOCKED' ? 'Unlock account' : 'Lock account'}
                         >
                           {user.accountStatus === 'LOCKED' ? <Unlock size={18} /> : <Lock size={18} />}
@@ -263,7 +263,7 @@ export default function AdminUsersPage() {
                         </Link>
                         <button
                           onClick={() => setDeleteModal({ isOpen: true, userId: user.id })}
-                          className="p-2 hover:bg-red-500/10 text-red-600 dark:text-red-400 rounded-lg transition"
+                          className="p-2 hover:bg-error/10 text-error rounded-lg transition"
                           disabled={user.role === 'OWNER'}
                         >
                           <Trash2 size={18} />

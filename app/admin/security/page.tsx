@@ -114,9 +114,9 @@ export default function SecurityPage() {
       <div className="bg-card border border-border rounded-lg p-6">
         <div className="flex items-center gap-4 mb-6">
           <div className={`w-12 h-12 rounded-full flex items-center justify-center ${
-            twoFactorEnabled ? 'bg-green-500/10' : 'bg-yellow-500/10'
+            twoFactorEnabled ? 'bg-success/10' : 'bg-warning/10'
           }`}>
-            <Shield className={twoFactorEnabled ? 'text-green-600 dark:text-green-400' : 'text-yellow-600 dark:text-yellow-400'} size={24} />
+            <Shield className={twoFactorEnabled ? 'text-success' : 'text-warning'} size={24} />
           </div>
           <div>
             <h2 className="text-xl font-semibold text-foreground">Two-Factor Authentication</h2>
@@ -128,9 +128,9 @@ export default function SecurityPage() {
           </div>
         </div>
         {error && (
-          <div className="mb-6 p-4 bg-red-500/10 border border-red-500/20 rounded-lg flex items-start gap-3">
-            <AlertCircle className="text-red-600 dark:text-red-400 flex-shrink-0 mt-0.5" size={20} />
-            <p className="text-sm text-red-600 dark:text-red-400">{error}</p>
+          <div className="mb-6 p-4 bg-error/10 border border-error/20 rounded-lg flex items-start gap-3">
+            <AlertCircle className="text-error flex-shrink-0 mt-0.5" size={20} />
+            <p className="text-sm text-error">{error}</p>
           </div>
         )}
         {/* Initial State */}
@@ -209,8 +209,8 @@ export default function SecurityPage() {
         {/* Complete Step */}
         {setupStep === 'complete' && (
           <div className="text-center py-8">
-            <div className="w-16 h-16 bg-green-500/10 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Check className="text-green-600 dark:text-green-400" size={32} />
+            <div className="w-16 h-16 bg-success/10 rounded-full flex items-center justify-center mx-auto mb-4">
+              <Check className="text-success" size={32} />
             </div>
             <h3 className="text-xl font-semibold text-foreground mb-2">2FA Enabled Successfully!</h3>
             <p className="text-muted-foreground mb-6">
@@ -222,7 +222,7 @@ export default function SecurityPage() {
         {/* Already Enabled */}
         {twoFactorEnabled && setupStep === 'initial' && (
           <div className="space-y-4">
-            <div className="flex items-center gap-3 text-green-600 dark:text-green-400">
+            <div className="flex items-center gap-3 text-success">
               <Check size={20} />
               <span className="font-medium">2FA is currently enabled</span>
             </div>

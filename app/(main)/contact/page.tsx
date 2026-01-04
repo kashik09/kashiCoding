@@ -119,8 +119,8 @@ export default function ContactPage() {
         {!checkingAvailability && availability && availability.status !== 'AVAILABLE' && (
           <div className={`rounded-lg p-4 border ${
             availability.status === 'UNAVAILABLE'
-              ? 'bg-red-50 dark:bg-red-950/20 border-red-200 dark:border-red-900/50'
-              : 'bg-yellow-50 dark:bg-yellow-950/20 border-yellow-200 dark:border-yellow-900/50'
+              ? 'bg-error/10 border-error/20'
+              : 'bg-warning/10 border-warning/20'
           }`}>
             <div className="flex items-center gap-3 mb-2">
               <div className={`badge badge-sm ${
@@ -133,18 +133,18 @@ export default function ContactPage() {
             </div>
             <p className={`text-sm ${
               availability.status === 'UNAVAILABLE'
-                ? 'text-red-800 dark:text-red-200'
-                : 'text-yellow-800 dark:text-yellow-200'
+                ? 'text-error'
+                : 'text-warning'
             }`}>
               {availability.message || "I'm not accepting new projects right now, but feel free to send your inquiry. I'll reach out when availability opens up."}
             </p>
           </div>
         )}
         {!checkingAvailability && availability && availability.status === 'AVAILABLE' && availability.message && (
-          <div className="bg-green-50 dark:bg-green-950/20 border border-green-200 dark:border-green-900/50 rounded-lg p-4">
+          <div className="bg-success/10 border border-success/20 rounded-lg p-4">
             <div className="flex items-center gap-3">
               <div className="badge badge-sm badge-success">Available</div>
-              <p className="text-sm text-green-800 dark:text-green-200">
+              <p className="text-sm text-success">
                 {availability.message}
               </p>
             </div>

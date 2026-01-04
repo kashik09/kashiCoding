@@ -208,8 +208,8 @@ export default function AdsAdminPage() {
         </div>
       </div>
       {/* Info Banner */}
-      <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-4">
-        <p className="text-sm text-blue-600 dark:text-blue-400">
+      <div className="bg-info/10 border border-info/20 rounded-lg p-4">
+        <p className="text-sm text-info">
           <strong>Note:</strong> Ads require user consent in accordance with privacy regulations (GDPR, CCPA).
           Users must opt-in to personalized advertising before any ads are displayed.
         </p>

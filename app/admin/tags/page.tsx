@@ -124,7 +124,7 @@ export default function TagsManagerPage() {
                   </button>
                   <button
                     onClick={() => setDeleteTag(tag)}
-                    className="p-2 hover:bg-red-500/10 text-red-600 dark:text-red-400 rounded-lg transition"
+                    className="p-2 hover:bg-error/10 text-error rounded-lg transition"
                     title="Delete"
                   >
                     <X size={18} />
@@ -168,7 +168,7 @@ export default function TagsManagerPage() {
                   </button>
                   <button
                     onClick={() => setDeleteTag(tech)}
-                    className="p-2 hover:bg-red-500/10 text-red-600 dark:text-red-400 rounded-lg transition"
+                    className="p-2 hover:bg-error/10 text-error rounded-lg transition"
                     title="Delete"
                   >
                     <X size={18} />

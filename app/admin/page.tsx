@@ -187,7 +187,7 @@ export default function AdminDashboardPage() {
               <div className="flex items-center gap-2">
                 <div
                   className={`w-2 h-2 rounded-full ${
-                    stats.system.status === 'ok' ? 'bg-green-500' : 'bg-red-500'
+                    stats.system.status === 'ok' ? 'bg-success' : 'bg-error'
                   }`}
                 />
                 <span className="text-sm text-foreground">
@@ -197,7 +197,7 @@ export default function AdminDashboardPage() {
               <div className="flex items-center gap-2">
                 <div
                   className={`w-2 h-2 rounded-full ${
-                    stats.system.availableForBusiness ? 'bg-green-500' : 'bg-yellow-500'
+                    stats.system.availableForBusiness ? 'bg-success' : 'bg-warning'
                   }`}
                 />
                 <span className="text-sm text-foreground">
@@ -207,7 +207,7 @@ export default function AdminDashboardPage() {
               </div>
               {stats.system.maintenanceMode && (
                 <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 rounded-full bg-red-500" />
+                  <div className="w-2 h-2 rounded-full bg-error" />
                   <span className="text-sm text-foreground">
                     <strong>Maintenance Mode Active</strong>
                   </span>

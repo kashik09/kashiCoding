@@ -58,11 +58,11 @@ export default function AdminOrdersPage() {
   function getStatusColor(status: string) {
     switch (status) {
       case 'COMPLETED':
-        return 'bg-green-100 text-green-800 border-green-200'
+        return 'bg-success/10 text-success border-success/20'
       case 'PENDING':
-        return 'bg-yellow-100 text-yellow-800 border-yellow-200'
+        return 'bg-warning/10 text-warning border-warning/20'
       case 'PROCESSING':
-        return 'bg-blue-100 text-blue-800 border-blue-200'
+        return 'bg-info/10 text-info border-info/20'
       default:
         return 'bg-muted text-foreground border-border'
     }
@@ -99,21 +99,21 @@ export default function AdminOrdersPage() {
             </div>
             <div className="bg-card rounded-xl border border-border p-6">
               <div className="flex items-center gap-3 mb-2">
-                <Clock className="w-5 h-5 text-yellow-600" />
+                <Clock className="w-5 h-5 text-warning" />
                 <p className="text-sm text-muted-foreground">Pending</p>
               </div>
               <p className="text-3xl font-bold text-foreground">{stats.pendingOrders}</p>
             </div>
             <div className="bg-card rounded-xl border border-border p-6">
               <div className="flex items-center gap-3 mb-2">
-                <CheckCircle className="w-5 h-5 text-green-600" />
+                <CheckCircle className="w-5 h-5 text-success" />
                 <p className="text-sm text-muted-foreground">Completed</p>
               </div>
               <p className="text-3xl font-bold text-foreground">{stats.completedOrders}</p>
             </div>
             <div className="bg-card rounded-xl border border-border p-6">
               <div className="flex items-center gap-3 mb-2">
-                <DollarSign className="w-5 h-5 text-green-600" />
+                <DollarSign className="w-5 h-5 text-success" />
                 <p className="text-sm text-muted-foreground">Revenue</p>
               </div>
               <p className="text-3xl font-bold text-foreground">
@@ -185,8 +185,8 @@ export default function AdminOrdersPage() {
                     <td className="px-6 py-4">
                       <span className={`px-2 py-1 rounded-full text-xs font-medium border ${
                         order.paymentStatus === 'COMPLETED'
-                          ? 'bg-green-100 text-green-800 border-green-200'
-                          : 'bg-yellow-100 text-yellow-800 border-yellow-200'
+                          ? 'bg-success/10 text-success border-success/20'
+                          : 'bg-warning/10 text-warning border-warning/20'
                       }`}>
                         {order.paymentStatus}
                       </span>

@@ -209,7 +209,7 @@ export default function EditDigitalProductPage() {
           {/* Name */}
           <div>
             <label className="block text-sm font-medium text-foreground mb-2">
-              Product Name <span className="text-red-500">*</span>
+              Product Name <span className="text-error">*</span>
             </label>
             <input
               type="text"
@@ -223,7 +223,7 @@ export default function EditDigitalProductPage() {
           {/* Slug */}
           <div>
             <label className="block text-sm font-medium text-foreground mb-2">
-              Slug <span className="text-red-500">*</span>
+              Slug <span className="text-error">*</span>
             </label>
             <input
               type="text"
@@ -240,7 +240,7 @@ export default function EditDigitalProductPage() {
           {/* Description */}
           <div>
             <label className="block text-sm font-medium text-foreground mb-2">
-              Description <span className="text-red-500">*</span>
+              Description <span className="text-error">*</span>
             </label>
             <textarea
               name="description"
@@ -255,7 +255,7 @@ export default function EditDigitalProductPage() {
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-foreground mb-2">
-                Category <span className="text-red-500">*</span>
+                Category <span className="text-error">*</span>
               </label>
               <select
                 name="category"
@@ -270,7 +270,7 @@ export default function EditDigitalProductPage() {
             </div>
             <div>
               <label className="block text-sm font-medium text-foreground mb-2">
-                Price (USD) <span className="text-red-500">*</span>
+                Price (USD) <span className="text-error">*</span>
               </label>
               <input
                 type="number"
@@ -305,7 +305,7 @@ export default function EditDigitalProductPage() {
           {/* File URL */}
           <div>
             <label className="block text-sm font-medium text-foreground mb-2">
-              Product File URL <span className="text-red-500">*</span>
+              Product File URL <span className="text-error">*</span>
             </label>
             <input
               type="url"
@@ -320,7 +320,7 @@ export default function EditDigitalProductPage() {
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-foreground mb-2">
-                File Size (bytes) <span className="text-red-500">*</span>
+                File Size (bytes) <span className="text-error">*</span>
               </label>
               <input
                 type="number"
@@ -333,7 +333,7 @@ export default function EditDigitalProductPage() {
             </div>
             <div>
               <label className="block text-sm font-medium text-foreground mb-2">
-                File Type <span className="text-red-500">*</span>
+                File Type <span className="text-error">*</span>
               </label>
               <input
                 type="text"

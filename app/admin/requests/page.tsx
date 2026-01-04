@@ -156,11 +156,11 @@ export default function AdminRequestsPage() {
   }
   const getStatusBadge = (status: string) => {
     const styles: Record<string, string> = {
-      PENDING: 'bg-yellow-500/20 text-yellow-700 dark:text-yellow-300',
-      REVIEWING: 'bg-blue-500/20 text-blue-700 dark:text-blue-300',
-      IN_PROGRESS: 'bg-cyan-500/20 text-cyan-700 dark:text-cyan-300',
-      COMPLETED: 'bg-blue-500/20 text-blue-700 dark:text-blue-300',
-      REJECTED: 'bg-red-500/20 text-red-700 dark:text-red-300',
+      PENDING: 'bg-warning/10 text-warning',
+      REVIEWING: 'bg-info/10 text-info',
+      IN_PROGRESS: 'bg-info/10 text-info',
+      COMPLETED: 'bg-info/10 text-info',
+      REJECTED: 'bg-error/10 text-error',
       CANCELLED: 'bg-muted/50 text-muted-foreground'
     }
     return styles[status] || styles.PENDING
@@ -219,28 +219,28 @@ export default function AdminRequestsPage() {
         <div className="bg-card rounded-xl border border-border p-6">
           <div className="flex items-center justify-between mb-2">
             <p className="text-muted-foreground text-sm">Pending</p>
-            <Clock className="text-yellow-600 dark:text-yellow-400" size={20} />
+            <Clock className="text-warning" size={20} />
           </div>
           <p className="text-2xl font-bold text-foreground">{stats.pending}</p>
         </div>
         <div className="bg-card rounded-xl border border-border p-6">
           <div className="flex items-center justify-between mb-2">
             <p className="text-muted-foreground text-sm">Contacted</p>
-            <Mail className="text-blue-600 dark:text-blue-400" size={20} />
+            <Mail className="text-info" size={20} />
           </div>
           <p className="text-2xl font-bold text-foreground">{stats.contacted}</p>
         </div>
         <div className="bg-card rounded-xl border border-border p-6">
           <div className="flex items-center justify-between mb-2">
             <p className="text-muted-foreground text-sm">Completed</p>
-            <CheckCircle className="text-blue-600 dark:text-blue-400" size={20} />
+            <CheckCircle className="text-info" size={20} />
           </div>
           <p className="text-2xl font-bold text-foreground">{stats.completed}</p>
         </div>
         <div className="bg-card rounded-xl border border-border p-6">
           <div className="flex items-center justify-between mb-2">
             <p className="text-muted-foreground text-sm">Rejected</p>
-            <XCircle className="text-red-600 dark:text-red-400" size={20} />
+            <XCircle className="text-error" size={20} />
           </div>
           <p className="text-2xl font-bold text-foreground">{stats.rejected}</p>
         </div>
@@ -319,14 +319,14 @@ export default function AdminRequestsPage() {
                           <>
                             <button
                               onClick={() => setActionModal({ isOpen: true, type: 'accept', requestId: request.id })}
-                              className="p-2 hover:bg-blue-500/10 text-blue-600 dark:text-blue-400 rounded-lg transition"
+                              className="p-2 hover:bg-primary/10 text-primary rounded-lg transition"
                               title="Accept request"
                             >
                               <Check size={18} />
                             </button>
                             <button
                               onClick={() => setActionModal({ isOpen: true, type: 'reject', requestId: request.id })}
-                              className="p-2 hover:bg-red-500/10 text-red-600 dark:text-red-400 rounded-lg transition"
+                              className="p-2 hover:bg-error/10 text-error rounded-lg transition"
                               title="Reject request"
                             >
                               <X size={18} />
@@ -344,7 +344,7 @@ export default function AdminRequestsPage() {
                         </button>
                         <button
                           onClick={() => setDeleteModal({ isOpen: true, requestId: request.id })}
-                          className="p-2 hover:bg-red-500/10 text-red-600 dark:text-red-400 rounded-lg transition"
+                          className="p-2 hover:bg-error/10 text-error rounded-lg transition"
                         >
                           <Trash2 size={18} />
                         </button>
@@ -430,7 +430,7 @@ export default function AdminRequestsPage() {
                       setShowModal(false)
                       setActionModal({ isOpen: true, type: 'accept', requestId: selectedRequest.id })
                     }}
-                    className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+                    className="px-6 py-2 bg-primary text-primary-content rounded-lg hover:bg-primary/90 transition"
                   >
                     Accept
                   </button>
@@ -439,7 +439,7 @@ export default function AdminRequestsPage() {
                       setShowModal(false)
                       setActionModal({ isOpen: true, type: 'reject', requestId: selectedRequest.id })
                     }}
-                    className="px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition"
+                    className="px-6 py-2 bg-error text-error-content rounded-lg hover:bg-error/90 transition"
                   >
                     Reject
                   </button>
