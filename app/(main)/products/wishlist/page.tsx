@@ -85,7 +85,7 @@ export default function WishlistPage() {
               <ArrowLeft className="w-4 h-4" />
               Back to Products
             </Link>
-            <h1 className="text-h1 font-bold text-foreground mb-3">My Wishlist</h1>
+            <h1 className="text-h1 font-bold text-foreground mb-3">Saved for later</h1>
             <p className="text-body text-muted-foreground/90">
               Products you've saved for later
             </p>

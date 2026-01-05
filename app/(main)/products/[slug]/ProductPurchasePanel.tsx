@@ -97,7 +97,7 @@ export function ProductPurchasePanel({ product }: ProductPurchasePanelProps) {
 
   async function handleWishlistToggle() {
     if (!session?.user?.id) {
-      showToast('Please login to save items to wishlist', 'error')
+      showToast('Please login to save for later', 'error')
       router.push(`/login?callbackUrl=/products/${product.slug}`)
       return
     }
@@ -115,19 +115,19 @@ export function ProductPurchasePanel({ product }: ProductPurchasePanelProps) {
           body: JSON.stringify({ productId: product.id }),
         })
         if (!res.ok) throw new Error()
-        showToast('Added to wishlist!', 'success')
+        showToast('Saved for later!', 'success')
       } else {
         // Remove from wishlist
         const res = await fetch(`/api/me/wishlist/${product.id}`, {
           method: 'DELETE',
         })
         if (!res.ok) throw new Error()
-        showToast('Removed from wishlist', 'success')
+        showToast('Removed from saved items', 'success')
       }
     } catch (error) {
       // Revert on error
       setIsSaved(!newSavedState)
-      showToast('Failed to update wishlist', 'error')
+      showToast('Failed to update saved items', 'error')
     } finally {
       setIsLoadingWishlist(false)
     }
@@ -171,7 +171,7 @@ export function ProductPurchasePanel({ product }: ProductPurchasePanelProps) {
           ) : (
             <>
               <Heart className={`w-5 h-5 ${isSaved ? 'fill-current' : ''}`} />
-              {isSaved ? 'Saved to Wishlist' : 'Save to Wishlist'}
+              {isSaved ? 'Saved for later' : 'Save for later'}
             </>
           )}
         </button>

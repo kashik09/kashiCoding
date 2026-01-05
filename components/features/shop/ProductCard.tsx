@@ -182,7 +182,7 @@ export function ProductCard({ product, onAddToCart, showQuickAdd = true }: Produ
                     ? 'bg-primary/10 text-primary'
                     : 'bg-muted text-muted-foreground hover:bg-primary/10 hover:text-primary'
                 }`}
-                title={isSaved ? 'Remove from wishlist' : 'Add to wishlist'}
+                title={isSaved ? 'Remove from saved' : 'Save for later'}
               >
                 <Heart className={`w-4 h-4 ${isSaved ? 'fill-current' : ''}`} />
               </button>
