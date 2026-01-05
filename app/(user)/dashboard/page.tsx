@@ -137,6 +137,16 @@ export default function DashboardPage() {
     const diffMonths = Math.round(diffDays / 30)
     return `${diffMonths} month${diffMonths !== 1 ? 's' : ''}`
   }
+  const greetingName = (() => {
+    const name = session?.user?.name?.trim()
+    if (name) return name.split(' ')[0]
+    const email = session?.user?.email?.trim()
+    if (email) {
+      const [localPart] = email.split('@')
+      return localPart || email
+    }
+    return 'there'
+  })()
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
@@ -149,7 +159,7 @@ export default function DashboardPage() {
       {/* Welcome Section */}
       <div>
         <h1 className="text-3xl font-bold text-foreground mb-2">
-          Welcome back, {session?.user?.name?.split(' ')[0] || 'there'}!
+          Welcome back, {greetingName} 👋🏾
         </h1>
         <p className="text-muted-foreground">
           Here&apos;s an overview of your account activity
