@@ -45,6 +45,7 @@ model User {
   membership              Membership?              @relation(fields: [membershipId], references: [id])
   wishlistItems           WishlistItem[]
   supportTickets          SupportTicket[]
+  passwordResetTokens     PasswordResetToken[]
 
   @@index([email])
   @@index([accountStatus])
@@ -90,6 +91,21 @@ model VerificationToken {
 
   @@unique([identifier, token])
   @@map("verification_tokens")
+}
+
+model PasswordResetToken {
+  id        String   @id @default(cuid())
+  userId    String
+  tokenHash String
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([tokenHash])
+  @@index([expiresAt])
+  @@map("password_reset_tokens")
 }
 
 model ProjectRequest {
