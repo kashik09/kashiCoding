@@ -6,6 +6,7 @@ type IncomingBody = {
   name?: string
   email?: string
   projectType?: string
+  serviceType?: string
   budget?: string
   timeline?: string
   description?: string
@@ -29,12 +30,18 @@ export async function POST(req: Request) {
     }
 
     const session = await getServerSession()
-    const body = (await req.json()) as IncomingBody
+    const body = (await req.json().catch(() => null)) as IncomingBody | null
+    if (!body) {
+      return NextResponse.json(
+        { error: 'Missing required fields.' },
+        { status: 400 }
+      )
+    }
 
     const name = session?.user?.name ?? body.name ?? ''
     const email = session?.user?.email ?? body.email ?? ''
 
-    const projectType = body.projectType ?? ''
+    const projectType = body.projectType ?? body.serviceType ?? ''
     const budget = body.budget ?? ''
     const timeline = body.timeline ?? ''
     const description = body.description ?? ''
