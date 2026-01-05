@@ -12,6 +12,23 @@ import { Github } from 'lucide-react'
 export default function LoginPage() {
   const searchParams = useSearchParams()
   const callbackUrl = searchParams.get('callbackUrl') || '/dashboard'
+  const authError = searchParams.get('error')
+  const authErrorMessage = (() => {
+    switch (authError) {
+      case 'OAuthAccountNotLinked':
+        return 'This email is linked to a different sign-in method. Use the provider you originally signed up with.'
+      case 'CredentialsSignin':
+        return 'Invalid email or password.'
+      case 'AccessDenied':
+        return 'Access denied. Please try a different account.'
+      case 'Configuration':
+        return 'Authentication is misconfigured. Please try again later.'
+      case 'Verification':
+        return 'Verification failed or expired. Please request a new link.'
+      default:
+        return authError ? 'Something went wrong. Please try again.' : ''
+    }
+  })()
 
   const [error, setError] = useState('')
   const [formData, setFormData] = useState({
@@ -72,9 +89,9 @@ export default function LoginPage() {
           <p className="text-muted-foreground">Sign in to your account</p>
         </div>
 
-        {error && (
+        {(error || authErrorMessage) && (
           <div className="mb-6 p-4 bg-error/10 border border-error/20 rounded-lg text-error text-sm">
-            {error}
+            {error || authErrorMessage}
           </div>
         )}
 
