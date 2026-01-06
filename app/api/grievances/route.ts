@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { getServerSession } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
 import { isValidEmail } from '@/lib/auth-utils'
+import { checkRateLimit, getRateLimitHeaders, getRateLimitKey } from '@/lib/rate-limit'
 
 const prismaClient = prisma as any
 
@@ -19,6 +20,15 @@ const MAX_MESSAGE_LENGTH = 2000
 
 export async function POST(request: Request) {
   try {
+    const rateKey = getRateLimitKey({ headers: request.headers }, 'grievances')
+    const rateResult = checkRateLimit(rateKey, 5, 10 * 60 * 1000)
+    if (!rateResult.allowed) {
+      return NextResponse.json(
+        { error: 'Please wait before submitting again.' },
+        { status: 429, headers: getRateLimitHeaders(rateResult) }
+      )
+    }
+
     const session = await getServerSession()
     const body = (await request.json().catch(() => null)) as IncomingBody | null
 
