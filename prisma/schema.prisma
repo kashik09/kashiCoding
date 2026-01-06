@@ -39,6 +39,7 @@ model User {
   licenses                License[]
   orders                  Order[]
   projectRequests         ProjectRequest[]
+  grievances              Grievance[]
   serviceProjects         ServiceProject[]
   sessions                Session[]
   adConsent               UserAdConsent?
@@ -136,6 +137,28 @@ model ProjectRequest {
   @@index([createdAt])
   @@index([projectType])
   @@map("project_requests")
+}
+
+model Grievance {
+  id          String           @id @default(cuid())
+  userId      String?
+  name        String?
+  email       String?
+  phone       String?
+  message     String
+  orderNumber String?
+  pageUrl     String?
+  status      GrievanceStatus  @default(OPEN)
+  adminNotes  String?
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+  user        User?            @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+  @@index([email])
+  @@index([status])
+  @@index([createdAt])
+  @@map("grievances")
 }
 
 model SupportTicket {
@@ -769,6 +792,12 @@ enum RequestStatus {
   COMPLETED
   REJECTED
   CANCELLED
+}
+
+enum GrievanceStatus {
+  OPEN
+  IN_PROGRESS
+  RESOLVED
 }
 
 enum Priority {
