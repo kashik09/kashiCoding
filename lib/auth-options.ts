@@ -176,9 +176,10 @@ export const authOptions: NextAuthOptions = {
 
         // Set JWT exp ourselves so "remember me" changes session validity
         const now = Math.floor(Date.now() / 1000)
-        token.exp = now + (rememberMe ? THIRTY_DAYS_SECONDS : ONE_DAY_SECONDS)
+        const baseExp = now + (rememberMe ? THIRTY_DAYS_SECONDS : ONE_DAY_SECONDS)
+        token.exp = baseExp
         if (ADMIN_ROLES.has((user as any).role)) {
-          token.exp = Math.min(token.exp, now + ADMIN_SESSION_MAX_AGE_SECONDS)
+          token.exp = Math.min(baseExp, now + ADMIN_SESSION_MAX_AGE_SECONDS)
         }
 
         // Fetch 2FA status from database
