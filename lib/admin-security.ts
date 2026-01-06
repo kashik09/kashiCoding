@@ -22,7 +22,8 @@ function getAdminSecuritySecret(): string {
 
 function base64UrlEncode(data: Uint8Array): string {
   let binary = ''
-  for (const byte of data) {
+  for (let i = 0; i < data.length; i += 1) {
+    const byte = data[i]
     binary += String.fromCharCode(byte)
   }
   const base64 =
