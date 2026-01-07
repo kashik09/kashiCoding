@@ -7,6 +7,8 @@ import { Search, Plus, Package, Download, Edit, Trash2, CheckCircle, XCircle } f
 import { useToast } from '@/components/ui/Toast'
 import { Spinner } from '@/components/ui/Spinner'
 import ConfirmModal from '@/components/ui/ConfirmModal'
+import { prettyCategory } from "@/lib/product-ui"
+
 interface DigitalProduct {
   id: string
   title: string
@@ -257,7 +259,7 @@ export default function AdminDigitalProductsPage() {
                     </td>
                     <td className="p-4">
                       <span className="px-3 py-1 bg-primary/10 text-primary rounded-full text-sm">
-                        {product.category.replace(/_/g, ' ')}
+                        {prettyCategory(product.category)}
                       </span>
                     </td>
                     <td className="p-4 text-foreground">${product.price.toFixed(2)}</td>

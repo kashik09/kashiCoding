@@ -838,6 +838,8 @@ enum ProductCategory {
   TEMPLATE
   THEME
   UI_KIT
+  TOOL
+  SDK
   CODE_SNIPPET
   DOCUMENTATION
   ASSET

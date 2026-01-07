@@ -7,6 +7,7 @@ import { Star, Download, ShoppingCart, Heart } from 'lucide-react'
 import { formatPriceShort } from '@/lib/currency'
 import type { SupportedCurrency } from '@/lib/currency'
 import { isLocalImageUrl, normalizePublicPath } from '@/lib/utils'
+import { prettyCategory } from "@/lib/product-ui"
 import { useSession } from 'next-auth/react'
 import { useEffect, useState } from 'react'
 
@@ -136,7 +137,7 @@ export function ProductCard({
         {/* Category Badge */}
         <div className="mb-2">
           <Badge variant="secondary" className="text-xs">
-            {product.category.replace(/_/g, ' ')}
+            {prettyCategory(product.category)}
           </Badge>
         </div>
 
