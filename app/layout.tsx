@@ -65,12 +65,6 @@ const THEME_BOOTSTRAP = `(() => {
 export const metadata: Metadata = {
   title: 'Kashi Kweyu | digital builder',
   description: 'Portfolio of Kashi Kweyu — building calm, useful products.',
-  icons: {
-    icon: [
-      { url: '/icon-light.svg', media: '(prefers-color-scheme: light)' },
-      { url: '/icon-dark.svg', media: '(prefers-color-scheme: dark)' },
-    ],
-  },
 }
 
 export const viewport: Viewport = {
