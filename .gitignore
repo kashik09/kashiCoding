@@ -14,9 +14,6 @@
 # production
 /build
 
-# uploads
-/public/uploads
-
 # misc
 .DS_Store
 *.pem
@@ -44,12 +41,6 @@ backups/
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-
-# Uploads (keep directory structure but ignore uploaded files)
-public/uploads/**/*
-!public/uploads/.gitkeep
-!public/uploads/**/
-!public/uploads/**/.gitkeep
 
 .env
 .env.local

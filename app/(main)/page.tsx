@@ -1,6 +1,7 @@
 // Use ISR with 1-hour revalidation instead of force-dynamic for better performance
 // This reduces server load and improves TTFB while keeping content relatively fresh
-export const revalidate = 3600 // Revalidate every 1 hour
+export const dynamic = "force-dynamic";
+export const revalidate = 3600; // Revalidate every 1 hour
 
 import { HomeCanvas } from '@/components/features/home'
 import { prisma } from '@/lib/prisma'
