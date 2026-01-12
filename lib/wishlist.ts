@@ -17,7 +17,6 @@ export async function getWishlistForUser(userId: string) {
           currency: true,
           usdPrice: true,
           ugxPrice: true,
-          creditPrice: true,
           thumbnailUrl: true,
           category: true,
           published: true,

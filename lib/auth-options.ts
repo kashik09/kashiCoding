@@ -51,7 +51,11 @@ export const authOptions: NextAuthOptions = {
           const isPasswordValid = await verifyPassword(password, storedPassword)
           if (!user || !isPasswordValid) return null
 
-          if (userRecord?.accountStatus === "LOCKED" || userRecord?.accountStatus === "BANNED") {
+          if (
+            userRecord?.accountStatus === "LOCKED" ||
+            userRecord?.accountStatus === "BANNED" ||
+            userRecord?.accountStatus === "SUSPENDED"
+          ) {
             return null
           }
           if (userRecord?.twoFactorEnabled === true && userRecord?.twoFactorVerified !== true) {
@@ -143,7 +147,12 @@ export const authOptions: NextAuthOptions = {
       })
 
       if (!dbUser) return true
-      if (dbUser.accountStatus === "LOCKED" || dbUser.accountStatus === "BANNED") return false
+      if (
+        dbUser.accountStatus === "LOCKED" ||
+        dbUser.accountStatus === "BANNED" ||
+        dbUser.accountStatus === "SUSPENDED"
+      )
+        return false
       if (dbUser.twoFactorEnabled && !dbUser.twoFactorVerified) return false
 
       return true

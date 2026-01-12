@@ -22,13 +22,11 @@ export const MEMBERSHIP_PLANS: MembershipPlan[] = [
     rolloverCap: 0,
     durationDays: 365, // 12 months
     features: [
-      '750 credits total (6-12 month term)',
+      '750 credits total (12-month term)',
+      'Credits expire after 12 months',
       'No rollover credits',
-      'No renewals',
-      'Documentation-only support',
-      'No rush work available',
       'Standard response time',
-      'Access to basic services',
+      'Access to essential services',
     ],
   },
   {
@@ -37,17 +35,15 @@ export const MEMBERSHIP_PLANS: MembershipPlan[] = [
     description: 'Best for professionals and growing businesses',
     price: 1499,
     credits: 1500,
-    rolloverCap: 300,
-    durationDays: 730, // 2 years
+    rolloverCap: 250,
+    durationDays: 365, // 12 months
     features: [
-      '1500 credits per year (2-year term)',
-      'Up to 300 credits rollover',
-      'Yearly renewal option',
-      'Discounted add-ons',
+      '1500 credits per year (12-month term)',
+      'Credits expire after 12 months',
+      'Up to 250 credits rollover',
       'Priority service queue',
-      'Priority reset requests',
-      'Advanced features access',
       'Faster response time',
+      'Expanded service access',
     ],
   },
   {
@@ -56,12 +52,11 @@ export const MEMBERSHIP_PLANS: MembershipPlan[] = [
     description: 'Full-service solution with monthly renewal',
     price: 499,
     credits: 500,
-    rolloverCap: 100,
+    rolloverCap: 0,
     durationDays: 30, // Monthly
     features: [
       '500 credits per month',
-      'Up to 100 credits rollover',
-      'Monthly or annual terms',
+      'Credits expire monthly (no rollover)',
       'Hosting management included',
       'Dedicated project manager',
       '24/7 priority support',

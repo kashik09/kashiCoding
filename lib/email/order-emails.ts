@@ -72,17 +72,13 @@ export async function sendOrderConfirmationEmail(orderId: string): Promise<{
         </table>
 
         ${
-          order.purchaseType === 'ONE_TIME'
+          order.paymentStatus === 'PENDING'
             ? `
         <div style="background: #fef3c7; border-left: 4px solid #f59e0b; padding: 15px; margin: 20px 0;">
           <p style="margin: 0; color: #92400e;"><strong>Payment Required:</strong> Your order is pending payment. Please follow the payment instructions sent separately.</p>
         </div>
         `
-            : `
-        <div style="background: #d1fae5; border-left: 4px solid #10b981; padding: 15px; margin: 20px 0;">
-          <p style="margin: 0; color: #065f46;"><strong>Paid with Credits:</strong> Your order has been paid with ${order.creditsUsed} credits and your licenses are being issued now!</p>
-        </div>
-        `
+            : ''
         }
 
         <p>You can view your order status and download your products from your <a href="${process.env.NEXT_PUBLIC_SITE_URL || ''}/dashboard/orders/${order.orderNumber}" style="color: #3b82f6;">dashboard</a>.</p>
@@ -319,12 +315,6 @@ export async function sendOrderCancelledEmail(
         </div>
 
         <p><strong>Order Total:</strong> ${formatPrice(Number(order.total), order.currency as SupportedCurrency)}</p>
-
-        ${
-          order.purchaseType === 'CREDITS' && order.creditsUsed
-            ? `<p><strong>Credits Refunded:</strong> ${order.creditsUsed} credits have been refunded to your account.</p>`
-            : ''
-        }
 
         <p>If you have any questions about this cancellation, please contact support.</p>
 

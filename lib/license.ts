@@ -1,6 +1,7 @@
 import crypto from 'crypto'
 import { AuditAction, LicenseType, LicenseStatus, Prisma } from '@prisma/client'
 import { prisma } from '@/lib/prisma'
+import { createAuditLog } from '@/lib/audit-logger'
 
 // Team license constants
 export const TEAM_LICENSE_MAX_SEATS = 5
@@ -480,15 +481,42 @@ export async function flagLicenseAbuse(options: {
   error?: string
 }> {
   try {
-    await prisma.license.update({
-      where: { id: options.licenseId },
-      data: {
-        abuseFlagged: true,
-        abuseFlaggedAt: new Date(),
-        abuseFlaggedBy: options.flaggedBy,
-        abuseReason: options.reason,
-        status: 'SUSPENDED',
-      },
+    const now = new Date()
+    const result = await prisma.$transaction(async (tx) => {
+      const license = await tx.license.update({
+        where: { id: options.licenseId },
+        data: {
+          abuseFlagged: true,
+          abuseFlaggedAt: now,
+          abuseFlaggedBy: options.flaggedBy,
+          abuseReason: options.reason,
+          status: 'SUSPENDED',
+        },
+        select: {
+          id: true,
+          userId: true,
+        },
+      })
+
+      const user = await tx.user.findUnique({
+        where: { id: license.userId },
+        select: { accountStatus: true },
+      })
+
+      let accountLocked = false
+      if (user && user.accountStatus !== 'LOCKED' && user.accountStatus !== 'BANNED') {
+        await tx.user.update({
+          where: { id: license.userId },
+          data: {
+            accountStatus: 'LOCKED',
+            accountLockedAt: now,
+            accountLockedReason: `License abuse detected; manual review required. Reason: ${options.reason}`,
+          },
+        })
+        accountLocked = true
+      }
+
+      return { license, accountLocked }
     })
 
     // Log audit event
@@ -503,6 +531,22 @@ export async function flagLicenseAbuse(options: {
         ...options.details,
       },
     })
+
+    if (result.accountLocked) {
+      await createAuditLog({
+        action: 'ACCOUNT_LOCKED',
+        resource: 'User',
+        resourceId: result.license.userId,
+        details: {
+          event: 'LICENSE_ABUSE_LOCK',
+          reason: options.reason,
+          licenseId: result.license.id,
+          flaggedBy: options.flaggedBy,
+        },
+        ipHash: options.ipHash,
+        userAgent: options.userAgent,
+      })
+    }
 
     return {
       success: true,

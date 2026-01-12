@@ -19,7 +19,6 @@ export async function getOrCreateCart(userId: string) {
                 price: true,
                 usdPrice: true,
                 ugxPrice: true,
-                creditPrice: true,
                 currency: true,
                 thumbnailUrl: true,
                 published: true,
@@ -46,7 +45,6 @@ export async function getOrCreateCart(userId: string) {
                   price: true,
                   usdPrice: true,
                   ugxPrice: true,
-                  creditPrice: true,
                   currency: true,
                   thumbnailUrl: true,
                   published: true,
@@ -327,13 +325,11 @@ export async function calculateCartTotal(
   tax: number
   total: number
   itemCount: number
-  creditsRequired?: number
 }> {
   try {
     const cart = await getOrCreateCart(userId)
 
     let subtotal = 0
-    let creditsRequired = 0
 
     for (const item of cart.items) {
       if (!item.product) continue
@@ -349,11 +345,6 @@ export async function calculateCartTotal(
       }
 
       subtotal += itemPrice * item.quantity
-
-      // Calculate credits required (if available)
-      if (item.product.creditPrice) {
-        creditsRequired += item.product.creditPrice * item.quantity
-      }
     }
 
     // Tax calculation (0 for MVP, can be enhanced later)
@@ -366,7 +357,6 @@ export async function calculateCartTotal(
       tax,
       total,
       itemCount: cart.items.length,
-      creditsRequired: creditsRequired > 0 ? creditsRequired : undefined,
     }
   } catch (error) {
     console.error('Error calculating cart total:', error)

@@ -62,7 +62,7 @@ export class ManualPaymentProvider implements PaymentProvider {
       `Reference your order number: ${params.orderNumber}`,
       `Amount to pay: ${params.currency} ${params.amount.toLocaleString()}`,
       'Send proof of payment (screenshot/receipt)',
-      'We will confirm your payment and activate your licenses within 24 hours',
+      'We will confirm your payment and activate your licenses once payment is confirmed',
     ]
 
     if (customInstructions) {

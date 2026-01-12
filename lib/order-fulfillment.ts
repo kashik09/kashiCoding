@@ -1,7 +1,6 @@
 import { OrderStatus, PaymentStatus, AuditAction } from '@prisma/client'
 import { prisma } from '@/lib/prisma'
 import { generateLicenseKey } from '@/lib/license'
-import { refundCredits } from '@/lib/credits'
 import { createAuditLog } from '@/lib/audit-logger'
 
 type AuditContext = {
@@ -334,18 +333,6 @@ export async function cancelOrder(
     }
 
     await prisma.$transaction(async (tx) => {
-      // Refund credits if this was a credit purchase
-      if (order.purchaseType === 'CREDITS' && order.membershipId && order.creditsUsed) {
-        await refundCredits({
-          userId: order.userId,
-          membershipId: order.membershipId,
-          amount: order.creditsUsed,
-          description: `Order ${order.orderNumber} cancelled: ${reason}`,
-          reference: order.id,
-          performedBy: cancelledBy,
-        })
-      }
-
       // Update order status
       await tx.order.update({
         where: { id: orderId },
@@ -365,7 +352,6 @@ export async function cancelOrder(
             orderNumber: order.orderNumber,
             reason,
             cancelledBy,
-            refundedCredits: order.creditsUsed || 0,
           },
         },
       })
