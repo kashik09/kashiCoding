@@ -230,7 +230,7 @@ async function main() {
       slug: 'json-api-builder',
       description:
         'CLI tool that turns a JSON config into a working CRUD API server. Generates routes for resources, includes health checks, and supports optional file persistence.',
-      category: 'TOOL',
+      category: 'CODE_SNIPPET',
       tags: ['api', 'cli', 'fastify', 'json', 'crud', 'typescript'],
       price: new Prisma.Decimal('35.00'),
       currency: 'USD',
