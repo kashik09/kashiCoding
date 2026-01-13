@@ -173,7 +173,7 @@ export async function POST(request: NextRequest) {
       data: {
         userId: session.user.id,
         action: 'STUDENT_VERIFICATION_SUBMITTED',
-        resourceType: 'StudentVerification',
+        resource: 'StudentVerification',
         resourceId: verification.id,
         details: {
           method,

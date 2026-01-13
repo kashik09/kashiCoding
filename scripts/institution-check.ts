@@ -199,4 +199,5 @@ if (require.main === module) {
   main()
 }
 
-export { checkInstitution, InstitutionCheckResult }
+export { checkInstitution }
+export type { InstitutionCheckResult }

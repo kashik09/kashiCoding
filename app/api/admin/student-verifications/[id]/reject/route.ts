@@ -60,7 +60,7 @@ export async function POST(
       data: {
         userId: verification.userId,
         action: 'STUDENT_VERIFICATION_REJECTED',
-        resourceType: 'StudentVerification',
+        resource: 'StudentVerification',
         resourceId: id,
         details: {
           reviewedBy: session.user.id,
