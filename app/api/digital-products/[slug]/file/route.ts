@@ -11,6 +11,7 @@ import {
   hashIp,
   logDownloadEvent,
 } from '@/lib/downloads'
+import { canUserDownload } from '@/lib/suspension-middleware'
 import { checkRateLimit, getRateLimitHeaders, getRateLimitKey } from '@/lib/rate-limit'
 
 function getClientIp(req: NextRequest): string | null {
@@ -157,6 +158,24 @@ export async function GET(
       return NextResponse.json(
         { success: false, error: 'Product not available' },
         { status: 404 }
+      )
+    }
+
+    // Check suspension gates
+    const downloadPermission = await canUserDownload(userId, license.id)
+    if (!downloadPermission.allowed) {
+      await logDownloadEvent({
+        userId,
+        action: AuditAction.DOWNLOAD_FAILED,
+        resourceId: product.id,
+        ipHash,
+        userAgent,
+        details: { reason: 'SUSPENDED_OR_RESTRICTED', message: downloadPermission.reason },
+      })
+
+      return NextResponse.json(
+        { success: false, error: downloadPermission.reason || 'Cannot download at this time' },
+        { status: 403 }
       )
     }
 

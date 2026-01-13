@@ -12,6 +12,8 @@ import {
   createDownloadToken,
 } from '@/lib/downloads'
 import { detectDownloadAbuse, flagLicenseAbuse } from '@/lib/license'
+import { canUserDownload } from '@/lib/suspension-middleware'
+import { checkAndSuspendIfAbused } from '@/lib/suspension'
 import { getEmailConfig, getEmailTemplate, sendEmail } from '@/lib/email'
 import { checkRateLimit, getRateLimitHeaders, getRateLimitKey } from '@/lib/rate-limit'
 
@@ -116,6 +118,24 @@ export async function POST(
 
       return NextResponse.json(
         { success: false, error: 'No active license for this product' },
+        { status: 403 }
+      )
+    }
+
+    // Check suspension gates
+    const downloadPermission = await canUserDownload(userId, license.id)
+    if (!downloadPermission.allowed) {
+      await logDownloadEvent({
+        userId,
+        action: AuditAction.DOWNLOAD_FAILED,
+        resourceId: product.id,
+        ipHash,
+        userAgent,
+        details: { reason: 'SUSPENDED_OR_RESTRICTED', message: downloadPermission.reason },
+      })
+
+      return NextResponse.json(
+        { success: false, error: downloadPermission.reason || 'Cannot download at this time' },
         { status: 403 }
       )
     }
@@ -228,6 +248,27 @@ export async function POST(
         {
           success: false,
           error: 'License has been suspended due to suspected abuse. Please contact support.',
+        },
+        { status: 403 }
+      )
+    }
+
+    // Check for new abuse patterns and auto-suspend if needed
+    const suspensionCheck = await checkAndSuspendIfAbused(userId, license.id)
+    if (suspensionCheck.suspended) {
+      await logDownloadEvent({
+        userId,
+        action: AuditAction.DOWNLOAD_FAILED,
+        resourceId: product.id,
+        ipHash,
+        userAgent,
+        details: { reason: 'AUTO_SUSPENDED', message: suspensionCheck.reason },
+      })
+
+      return NextResponse.json(
+        {
+          success: false,
+          error: 'Your account has been suspended due to suspicious activity. Please contact support.',
         },
         { status: 403 }
       )

@@ -6,6 +6,8 @@ import { generateOrderNumber } from '@/lib/order-number'
 import { getProvider } from '@/lib/payment/providers'
 import { sendOrderConfirmationEmail, sendPaymentInstructionsEmail } from '@/lib/email/order-emails'
 import { OrderPurchaseType, PaymentStatus, OrderStatus, AuditAction } from '@prisma/client'
+import { canUserPurchase } from '@/lib/suspension-middleware'
+import { getUserDiscountEligibility, calculateDiscountedPrice } from '@/lib/discounts'
 
 /**
  * POST /api/checkout
@@ -86,6 +88,36 @@ export async function POST(request: NextRequest) {
       )
     }
 
+    // Check if user is suspended
+    const purchasePermission = await canUserPurchase(session.user.id)
+    if (!purchasePermission.allowed) {
+      return NextResponse.json(
+        { error: purchasePermission.reason || 'Cannot make purchases at this time' },
+        { status: 403 }
+      )
+    }
+
+    // Check for discount eligibility
+    const discountEligibility = await getUserDiscountEligibility(session.user.id)
+    let finalSubtotal = totals.subtotal
+    let finalTotal = totals.total
+    let discountAmount = 0
+
+    if (discountEligibility.eligible) {
+      // Calculate discounted prices
+      const discountedSubtotal = calculateDiscountedPrice(
+        Number(totals.subtotal),
+        discountEligibility.discountPercent
+      )
+      discountAmount = Number(totals.subtotal) - discountedSubtotal
+      finalSubtotal = discountedSubtotal
+
+      // Recalculate total (subtotal + tax)
+      const taxRate = Number(totals.tax) / Number(totals.subtotal)
+      const discountedTax = discountedSubtotal * taxRate
+      finalTotal = discountedSubtotal + discountedTax
+    }
+
     // Create order in a transaction
     const order = await prisma.$transaction(async (tx) => {
       // Create order
@@ -93,9 +125,11 @@ export async function POST(request: NextRequest) {
         data: {
           orderNumber,
           userId: session.user.id,
-          subtotal: totals.subtotal,
-          tax: totals.tax,
-          total: totals.total,
+          subtotal: finalSubtotal,
+          tax: discountEligibility.eligible
+            ? finalTotal - finalSubtotal
+            : totals.tax,
+          total: finalTotal,
           currency,
           paymentStatus: PaymentStatus.PENDING,
           paymentMethod,
@@ -108,6 +142,12 @@ export async function POST(request: NextRequest) {
           termsVersion: '1.0', // TODO: Get from settings
           customerEmail: user.email,
           customerName: user.name || undefined,
+          discountApplied: discountEligibility.eligible,
+          discountType: discountEligibility.discountType,
+          discountPercent: discountEligibility.eligible
+            ? discountEligibility.discountPercent
+            : 0,
+          discountAmount: discountAmount,
         },
         include: {
           items: true,

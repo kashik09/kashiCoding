@@ -37,7 +37,7 @@ export async function suspendUser(
     data: {
       userId,
       action: 'ACCOUNT_SUSPENDED',
-      resourceType: 'User',
+      resource: 'User',
       resourceId: userId,
       details: { reason, suspendedBy },
     },
@@ -76,7 +76,7 @@ export async function unsuspendUser(userId: string, unsuspendedBy: string): Prom
     data: {
       userId,
       action: 'ACCOUNT_UNSUSPENDED',
-      resourceType: 'User',
+      resource: 'User',
       resourceId: userId,
       details: { unsuspendedBy },
     },
@@ -209,7 +209,7 @@ export async function checkAndSuspendIfAbused(
       data: {
         userId,
         action: 'LICENSE_ABUSE_DETECTED',
-        resourceType: 'License',
+        resource: 'License',
         resourceId: licenseId,
         details: {
           suspicionScore: detection.score,
@@ -235,7 +235,7 @@ export async function checkAndSuspendIfAbused(
       data: {
         userId,
         action: 'RESALE_SUSPECTED',
-        resourceType: 'License',
+        resource: 'License',
         resourceId: licenseId,
         details: {
           suspicionScore: detection.score,
