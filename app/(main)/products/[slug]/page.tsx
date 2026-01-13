@@ -1,18 +1,23 @@
-import type { Metadata } from 'next'
-import { cache } from 'react'
-import { notFound } from 'next/navigation'
+import Link from 'next/link'
 import Image from 'next/image'
-import { Download, FileText, Package, ShieldCheck, Headphones, Zap } from 'lucide-react'
+import { notFound } from 'next/navigation'
 import { prisma } from '@/lib/prisma'
-import { convertPrice } from '@/lib/currency'
+import { prettyCategory } from '@/lib/product-ui'
+import { ProductDetailClient } from '@/components/features/shop/ProductDetailClient'
 import { isLocalImageUrl, normalizePublicPath } from '@/lib/utils'
-import { ProductPurchasePanel } from './ProductPurchasePanel'
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || ''
+function toNumber(value: any): number {
+  if (value === null || value === undefined) return 0
+  return Number(value)
+}
 
-const getProduct = cache(async (slug: string) =>
-  prisma.digitalProduct.findFirst({
-    where: { slug, published: true },
+export default async function ProductDetailPage({
+  params,
+}: {
+  params: { slug: string }
+}) {
+  const product = await prisma.digitalProduct.findFirst({
+    where: { slug: params.slug, published: true },
     select: {
       id: true,
       name: true,
@@ -21,305 +26,186 @@ const getProduct = cache(async (slug: string) =>
       category: true,
       tags: true,
       price: true,
-      currency: true,
       usdPrice: true,
       ugxPrice: true,
-      fileSize: true,
-      fileType: true,
+      creditPrice: true,
       thumbnailUrl: true,
       previewImages: true,
       personalLicense: true,
       commercialLicense: true,
       teamLicense: true,
       version: true,
-      changelog: true,
-      documentation: true,
-      featured: true,
-      downloadCount: true,
-      purchaseCount: true,
-      publishedAt: true,
-      createdAt: true,
-      updatedAt: true,
+      fileSize: true,
+      fileType: true,
     },
   })
-)
-
-export async function generateMetadata({
-  params,
-}: {
-  params: { slug: string }
-}): Promise<Metadata> {
-  const product = await getProduct(params.slug)
-
-  if (!product) {
-    return {
-      title: 'Product not found',
-      robots: { index: false, follow: false },
-    }
-  }
-
-  const canonical = SITE_URL
-    ? `${SITE_URL}/products/${product.slug}`
-    : `/products/${product.slug}`
-  const description = product.description || product.name
-  const imagePath = normalizePublicPath(product.thumbnailUrl)
-  const imageUrl = imagePath && SITE_URL ? `${SITE_URL}${imagePath}` : imagePath
-  return {
-    title: `${product.name} | Products`,
-    description,
-    alternates: {
-      canonical,
-    },
-    openGraph: {
-      title: product.name,
-      description,
-      type: 'website',
-      images: imageUrl ? [imageUrl] : undefined,
-    },
-  }
-}
-
-export default async function ProductDetailPage({
-  params,
-}: {
-  params: { slug: string }
-}) {
-  const product = await getProduct(params.slug)
 
   if (!product) {
     notFound()
   }
 
-  const basePrice = Number(product.usdPrice || product.price || 0)
-  const prices = {
-    usd: Number(product.usdPrice || product.price || 0),
-    ugx: Number(product.ugxPrice || convertPrice(basePrice, 'USD', 'UGX')),
-    credits: null,
-  }
+  const displayName =
+    product.slug === 'nextjs-portfolio-starter' ? 'Portfolio Starter' : product.name
+  const usdPrice = toNumber(product.usdPrice || product.price)
+  const ugxPrice = product.ugxPrice ? toNumber(product.ugxPrice) : usdPrice * 3700
+  const previewSrc = normalizePublicPath(product.previewImages?.[0] || product.thumbnailUrl)
+  const isLocalPreview = previewSrc ? isLocalImageUrl(previewSrc) : false
 
-  const licenseOptions = [] as Array<{
+  const licenseOptions = [
+    product.personalLicense && {
+      type: 'PERSONAL' as const,
+      name: 'Personal',
+      description: 'Single user license for personal or limited commercial work.',
+      price: usdPrice,
+      currency: 'USD',
+      prices: {
+        usd: usdPrice,
+        ugx: ugxPrice,
+        credits: null,
+      },
+    },
+    product.commercialLicense && {
+      type: 'COMMERCIAL' as const,
+      name: 'Commercial',
+      description: 'Single user license for client or business use.',
+      price: usdPrice,
+      currency: 'USD',
+      prices: {
+        usd: usdPrice,
+        ugx: ugxPrice,
+        credits: null,
+      },
+    },
+    product.teamLicense && {
+      type: 'TEAM' as const,
+      name: 'Team',
+      description: '2-5 users with assigned seats and internal sharing.',
+      price: usdPrice,
+      currency: 'USD',
+      prices: {
+        usd: usdPrice,
+        ugx: ugxPrice,
+        credits: null,
+      },
+    },
+  ].filter(Boolean) as Array<{
     type: 'PERSONAL' | 'COMMERCIAL' | 'TEAM'
     name: string
     description: string
     price: number
     currency: string
-    prices: {
-      usd: number | string
-      ugx: number | string
-      credits: number | null
-    }
+    prices: { usd: number; ugx: number; credits: number | null }
   }>
 
-  if (product.personalLicense) {
-    licenseOptions.push({
-      type: 'PERSONAL',
-      name: 'Personal License',
-      description: 'For individual use on a single device',
-      price: basePrice,
-      currency: 'USD',
-      prices,
-    })
-  }
-
-  if (product.commercialLicense) {
-    licenseOptions.push({
-      type: 'COMMERCIAL',
-      name: 'Commercial License',
-      description: 'For commercial projects and clients',
-      price: basePrice * 1.5,
-      currency: 'USD',
-      prices: {
-        usd: Number(prices.usd) * 1.5,
-        ugx: Number(prices.ugx) * 1.5,
-        credits: null,
-      },
-    })
-  }
-
-  if (product.teamLicense) {
-    licenseOptions.push({
-      type: 'TEAM',
-      name: 'Team License',
-      description: 'For teams up to 5 members',
-      price: basePrice * 3,
-      currency: 'USD',
-      prices: {
-        usd: Number(prices.usd) * 3,
-        ugx: Number(prices.ugx) * 3,
-        credits: null,
-      },
-    })
-  }
-
-  const canonical = SITE_URL
-    ? `${SITE_URL}/products/${product.slug}`
-    : `/products/${product.slug}`
-  const imagePath = normalizePublicPath(product.thumbnailUrl)
-  const imageUrl = imagePath && SITE_URL ? `${SITE_URL}${imagePath}` : imagePath
-  const isLocalImage = isLocalImageUrl(imagePath)
-
-  const productJsonLd: Record<string, any> = {
-    '@context': 'https://schema.org',
-    '@type': 'Product',
-    name: product.name,
-    description: product.description,
-    offers: {
-      '@type': 'Offer',
-      price: basePrice,
-      priceCurrency: 'USD',
-      availability: 'https://schema.org/InStock',
-      url: canonical,
-    },
-  }
-
-  if (imageUrl) {
-    productJsonLd.image = [imageUrl]
-  }
+  const defaultLicense = licenseOptions[0]?.type ?? 'PERSONAL'
 
   return (
     <div className="min-h-screen py-16">
-      <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          {/* Images */}
-          <div className="space-y-4">
-            <div className="relative aspect-video rounded-xl overflow-hidden bg-muted border border-border">
-              {imagePath ? (
-                isLocalImage ? (
-                  <Image
-                    src={imagePath}
-                    alt={product.name}
-                    fill
-                    sizes="(min-width: 1024px) 560px, 100vw"
-                    className="object-cover"
-                    priority
-                  />
-                ) : (
-                  <img
-                    src={imagePath}
-                    alt={product.name}
-                    className="h-full w-full object-cover"
-                    loading="eager"
-                  />
-                )
-              ) : (
-                <div className="w-full h-full flex items-center justify-center">
-                  <Package className="w-24 h-24 text-muted-foreground/20" />
-                </div>
-              )}
+      <div className="container mx-auto px-4 space-y-12">
+        <div className="flex flex-col lg:flex-row gap-10">
+          <div className="flex-1 space-y-6">
+            <p className="text-sm uppercase tracking-[0.2em] text-muted-foreground">
+              {prettyCategory(product.category)}
+            </p>
+            <h1 className="text-4xl md:text-5xl font-bold text-foreground">
+              {displayName}
+            </h1>
+            <p className="text-lg text-muted-foreground">{product.description}</p>
+
+            <div className="flex flex-wrap gap-2">
+              {product.tags.map((tag) => (
+                <span
+                  key={tag}
+                  className="text-xs px-3 py-1 rounded-full border border-border text-muted-foreground"
+                >
+                  {tag}
+                </span>
+              ))}
             </div>
 
-            {product.previewImages && product.previewImages.length > 0 && (
-              <div className="grid grid-cols-3 gap-4">
-                {product.previewImages.slice(0, 3).map((image, index) => (
-                  <div
-                    key={`${image}-${index}`}
-                    className="relative aspect-video rounded-lg overflow-hidden bg-muted border border-border"
-                  >
-                    <Image
-                      src={image}
-                      alt={`Preview ${index + 1}`}
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                ))}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm text-muted-foreground">
+              <div className="bg-card border border-border rounded-xl p-4">
+                <p className="uppercase tracking-wide text-xs">Version</p>
+                <p className="text-foreground font-semibold">{product.version}</p>
               </div>
-            )}
+              <div className="bg-card border border-border rounded-xl p-4">
+                <p className="uppercase tracking-wide text-xs">File Type</p>
+                <p className="text-foreground font-semibold">{product.fileType}</p>
+              </div>
+              <div className="bg-card border border-border rounded-xl p-4">
+                <p className="uppercase tracking-wide text-xs">File Size</p>
+                <p className="text-foreground font-semibold">
+                  {(product.fileSize / (1024 * 1024)).toFixed(1)} MB
+                </p>
+              </div>
+              <div className="bg-card border border-border rounded-xl p-4">
+                <p className="uppercase tracking-wide text-xs">License</p>
+                <p className="text-foreground font-semibold">One-time purchase</p>
+              </div>
+            </div>
+
+            <div className="bg-card border border-border rounded-2xl p-6 space-y-4">
+              <h2 className="text-xl font-bold text-foreground">License boundaries</h2>
+              <ul className="space-y-2 text-sm text-muted-foreground">
+                <li>Non-transferable, no resale or redistribution.</li>
+                <li>One person or one team per license tier.</li>
+                <li>Download limits and device limits are enforced.</li>
+                <li>Enterprise use requires a custom agreement.</li>
+                <li>No refunds after purchase, except where required by law.</li>
+              </ul>
+              <Link href="/legal/terms" className="text-sm text-primary hover:underline">
+                Read full terms
+              </Link>
+            </div>
           </div>
 
-          {/* Details */}
-          <div className="space-y-6">
-            <div>
-              <div className="inline-block px-3 py-1 bg-primary/10 text-primary rounded-full text-sm font-medium mb-4">
-                {product.category.replace(/_/g, ' ')}
+          <div className="w-full lg:w-[420px] space-y-6">
+            <div className="bg-card border border-border rounded-2xl overflow-hidden">
+              <div className="relative aspect-video bg-muted">
+                {previewSrc ? (
+                  isLocalPreview ? (
+                    <Image
+                      src={previewSrc}
+                      alt={displayName}
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 768px) 100vw, 420px"
+                    />
+                  ) : (
+                    <img
+                      src={previewSrc}
+                      alt={displayName}
+                      className="h-full w-full object-cover"
+                      loading="lazy"
+                    />
+                  )
+                ) : null}
               </div>
-              <h1 className="text-4xl font-bold text-foreground mb-4">
-                {product.name}
-              </h1>
-              <p className="text-lg text-muted-foreground">
-                {product.description}
-              </p>
+              <div className="p-6 space-y-4">
+                <ProductDetailClient
+                  productId={product.id}
+                  productName={displayName}
+                  productSlug={product.slug}
+                  licenseOptions={licenseOptions}
+                  defaultLicense={defaultLicense}
+                />
+              </div>
             </div>
 
-            <div className="flex flex-wrap gap-6 text-sm">
-              <div className="flex items-center gap-2">
-                <Download className="w-4 h-4 text-muted-foreground" />
-                <span className="text-foreground">{product.downloadCount} downloads</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Package className="w-4 h-4 text-muted-foreground" />
-                <span className="text-foreground">{product.purchaseCount} purchases</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <FileText className="w-4 h-4 text-muted-foreground" />
-                <span className="text-foreground">v{product.version}</span>
-              </div>
-            </div>
-
-            <ProductPurchasePanel
-              product={{
-                id: product.id,
-                slug: product.slug,
-                prices,
-                licenseOptions,
-              }}
-            />
-
-            <div className="grid gap-4 pt-6 border-t border-border">
-              <div className="flex items-start gap-3">
-                <Zap className="w-5 h-5 text-primary mt-0.5" />
-                <div>
-                  <h3 className="text-sm font-semibold text-foreground">Instant delivery</h3>
-                  <p className="text-sm text-muted-foreground">Get immediate access after payment confirmation.</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-3">
-                <ShieldCheck className="w-5 h-5 text-primary mt-0.5" />
-                <div>
-                  <h3 className="text-sm font-semibold text-foreground">Secure checkout</h3>
-                  <p className="text-sm text-muted-foreground">Payments are protected and encrypted.</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-3">
-                <Headphones className="w-5 h-5 text-primary mt-0.5" />
-                <div>
-                  <h3 className="text-sm font-semibold text-foreground">Support if you need it</h3>
-                  <p className="text-sm text-muted-foreground">Email help for setup, downloads, and licensing.</p>
-                </div>
-              </div>
+            <div className="bg-muted/40 border border-border rounded-2xl p-6 space-y-4">
+              <h3 className="text-lg font-semibold text-foreground">What happens after purchase?</h3>
+              <ul className="space-y-2 text-sm text-muted-foreground">
+                <li>Payment is confirmed manually before license issuance.</li>
+                <li>Licenses are tied to your account and tracked in audit logs.</li>
+                <li>Abuse or chargebacks can trigger suspension.</li>
+              </ul>
+              <Link href="/contact" className="text-sm text-primary hover:underline">
+                Questions? Contact support.
+              </Link>
             </div>
           </div>
         </div>
-
-        {(product.documentation || product.changelog) && (
-          <div className="mt-16 grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {product.documentation && (
-              <div className="bg-card p-6 rounded-xl border border-border">
-                <h2 className="text-2xl font-bold text-foreground mb-4">Documentation</h2>
-                <div className="prose prose-sm max-w-none text-muted-foreground">
-                  {product.documentation}
-                </div>
-              </div>
-            )}
-
-            {product.changelog && (
-              <div className="bg-card p-6 rounded-xl border border-border">
-                <h2 className="text-2xl font-bold text-foreground mb-4">Changelog</h2>
-                <div className="prose prose-sm max-w-none text-muted-foreground whitespace-pre-wrap">
-                  {product.changelog}
-                </div>
-              </div>
-            )}
-          </div>
-        )}
       </div>
-
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(productJsonLd),
-        }}
-      />
     </div>
   )
 }

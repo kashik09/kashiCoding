@@ -47,9 +47,13 @@ export default function Footer({ pathname }: { pathname?: string }) {
             <ul className="space-y-2">
               {[
                 { href: '/projects', label: 'Projects' },
+                { href: '/products', label: 'Products' },
                 { href: '/services', label: 'Services' },
+                { href: '/pricing', label: 'Pricing' },
+                { href: '/students', label: 'Students' },
+                { href: '/enterprise', label: 'Enterprise' },
                 { href: '/about', label: 'About' },
-                { href: '/request', label: 'Request Service' },
+                { href: '/contact', label: 'Contact' },
               ].map((link) => (
                 <li key={link.href}>
                   <Link href={link.href} className={linkClass(link.href)}>
@@ -69,6 +73,9 @@ export default function Footer({ pathname }: { pathname?: string }) {
               {[
                 { href: '/legal/privacy-policy', label: 'Privacy Policy' },
                 { href: '/legal/terms', label: 'Terms of Service' },
+                { href: '/legal/acceptable-use', label: 'Acceptable Use' },
+                { href: '/legal/refund-policy', label: 'Refund Policy' },
+                { href: '/legal/license-terms', label: 'License Terms' },
               ].map((link) => (
                 <li key={link.href}>
                   <Link href={link.href} className={linkClass(link.href)}>

@@ -19,6 +19,10 @@ export default function Header() {
   const publicLinks = [
     { href: '/projects', label: 'projects' },
     { href: '/products', label: 'products' },
+    { href: '/services', label: 'services' },
+    { href: '/pricing', label: 'pricing' },
+    { href: '/students', label: 'students' },
+    { href: '/enterprise', label: 'enterprise' },
     { href: '/about', label: 'about' },
     { href: '/contact', label: 'contact' },
   ]
@@ -27,6 +31,10 @@ export default function Header() {
     { href: '/dashboard', label: 'dashboard' },
     { href: '/projects', label: 'projects' },
     { href: '/products', label: 'products' },
+    { href: '/services', label: 'services' },
+    { href: '/pricing', label: 'pricing' },
+    { href: '/students', label: 'students' },
+    { href: '/enterprise', label: 'enterprise' },
     { href: '/about', label: 'about' },
     { href: '/contact', label: 'contact' },
   ]

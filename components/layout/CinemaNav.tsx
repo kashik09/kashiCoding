@@ -11,9 +11,12 @@ interface CinemaNavProps {
 
 const navLinks = [
   { href: '/projects', label: 'Projects' },
-  { href: '/products', label: 'Shop' },
-  { href: '/about', label: 'About' },
-  { href: 'https://wa.me/256760637783', label: 'Contact' },
+  { href: '/products', label: 'Products' },
+  { href: '/services', label: 'Services' },
+  { href: '/pricing', label: 'Pricing' },
+  { href: '/students', label: 'Students' },
+  { href: '/enterprise', label: 'Enterprise' },
+  { href: '/contact', label: 'Contact' },
 ]
 
 export function CinemaNav({ enabled, active }: CinemaNavProps) {

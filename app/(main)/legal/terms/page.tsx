@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import Link from 'next/link'
 import { Spinner } from '@/components/ui/Spinner'
 
 export default function TermsPage() {
@@ -32,165 +33,157 @@ export default function TermsPage() {
       <div className="max-w-4xl mx-auto py-12 px-4">
         <div className="mb-12">
           <h1 className="text-4xl font-bold text-foreground mb-4">Terms of Service</h1>
-          <p className="text-muted-foreground">Last updated: December 16, 2025</p>
+          <p className="text-muted-foreground">Last updated: January 12, 2026</p>
         </div>
 
       <div className="prose prose-slate dark:prose-invert max-w-none space-y-8">
         <section>
           <h2 className="text-2xl font-bold text-foreground mb-4">1. Agreement to Terms</h2>
           <p className="text-foreground leading-relaxed mb-4">
-            By accessing or using our services, you agree to be bound by these Terms of Service and all applicable laws and regulations. If you do not agree with any of these terms, you are prohibited from using or accessing this site.
+            By accessing or using our products or services, you agree to these Terms and all applicable laws. If you do not agree, do not use the site or purchase anything.
+          </p>
+          <p className="text-foreground leading-relaxed mb-4">
+            These Terms incorporate our Acceptable Use Policy, Refund Policy, and License Terms.
           </p>
         </section>
 
         <section>
-          <h2 className="text-2xl font-bold text-foreground mb-4">2. Services</h2>
+          <h2 className="text-2xl font-bold text-foreground mb-4">2. Digital Products and License Terms</h2>
           <p className="text-foreground leading-relaxed mb-4">
-            We provide web development, design, and consulting services. The specific scope of work, deliverables, timelines, and pricing will be outlined in individual project agreements or proposals.
+            All digital products (including Portfolio Starter) are one-time purchases delivered as downloads and licensed, not sold. Licenses are non-transferable and for internal use only.
           </p>
           <ul className="list-disc list-inside space-y-2 text-foreground ml-4">
-            <li>Web Development (Frontend & Backend)</li>
-            <li>Mobile Development</li>
-            <li>UI/UX Design</li>
-            <li>Technical Consulting</li>
-            <li>Custom Software Solutions</li>
+            <li>No resale, redistribution, or sublicensing</li>
+            <li>One person or one team per license tier</li>
+            <li>License sharing outside your team is prohibited</li>
+            <li>Use of products for client work is allowed under the correct license</li>
           </ul>
         </section>
 
         <section>
-          <h2 className="text-2xl font-bold text-foreground mb-4">3. Service Requests</h2>
+          <h2 className="text-2xl font-bold text-foreground mb-4">3. License Tiers and Seats</h2>
           <p className="text-foreground leading-relaxed mb-4">
-            Submitting a service request through our platform does not constitute a binding agreement. A formal agreement must be accepted in writing before any work begins or fees are charged.
-          </p>
-          <p className="text-foreground leading-relaxed mb-4">
-            When you submit a service request:
+            License tiers determine allowed usage and seats.
           </p>
           <ul className="list-disc list-inside space-y-2 text-foreground ml-4">
-            <li>You authorize us to contact you via email, phone, or other provided contact methods</li>
-            <li>We will review your request and respond typically within 24-48 business hours</li>
-            <li>We reserve the right to decline any project request for any reason</li>
-            <li>No charges or obligations arise from submitting a request form</li>
+            <li>Personal: 1 user, 1 active device/session</li>
+            <li>Commercial: 1 user for business or client work</li>
+            <li>Team: 2-5 users, seats must be assigned</li>
+            <li>Enterprise: custom terms by written agreement</li>
           </ul>
         </section>
 
         <section>
-          <h2 className="text-2xl font-bold text-foreground mb-4">4. User Accounts</h2>
+          <h2 className="text-2xl font-bold text-foreground mb-4">4. Downloads, Abuse, and Audit Logs</h2>
           <p className="text-foreground leading-relaxed mb-4">
-            If you create an account on our platform:
+            Download limits and device limits are enforced to prevent abuse. We maintain audit logs of license actions and download activity. Abuse or license sharing may result in suspension or termination.
+          </p>
+        </section>
+
+        <section>
+          <h2 className="text-2xl font-bold text-foreground mb-4">5. Services, Credits, and Subscriptions</h2>
+          <p className="text-foreground leading-relaxed mb-4">
+            Services are delivered through scoped work. Credits are prepaid service units, not money, not hours, and not unlimited. We confirm scope and credit usage before work starts.
+          </p>
+          <p className="text-foreground leading-relaxed mb-4">
+            A written scope, statement of work, or explicit approval is required before we begin. Submitting a request does not create a contract.
           </p>
           <ul className="list-disc list-inside space-y-2 text-foreground ml-4">
-            <li>You are responsible for maintaining the confidentiality of your account credentials</li>
-            <li>You are responsible for all activities that occur under your account</li>
-            <li>You must notify us immediately of any unauthorized access to your account</li>
-            <li>We reserve the right to suspend or terminate accounts that violate these terms</li>
+            <li>Small fix: narrow, reversible change (typically 2-4 credits)</li>
+            <li>Scoped work: defined deliverable with clear boundaries</li>
+            <li>Living systems: auth, dashboards, e-commerce, RBAC, data-heavy apps</li>
+            <li>Living systems strongly require subscription/retainer support</li>
+            <li>Cash one-off payments may still be available by agreement</li>
+            <li>Scope changes cost extra (credits or additional payment)</li>
           </ul>
         </section>
 
         <section>
-          <h2 className="text-2xl font-bold text-foreground mb-4">5. Payment Terms</h2>
+          <h2 className="text-2xl font-bold text-foreground mb-4">6. Credits Expiration and Rollover</h2>
           <p className="text-foreground leading-relaxed mb-4">
-            Payment terms are governed by the specific project agreement or contract provided to you. Unless otherwise stated in writing:
-          </p>
-          <ul className="list-disc list-inside space-y-2 text-foreground ml-4">
-            <li>Payment terms will be specified in individual project agreements</li>
-            <li>We typically require a deposit before commencing work</li>
-            <li>Late payments may incur additional fees as specified in your agreement</li>
-            <li>No payment is due until a formal written agreement is executed</li>
-          </ul>
-        </section>
-
-        <section>
-          <h2 className="text-2xl font-bold text-foreground mb-4">6. Refunds and Cancellations</h2>
-
-          <h3 className="text-xl font-semibold text-foreground mb-3 mt-6">Digital Products</h3>
-          <p className="text-foreground leading-relaxed mb-4">
-            Digital products are licensed to the purchaser and may not be resold or redistributed. All digital products are non-refundable once access or download has been provided, except where required by applicable law.
-          </p>
-
-          <h3 className="text-xl font-semibold text-foreground mb-3 mt-6">Services</h3>
-          <p className="text-foreground leading-relaxed mb-4">
-            Service fees and refund terms are governed by the specific project agreement or contract provided to you. Unless otherwise stated in writing, service fees are non-refundable. Each project may have unique terms based on scope and deliverables.
-          </p>
-
-          <h3 className="text-xl font-semibold text-foreground mb-3 mt-6">Service Requests</h3>
-          <p className="text-foreground leading-relaxed mb-4">
-            Submitting a service request through our platform does not constitute a binding agreement. A formal agreement must be accepted in writing before any work begins or fees are charged. No refund is necessary for service requests as no payment is collected at the request stage.
-          </p>
-
-          <h3 className="text-xl font-semibold text-foreground mb-3 mt-6">Memberships</h3>
-          <p className="text-foreground leading-relaxed mb-4">
-            Memberships are non-refundable. Credits are non-refundable and expire according to the membership terms.
+            Credits are usable while valid and expire based on the plan terms. Some plans may allow limited rollover, capped at the plan limit. Expired credits are forfeited.
           </p>
         </section>
 
         <section>
-          <h2 className="text-2xl font-bold text-foreground mb-4">7. Intellectual Property</h2>
+          <h2 className="text-2xl font-bold text-foreground mb-4">7. Payments and No Refunds</h2>
           <p className="text-foreground leading-relaxed mb-4">
-            Unless otherwise specified in a project agreement:
+            All sales are final. Digital products, memberships, subscriptions, and credits are non-refundable after purchase or payment, except where required by law.
           </p>
-          <ul className="list-disc list-inside space-y-2 text-foreground ml-4">
-            <li>Upon full payment, ownership of project deliverables transfers to the client</li>
-            <li>We retain the right to showcase completed work in our portfolio</li>
-            <li>Any pre-existing intellectual property remains with its original owner</li>
-            <li>Third-party licenses and dependencies remain subject to their original terms</li>
-          </ul>
-        </section>
-
-        <section>
-          <h2 className="text-2xl font-bold text-foreground mb-4">8. Confidentiality</h2>
           <p className="text-foreground leading-relaxed mb-4">
-            We respect the confidentiality of your project information. Any sensitive business information, trade secrets, or proprietary data shared with us will be kept confidential unless required by law to disclose.
+            Chargebacks or payment reversals can result in immediate suspension while we investigate.
           </p>
         </section>
 
         <section>
-          <h2 className="text-2xl font-bold text-foreground mb-4">9. Limitation of Liability</h2>
+          <h2 className="text-2xl font-bold text-foreground mb-4">8. Minors and Student Discounts (Ages 13-17)</h2>
           <p className="text-foreground leading-relaxed mb-4">
-            To the maximum extent permitted by law, we shall not be liable for any indirect, incidental, special, consequential, or punitive damages resulting from your use of or inability to use the service.
+            Users under 13 may not use the service. Users ages 13-17 may access limited features with verification and guardian consent where required by law. Student discounts for ages 13-18 require manual verification and stricter scope limits.
+          </p>
+        </section>
+
+        <section>
+          <h2 className="text-2xl font-bold text-foreground mb-4">9. Accounts, Suspension, and Termination</h2>
+          <p className="text-foreground leading-relaxed mb-4">
+            You are responsible for your account activity. We may suspend or terminate accounts or licenses for abuse, payment failure, chargebacks, or policy violations.
+          </p>
+        </section>
+
+        <section>
+          <h2 className="text-2xl font-bold text-foreground mb-4">10. Intellectual Property</h2>
+          <p className="text-foreground leading-relaxed mb-4">
+            Unless stated in a signed agreement, you own project deliverables after full payment. We retain rights to pre-existing IP and may show completed work in our portfolio.
+          </p>
+        </section>
+
+        <section>
+          <h2 className="text-2xl font-bold text-foreground mb-4">11. Disclaimer and Limitation of Liability</h2>
+          <p className="text-foreground leading-relaxed mb-4">
+            Services and products are provided "as is" without warranty. To the maximum extent permitted by law, we are not liable for indirect, incidental, or consequential damages.
           </p>
           <p className="text-foreground leading-relaxed mb-4">
             Additionally:
           </p>
           <ul className="list-disc list-inside space-y-2 text-foreground ml-4">
-            <li>Our total liability shall not exceed the amount paid for the specific service</li>
-            <li>We are not responsible for third-party services, tools, or platforms used in projects</li>
+            <li>Total liability is limited to the amount paid for the specific product or service</li>
+            <li>We are not responsible for third-party services or platforms used in projects</li>
             <li>Clients are responsible for maintaining backups of their data</li>
           </ul>
         </section>
 
         <section>
-          <h2 className="text-2xl font-bold text-foreground mb-4">10. Warranty Disclaimer</h2>
-          <p className="text-foreground leading-relaxed mb-4">
-            Services are provided "as is" without warranty of any kind. While we strive for excellence, we do not guarantee that our services will be error-free, uninterrupted, or meet specific performance requirements unless explicitly stated in a project agreement.
-          </p>
-        </section>
-
-        <section>
-          <h2 className="text-2xl font-bold text-foreground mb-4">11. Termination</h2>
-          <p className="text-foreground leading-relaxed mb-4">
-            Either party may terminate a project agreement according to the terms specified in that agreement. Termination does not relieve either party of obligations incurred prior to termination.
-          </p>
-        </section>
-
-        <section>
           <h2 className="text-2xl font-bold text-foreground mb-4">12. Changes to Terms</h2>
           <p className="text-foreground leading-relaxed mb-4">
-            We reserve the right to modify these terms at any time. Changes will be effective immediately upon posting to this page. Your continued use of our services after changes constitutes acceptance of the modified terms.
+            We may update these Terms from time to time. Changes are effective when posted.
           </p>
         </section>
 
         <section>
-          <h2 className="text-2xl font-bold text-foreground mb-4">13. Governing Law</h2>
-          <p className="text-foreground leading-relaxed mb-4">
-            These terms shall be governed by and construed in accordance with applicable laws, without regard to conflict of law provisions.
-          </p>
-        </section>
-
-        <section>
-          <h2 className="text-2xl font-bold text-foreground mb-4">14. Contact Information</h2>
+          <h2 className="text-2xl font-bold text-foreground mb-4">13. Contact</h2>
           <p className="text-foreground leading-relaxed mb-4">
             If you have any questions about these Terms of Service, please contact us through the contact form on our website or via the contact information provided on our site.
           </p>
+        </section>
+
+        <section>
+          <h2 className="text-2xl font-bold text-foreground mb-4">Related Policies</h2>
+          <ul className="list-disc list-inside space-y-2 text-foreground ml-4">
+            <li>
+              <Link href="/legal/acceptable-use" className="text-primary hover:underline">
+                Acceptable Use Policy
+              </Link>
+            </li>
+            <li>
+              <Link href="/legal/refund-policy" className="text-primary hover:underline">
+                Refund Policy
+              </Link>
+            </li>
+            <li>
+              <Link href="/legal/license-terms" className="text-primary hover:underline">
+                License Terms
+              </Link>
+            </li>
+          </ul>
         </section>
 
         <div className="mt-12 p-6 bg-muted rounded-lg border border-border">

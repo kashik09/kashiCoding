@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { ArrowRight, Code, Smartphone, Palette, MessageSquare, CheckCircle } from 'lucide-react'
+import { ArrowRight, Wrench, Layers, ShieldCheck, MessageSquare, CheckCircle } from 'lucide-react'
 import { Spinner } from '@/components/ui/Spinner'
 
 type Service = {
@@ -45,62 +45,58 @@ export default function ServicesPage() {
 
   const services: Service[] = [
     {
-      id: 'web-dev',
-      name: 'Web Development',
-      icon: Code,
-      description: 'Full-stack web applications built with modern frameworks. From landing pages to complex web platforms.',
-      price: 'Scope-based credits',
+      id: 'credit-fixes',
+      name: 'Credit-Based Fixes',
+      icon: Wrench,
+      description: 'Tight, reversible improvements and bug fixes with clear scope and fast turnaround.',
+      price: '2-6 credits',
       features: [
-        'Next.js, React, TypeScript',
-        'Responsive & mobile-first',
-        'SEO optimized',
-        'Database integration',
-        'Authentication & security',
+        'Small fixes (2-4 credits)',
+        'Scoped tweaks and polish',
+        'Defined acceptance criteria',
+        'No open-ended work',
       ],
     },
     {
-      id: 'mobile-dev',
-      name: 'Mobile Development',
-      icon: Smartphone,
-      description: 'Native and cross-platform mobile applications for iOS and Android.',
-      price: 'Scope-based credits',
+      id: 'scoped-builds',
+      name: 'Scoped Builds',
+      icon: Layers,
+      description: 'Focused builds with a fixed deliverable: landing pages, flows, or compact features.',
+      price: '6-24 credits',
       features: [
-        'iOS & Android apps',
-        'React Native or native development',
-        'Backend integration',
-        'App Store deployment',
-        'Push notifications',
+        'Clear scope + timeline',
+        'Design + build options',
+        'One-off cash payment allowed',
+        'Scope changes cost extra',
       ],
     },
     {
-      id: 'ui-ux',
-      name: 'UI/UX Design',
-      icon: Palette,
-      description: 'Beautiful, user-centered design systems and interfaces that users love.',
-      price: 'Scope-based credits',
+      id: 'living-systems',
+      name: 'Living System Support',
+      icon: ShieldCheck,
+      description: 'Ongoing support for auth, dashboards, e-commerce, RBAC, and data-heavy apps.',
+      price: 'Subscription or retainer',
       features: [
-        'Figma design files',
-        'Design system creation',
-        'Wireframes & prototypes',
-        'User research',
-        'Accessibility compliance',
+        'Subscription strongly required',
+        'Priority support buckets',
+        'Proactive maintenance',
+        'Monthly planning calls',
       ],
     },
     {
       id: 'consulting',
-      name: 'Consulting',
+      name: 'Consulting & Reviews',
       icon: MessageSquare,
-      description: 'Technical consulting for architecture, code reviews, and strategic planning.',
-      price: 'Scope-based credits',
+      description: 'Architecture reviews, audits, and technical direction with clear outcomes.',
+      price: 'Scoped credits',
       features: [
-        'Architecture review',
-        'Code audits',
-        'Technology selection',
-        'Performance optimization',
-        'Team mentoring',
+        'Audit summaries + action plan',
+        'Roadmap guidance',
+        'Performance and security reviews',
+        'Decision support',
       ],
     },
-  ];
+  ]
 
   if (isLoading) {
     return (
@@ -117,7 +113,7 @@ export default function ServicesPage() {
         <div className="max-w-3xl mx-auto text-center mb-16">
           <h1 className="text-5xl font-bold text-foreground mb-6">Services</h1>
           <p className="text-xl text-muted-foreground leading-relaxed">
-            From idea to launch, I help bring your digital products to life with clean code and thoughtful design. Scope and credit usage are confirmed before work begins.
+            Services run on credits and clear scope. Credits are prepaid service units, not money and not hours. Bigger, living systems are supported best through subscriptions or retainers.
           </p>
         </div>
 
@@ -176,9 +172,9 @@ export default function ServicesPage() {
                   <div className="p-3 bg-primary/10 rounded-lg">
                     <Icon className="w-6 h-6 text-primary" />
                   </div>
-                  <div className="text-right">
-                    <p className="text-2xl font-bold text-foreground">{service.price}</p>
-                  </div>
+                <div className="text-right">
+                  <p className="text-2xl font-bold text-foreground">{service.price}</p>
+                </div>
                 </div>
 
                 <h3 className="text-2xl font-bold text-foreground mb-3">{service.name}</h3>
@@ -201,53 +197,51 @@ export default function ServicesPage() {
         <div className="max-w-3xl mx-auto text-center">
           <div className="bg-gradient-to-br from-primary/10 to-primary/5 rounded-2xl p-12 border border-primary/20">
             <h2 className="text-3xl font-bold text-foreground mb-4">
-              {isAvailable ? "Let's Build Something Great" : 'Interested in Working Together?'}
+              {isAvailable ? 'Ready to scope your work?' : 'Want to reserve a slot?'}
             </h2>
             <p className="text-muted-foreground mb-8 text-lg">
               {isAvailable
-                ? 'Have a project in mind? Get in touch to discuss your ideas and get a custom quote.'
-                : 'Reach out to discuss your project. I\'ll notify you when I have availability.'}
+                ? 'Share your request and we will confirm scope, credit usage, and timeline before anything starts.'
+                : 'Send your details and I will follow up when availability opens.'}
             </p>
-            <Link
-              href="/contact"
-              className="inline-flex items-center gap-2 px-8 py-4 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors font-semibold text-lg"
-            >
-              Get in Touch
-              <ArrowRight className="w-5 h-5" />
-            </Link>
+            <div className="flex flex-wrap justify-center gap-3">
+              <Link
+                href="/contact"
+                className="inline-flex items-center gap-2 px-8 py-4 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors font-semibold text-lg"
+              >
+                Get in Touch
+                <ArrowRight className="w-5 h-5" />
+              </Link>
+              <Link
+                href="/pricing"
+                className="inline-flex items-center gap-2 px-8 py-4 border border-border rounded-lg hover:border-primary/60 transition-colors font-semibold text-lg"
+              >
+                View Pricing
+              </Link>
+            </div>
           </div>
         </div>
 
         {/* Process Section */}
-        <div className="max-w-4xl mx-auto mt-24">
-          <h2 className="text-3xl font-bold text-foreground text-center mb-12">How It Works</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="text-center">
-              <div className="inline-flex items-center justify-center w-12 h-12 bg-primary/10 text-primary rounded-full font-bold text-xl mb-4">
-                1
-              </div>
-              <h3 className="font-semibold text-foreground mb-2">Discovery</h3>
-              <p className="text-sm text-muted-foreground">
-                We discuss your project goals, requirements, and timeline
-              </p>
+        <div className="max-w-4xl mx-auto mt-24 space-y-10">
+          <h2 className="text-3xl font-bold text-foreground text-center">How credits work</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm text-muted-foreground">
+            <div className="bg-card border border-border rounded-xl p-6 space-y-3">
+              <h3 className="text-lg font-semibold text-foreground">Small fix examples</h3>
+              <ul className="space-y-2">
+                <li>Bug fix or UI polish: 2-4 credits</li>
+                <li>New section or page: 3-6 credits</li>
+                <li>Performance tuning pass: 4-6 credits</li>
+              </ul>
             </div>
-            <div className="text-center">
-              <div className="inline-flex items-center justify-center w-12 h-12 bg-primary/10 text-primary rounded-full font-bold text-xl mb-4">
-                2
-              </div>
-              <h3 className="font-semibold text-foreground mb-2">Build</h3>
-              <p className="text-sm text-muted-foreground">
-                I design and develop your solution with regular check-ins
-              </p>
-            </div>
-            <div className="text-center">
-              <div className="inline-flex items-center justify-center w-12 h-12 bg-primary/10 text-primary rounded-full font-bold text-xl mb-4">
-                3
-              </div>
-              <h3 className="font-semibold text-foreground mb-2">Launch</h3>
-              <p className="text-sm text-muted-foreground">
-                We deploy your project and ensure everything runs smoothly
-              </p>
+            <div className="bg-card border border-border rounded-xl p-6 space-y-3">
+              <h3 className="text-lg font-semibold text-foreground">Boundaries</h3>
+              <ul className="space-y-2">
+                <li>Credits only cover agreed scope.</li>
+                <li>Scope changes cost extra credits.</li>
+                <li>Living systems require subscription support.</li>
+                <li>Cash one-off payments can still be approved.</li>
+              </ul>
             </div>
           </div>
         </div>

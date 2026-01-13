@@ -50,12 +50,12 @@ async function main() {
   // SEED DIGITAL PRODUCTS
   // ============================================
 
-  // 1. Next.js Portfolio Starter Template
+  // 1. Portfolio Starter Template
   const portfolioStarter = await prisma.digitalProduct.upsert({
     where: { slug: 'nextjs-portfolio-starter' },
     update: {},
     create: {
-      name: 'Next.js Portfolio Starter',
+      name: 'Portfolio Starter',
       slug: 'nextjs-portfolio-starter',
       description:
         'A fully-featured portfolio template built with Next.js 14, featuring JSON-based CMS, admin dashboard, theme switching, and automated screenshot capture. Perfect for developers who want a professional portfolio without the hassle.',
