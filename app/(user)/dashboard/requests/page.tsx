@@ -28,17 +28,18 @@ interface SiteStatusResponse {
 function getStatusBadgeClasses(status: string) {
   switch (status) {
     case 'PENDING':
-      return 'bg-muted text-muted-foreground'
+      return 'bg-warning/20 text-warning border border-warning/30'
+    case 'ACCEPTED':
     case 'REVIEWING':
     case 'IN_PROGRESS':
-      return 'bg-primary text-foreground'
+      return 'bg-info/20 text-info border border-info/30'
     case 'COMPLETED':
-      return 'bg-card text-foreground border border-border'
+      return 'bg-success/20 text-success border border-success/30'
     case 'REJECTED':
     case 'CANCELLED':
-      return 'bg-card text-muted-foreground border border-border'
+      return 'bg-destructive/20 text-destructive border border-destructive/30'
     default:
-      return 'bg-muted text-muted-foreground'
+      return 'bg-primary/20 text-primary border border-primary/30'
   }
 }
 function formatDate(dateString: string) {

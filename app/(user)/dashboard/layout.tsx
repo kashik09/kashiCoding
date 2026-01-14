@@ -91,7 +91,7 @@ export default function DashboardLayout({
     return null
   }
   const header = (
-    <header className="sticky top-0 z-50 bg-card border-b border-border backdrop-blur-sm">
+    <header className="sticky top-0 z-50 bg-base-200/80 backdrop-blur-md rounded-b-3xl border-b border-border shadow-sm">
       <div className="px-4 md:px-6 py-4">
         <div className="flex items-center justify-between">
           {/* Logo/Title */}
@@ -244,7 +244,7 @@ export default function DashboardLayout({
       header={header}
       sidebar={sidebar}
       mobileNav={mobileNav}
-      sidebarClassName="w-64 min-h-[calc(100vh-73px)] bg-card border-r border-border sticky top-[73px] h-[calc(100vh-73px)] overflow-y-auto"
+      sidebarClassName="w-64 min-h-[calc(100vh-73px)] bg-card border-r border-border sticky top-[73px] h-[calc(100vh-73px)] overflow-y-auto scrollbar-thin scrollbar-thumb-primary/20 scrollbar-track-transparent hover:scrollbar-thumb-primary/40"
       mainClassName="p-4 md:p-8 bg-base-100"
     >
       {maintenanceMode && (
