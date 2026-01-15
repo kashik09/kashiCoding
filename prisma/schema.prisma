@@ -211,6 +211,8 @@ model Project {
   @@index([featured])
   @@index([published])
   @@index([createdAt])
+  @@index([featured, createdAt])
+  @@index([published, featured, createdAt])
   @@map("projects")
 }
 

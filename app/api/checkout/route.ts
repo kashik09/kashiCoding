@@ -99,8 +99,11 @@ export async function POST(request: NextRequest) {
 
     // Check for discount eligibility
     const discountEligibility = await getUserDiscountEligibility(session.user.id)
-    let finalSubtotal = totals.subtotal
-    let finalTotal = totals.total
+    const subtotalValue = Number(totals.subtotal)
+    const taxValue = Number(totals.tax)
+    const totalValue = Number(totals.total)
+    let finalSubtotal = subtotalValue
+    let finalTotal = totalValue
     let discountAmount = 0
 
     if (discountEligibility.eligible) {
@@ -109,11 +112,11 @@ export async function POST(request: NextRequest) {
         Number(totals.subtotal),
         discountEligibility.discountPercent
       )
-      discountAmount = Number(totals.subtotal) - discountedSubtotal
+      discountAmount = subtotalValue - discountedSubtotal
       finalSubtotal = discountedSubtotal
 
       // Recalculate total (subtotal + tax)
-      const taxRate = Number(totals.tax) / Number(totals.subtotal)
+      const taxRate = subtotalValue > 0 ? taxValue / subtotalValue : 0
       const discountedTax = discountedSubtotal * taxRate
       finalTotal = discountedSubtotal + discountedTax
     }
@@ -128,7 +131,7 @@ export async function POST(request: NextRequest) {
           subtotal: finalSubtotal,
           tax: discountEligibility.eligible
             ? finalTotal - finalSubtotal
-            : totals.tax,
+            : taxValue,
           total: finalTotal,
           currency,
           paymentStatus: PaymentStatus.PENDING,
