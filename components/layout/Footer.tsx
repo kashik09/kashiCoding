@@ -72,7 +72,7 @@ export default function Footer({ pathname }: { pathname?: string }) {
             <ul className="space-y-2">
               {[
                 { href: '/legal/privacy-policy', label: 'Privacy Policy' },
-                { href: '/legal/terms', label: 'Terms of Service' },
+                { href: '/legal/terms-of-service', label: 'Terms of Service' },
                 { href: '/legal/acceptable-use', label: 'Acceptable Use' },
                 { href: '/legal/refund-policy', label: 'Refund Policy' },
                 { href: '/legal/license-terms', label: 'License Terms' },
