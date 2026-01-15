@@ -48,7 +48,7 @@ export async function GET(request: NextRequest) {
 
     const ip = getRequestIp(request.headers)
     const ipHash = ip ? await hashValue(ip) : null
-    await prisma.deviceSession.update({
+    await prisma.deviceSession.updateMany({
       where: {
         userId_deviceFingerprint: {
           userId: session.user.id,

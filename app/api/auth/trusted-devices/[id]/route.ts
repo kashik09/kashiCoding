@@ -35,7 +35,7 @@ export async function DELETE(
       )
     }
 
-    await prisma.deviceSession.update({
+    await prisma.deviceSession.updateMany({
       where: { id: device.id },
       data: {
         blocked: true,

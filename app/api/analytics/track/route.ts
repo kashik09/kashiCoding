@@ -16,18 +16,20 @@ export async function POST(req: NextRequest) {
       )
     }
 
-    // Insert analytics event into database
-    await prisma.analyticsEvent.create({
-      data: {
-        action,
-        page: page || null,
-        category: category || null,
-        label: label || null,
-        value: value ? parseInt(value) : null,
-        device: device || null,
-        referrer: referrer || null,
-        data: data || null,
-      },
+    // Insert analytics event into database without returning the full row
+    await prisma.analyticsEvent.createMany({
+      data: [
+        {
+          action,
+          page: page || null,
+          category: category || null,
+          label: label || null,
+          value: value ? parseInt(value) : null,
+          device: device || null,
+          referrer: referrer || null,
+          data: data || null,
+        },
+      ],
     })
 
     return NextResponse.json({ success: true }, { status: 201 })
