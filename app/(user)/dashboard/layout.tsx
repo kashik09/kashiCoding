@@ -16,6 +16,7 @@ import {
   AlertTriangle,
   Palette,
   LayoutDashboard,
+  ShoppingCart,
 } from 'lucide-react'
 import { useState, useEffect } from 'react'
 import DashboardShell from '@/components/features/dashboard/DashboardShell'
@@ -52,6 +53,7 @@ export default function DashboardLayout({
   const navItems = [
     { href: '/dashboard', icon: DashboardIcon, label: 'Dashboard' },
     { href: '/dashboard/downloads', icon: Download, label: 'My Downloads' },
+    { href: '/dashboard/orders', icon: ShoppingCart, label: 'My Orders' },
     { href: '/dashboard/requests', icon: FileText, label: 'My Requests' },
     { href: '/support', icon: AlertTriangle, label: 'Complaints' },
     { href: '/dashboard/settings', icon: Settings, label: 'Settings' },

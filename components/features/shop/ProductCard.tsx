@@ -166,9 +166,9 @@ export function ProductCard({
         </div>
 
         {/* Price and Actions */}
-        <div className="flex items-center justify-between gap-2">
-          <div>
-            <p className="text-2xl font-bold text-foreground">
+        <div className="flex items-center justify-between gap-3">
+          <div className="flex-shrink-0">
+            <p className={`font-bold text-foreground ${currency === 'UGX' ? 'text-lg' : 'text-2xl'}`}>
               {formatPriceShort(price, currency)}
             </p>
             {currency !== 'USD' && (
@@ -178,7 +178,7 @@ export function ProductCard({
             )}
           </div>
 
-          <div className="flex gap-2">
+          <div className="flex gap-2 flex-shrink-0">
             {/* Wishlist button - only for logged-in users */}
             {session?.user && (
               <button
