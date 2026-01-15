@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import { Shield, AlertCircle } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
+import { Spinner } from '@/components/ui/Spinner'
 
 export default function VerifyTwoFactorPage() {
   const router = useRouter()
@@ -88,8 +89,9 @@ export default function VerifyTwoFactorPage() {
             variant="primary"
             className="w-full"
             disabled={loading || !token}
+            loading={loading}
           >
-            {loading ? 'Verifying...' : 'Verify & Continue'}
+            {loading ? <><Spinner size="sm" /> Verifying...</> : 'Verify & Continue'}
           </Button>
         </form>
       </div>
