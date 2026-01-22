@@ -110,9 +110,9 @@ export default function StudentDiscountPage() {
 
   return (
     <div className="container mx-auto px-6 py-12 max-w-4xl">
-      <h1 className="text-4xl font-bold mb-4">Student & Youth Discount</h1>
+      <h1 className="text-4xl font-bold mb-4">Student & Youth Verification</h1>
       <p className="text-lg mb-8">
-        Get 50% off all personal-tier products and services with verified student or youth status.
+        Verify student or youth status for eligibility and guardian consent compliance.
       </p>
 
       {/* Current Status Section */}
@@ -142,13 +142,16 @@ export default function StudentDiscountPage() {
               <strong>Country:</strong> {verificationStatus.verification?.country}
             </p>
             <p>
-              <strong>Type:</strong> {verificationStatus.verification?.discountType === 'YOUTH_13_18' ? 'Youth (13-18)' : 'Student'}
+              <strong>Verification type:</strong>{' '}
+              {verificationStatus.verification?.discountType === 'YOUTH_13_18'
+                ? 'Youth (13-18)'
+                : 'Student'}
             </p>
 
             {verificationStatus.verification?.status === 'APPROVED' && (
               <>
                 <p className="text-success font-semibold">
-                  ✓ You have an active {verificationStatus.eligibility?.discountPercent}% discount!
+                  ✓ Your verification is active.
                 </p>
                 {verificationStatus.verification?.expiresAt && (
                   <p>
@@ -189,7 +192,7 @@ export default function StudentDiscountPage() {
         verificationStatus?.verification?.status === 'REJECTED' ||
         verificationStatus?.verification?.status === 'EXPIRED') && (
         <form onSubmit={handleSubmit} className="space-y-6 p-6 border rounded-lg">
-          <h2 className="text-2xl font-semibold mb-4">Apply for Student Discount</h2>
+          <h2 className="text-2xl font-semibold mb-4">Submit verification request</h2>
 
           {error && (
             <div className="alert alert-error">
@@ -203,10 +206,10 @@ export default function StudentDiscountPage() {
             </div>
           )}
 
-          {/* Discount Type */}
+          {/* Verification Type */}
           <div>
             <label className="label">
-              <span className="label-text font-semibold">Discount Type</span>
+              <span className="label-text font-semibold">Verification type</span>
             </label>
             <select
               className="select select-bordered w-full"
@@ -360,10 +363,10 @@ export default function StudentDiscountPage() {
       {/* Info Section */}
       <div className="mt-12 space-y-6">
         <div className="p-6 border rounded-lg">
-          <h3 className="text-xl font-semibold mb-2">What You Get</h3>
+          <h3 className="text-xl font-semibold mb-2">What Verification Covers</h3>
           <ul className="list-disc list-inside space-y-1">
-            <li>50% discount on all personal-tier products</li>
-            <li>50% discount on personal service subscriptions</li>
+            <li>Confirms student or youth status for eligibility checks</li>
+            <li>Enables student/youth purchase review where required</li>
             <li>Valid for 12 months after approval</li>
             <li>Can reapply after expiration</li>
           </ul>
@@ -372,9 +375,8 @@ export default function StudentDiscountPage() {
         <div className="p-6 border rounded-lg">
           <h3 className="text-xl font-semibold mb-2">Strict Boundaries</h3>
           <ul className="list-disc list-inside space-y-1">
-            <li>Student tier has stricter scope limits than regular personal tier</li>
-            <li>Additional revisions cost extra</li>
-            <li>No resale or commercial redistribution</li>
+            <li>No resale or redistribution</li>
+            <li>Guardian consent required for youth applicants</li>
             <li>Fraud results in permanent account suspension</li>
           </ul>
         </div>
@@ -384,15 +386,15 @@ export default function StudentDiscountPage() {
           <ol className="list-decimal list-inside space-y-1">
             <li>Submit your application with proof (school email or ID)</li>
             <li>We manually review within 1-2 business days</li>
-            <li>Approval email sent with instructions</li>
-            <li>Discount automatically applied at checkout</li>
+            <li>Approval email sent with next steps</li>
+            <li>Verification status is applied to your account</li>
           </ol>
         </div>
       </div>
 
       <div className="mt-8 text-center">
-        <Link href="/shop" className="btn btn-outline">
-          Browse Products
+        <Link href="/products" className="btn btn-outline">
+          Browse Shop
         </Link>
       </div>
     </div>
