@@ -22,7 +22,7 @@ export default function LicenseTermsPage() {
             <li>Personal: 1 user, 1 active device/session.</li>
             <li>Commercial: 1 user for business or client work.</li>
             <li>Team: 2-5 users, seats must be assigned.</li>
-            <li>Enterprise: custom terms by written agreement.</li>
+            <li>Custom terms by written agreement.</li>
           </ul>
         </section>
 
@@ -45,10 +45,10 @@ export default function LicenseTermsPage() {
         <section>
           <h2 className="text-2xl font-bold text-foreground mb-4">5. Contact</h2>
           <p className="text-foreground leading-relaxed mb-4">
-            Contact us if you need enterprise access or custom terms.
+            Contact us if you need custom terms.
           </p>
-          <Link href="/enterprise" className="text-primary hover:underline">
-            Enterprise contact
+          <Link href="/complaints" className="text-primary hover:underline">
+            Submit a complaint
           </Link>
         </section>
       </div>

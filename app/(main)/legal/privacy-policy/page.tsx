@@ -39,7 +39,7 @@ export default function PrivacyPage() {
         <section>
           <h2 className="text-2xl font-bold text-foreground mb-4">1. Introduction</h2>
           <p className="text-foreground leading-relaxed mb-4">
-            This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website or use our services. By using our services, you consent to the data practices described in this policy.
+            This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website or purchase our products. By using the site, you consent to the data practices described in this policy.
           </p>
         </section>
 
@@ -54,7 +54,7 @@ export default function PrivacyPage() {
             <li>Name, email, and contact details</li>
             <li>Account credentials</li>
             <li>Orders, licenses, and download history</li>
-            <li>Service requests and project details</li>
+            <li>Support requests and product access details</li>
             <li>Student verification submissions (age, school email, optional ID)</li>
             <li>Payment details handled by payment providers</li>
           </ul>
@@ -104,7 +104,7 @@ export default function PrivacyPage() {
           </p>
           <ul className="list-disc list-inside space-y-2 text-foreground ml-4">
             <li>Deliver products, licenses, and downloads</li>
-            <li>Provide and scope services and credits</li>
+            <li>Respond to complaints and support requests</li>
             <li>Verify student eligibility and consent</li>
             <li>Prevent abuse, fraud, and chargebacks</li>
             <li>Communicate updates and respond to support</li>
@@ -170,13 +170,13 @@ export default function PrivacyPage() {
         <section>
           <h2 className="text-2xl font-bold text-foreground mb-4">11. Contact</h2>
           <p className="text-foreground leading-relaxed mb-4">
-            If you have questions or requests regarding this Privacy Policy, contact us through the site contact form.
+            If you have questions or requests regarding this Privacy Policy, contact us through the complaints form.
           </p>
         </section>
 
         <div className="mt-12 p-6 bg-muted rounded-lg border border-border">
           <p className="text-sm text-muted-foreground">
-            By using our website and services, you acknowledge that you have read and understood this Privacy Policy and agree to its terms.
+            By using our website and products, you acknowledge that you have read and understood this Privacy Policy and agree to its terms.
           </p>
         </div>
       </div>

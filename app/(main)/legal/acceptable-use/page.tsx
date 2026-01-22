@@ -12,16 +12,16 @@ export default function AcceptableUsePage() {
         <section>
           <h2 className="text-2xl font-bold text-foreground mb-4">1. Purpose</h2>
           <p className="text-foreground leading-relaxed mb-4">
-            This policy protects customers and keeps the platform reliable. It applies to the site, digital products, and services.
+            This policy protects customers and keeps the platform reliable. It applies to the site and digital products.
           </p>
         </section>
 
         <section>
           <h2 className="text-2xl font-bold text-foreground mb-4">2. Allowed Use</h2>
           <ul className="list-disc list-inside space-y-2 text-foreground ml-4">
-            <li>Use products and services for lawful, internal purposes.</li>
+            <li>Use products for lawful, internal purposes.</li>
             <li>Share access only within your licensed team limit.</li>
-            <li>Use credits only for scoped work we both approve.</li>
+            <li>Follow download, device, and license limits.</li>
           </ul>
         </section>
 
@@ -46,10 +46,10 @@ export default function AcceptableUsePage() {
         <section>
           <h2 className="text-2xl font-bold text-foreground mb-4">5. Contact</h2>
           <p className="text-foreground leading-relaxed mb-4">
-            Report abuse or security issues through the contact form.
+            Report abuse or security issues through the complaints form.
           </p>
-          <Link href="/contact" className="text-primary hover:underline">
-            Contact support
+          <Link href="/complaints" className="text-primary hover:underline">
+            Submit a complaint
           </Link>
         </section>
       </div>
