@@ -31,9 +31,6 @@ yarn-error.log*
 # Claude Code
 .claude
 .claude-preferences
-docs/
-sh-files/
-backups/
 
 # vercel
 .vercel
@@ -41,9 +38,3 @@ backups/
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-
-.env
-.env.local
-
-.env
-.env.local
