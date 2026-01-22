@@ -17,47 +17,31 @@ type Bucket = {
 }
 
 const BUCKETS: Bucket[] = [
-  { id: 'Payments', label: 'Payments' },
-  { id: 'Login and Account', label: 'Login and Account' },
-  { id: 'Downloads', label: 'Downloads' },
-  { id: 'Orders and Checkout', label: 'Orders and Checkout' },
-  { id: 'Website and Bugs', label: 'Website and Bugs' },
+  { id: 'Product access', label: 'Product access / download issue' },
+  { id: 'License appeals', label: 'License / resale / abuse appeal' },
+  { id: 'Policy concerns', label: 'Policy concern' },
   { id: 'Other', label: 'Other' },
 ]
 
 const REASONS: Record<string, string[]> = {
-  Payments: [
-    "Didn’t receive payment",
-    'Wrong amount',
-    'Duplicate payment',
-    'Payment access issue',
-    'Other',
-  ],
-  'Login and Account': [
-    "Can’t log in",
-    'OAuth issue (Google/GitHub)',
-    'Password reset',
-    'Account locked',
-    'Other',
-  ],
-  Downloads: [
-    "Can’t download",
-    'Wrong file',
+  'Product access / download issue': [
+    'Download limit reached',
     'Link expired',
-    'License issue',
+    'Wrong file',
+    'Access revoked',
     'Other',
   ],
-  'Orders and Checkout': [
-    'Checkout failed',
-    'Cart issue',
-    'Refund request',
-    'Wrong product',
+  'License / resale / abuse appeal': [
+    'License flagged',
+    'Account suspended',
+    'Download blocked',
+    'Appeal a lock',
     'Other',
   ],
-  'Website and Bugs': [
-    'Page error',
-    'Broken link',
-    'UI issue',
+  'Policy concern': [
+    'Privacy request',
+    'Policy clarification',
+    'Refund policy question',
     'Other',
   ],
   Other: ['Other'],
@@ -67,16 +51,11 @@ const TOP_COUNTRIES: CountryCode[] = [
   'GB',
   'US',
   'CA',
-  'AE',
-  'IN',
   'UG',
   'KE',
-  'NG',
-  'GH',
-  'ZA',
 ]
 
-const MIN_MESSAGE_LENGTH = 10
+const MIN_MESSAGE_LENGTH = 25
 
 type Step = 'bucket' | 'reason' | 'form'
 
@@ -93,12 +72,13 @@ const flagForCountry = (code: string) =>
       String.fromCodePoint(127397 + char.charCodeAt(0))
     )
 
-export default function SupportPage() {
+export default function ComplaintsPage() {
   const { data: session } = useSession()
   const [step, setStep] = useState<Step>('bucket')
   const [bucket, setBucket] = useState<Bucket | null>(null)
   const [reason, setReason] = useState<string>('')
   const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
   const [countrySearch, setCountrySearch] = useState('')
   const [countryOpen, setCountryOpen] = useState(false)
   const [selectedCountry, setSelectedCountry] = useState<CountryOption | null>(null)
@@ -112,6 +92,7 @@ export default function SupportPage() {
   useEffect(() => {
     if (!session?.user) return
     setName((prev) => prev || session.user.name || '')
+    setEmail((prev) => prev || session.user.email || '')
   }, [session?.user])
 
   const countries = useMemo(() => {
@@ -171,44 +152,43 @@ export default function SupportPage() {
     setSuccess(false)
 
     if (!bucket) {
-      setError('Please choose a complaint category.')
+      setError('Kindly choose a complaint category.')
       return
     }
     if (!reason) {
-      setError('Please choose a reason.')
+      setError('Kindly choose a reason.')
       return
     }
     if (!name.trim()) {
-      setError('Please provide your name.')
-      return
-    }
-    if (!selectedCountry) {
-      setError('Please choose your country.')
+      setError('Kindly provide your name.')
       return
     }
     const digitsOnly = whatsAppNumber.replace(/\D/g, '')
-    if (!digitsOnly) {
-      setError('Please provide your WhatsApp number.')
+    if (digitsOnly && !selectedCountry) {
+      setError('Kindly choose a country for your phone number country code.')
       return
     }
     const trimmedMessage = message.trim()
     if (trimmedMessage.length < MIN_MESSAGE_LENGTH) {
-      setError('Please provide a few more details in your message.')
+      setError('Kindly provide a few more details in your message.')
       return
     }
-
-    const phone = `+${selectedCountry.dialCode}${digitsOnly}`
-    const parsedPhone = parsePhoneNumberFromString(phone)
-    if (!parsedPhone || !parsedPhone.isPossible()) {
-      setError('Please provide a valid WhatsApp number.')
-      return
+    let phone: string | null = null
+    if (digitsOnly && selectedCountry) {
+      phone = `+${selectedCountry.dialCode}${digitsOnly}`
+      const parsedPhone = parsePhoneNumberFromString(phone)
+      if (!parsedPhone || !parsedPhone.isPossible()) {
+        setError('Please provide a valid phone number.')
+        return
+      }
     }
     const messageBody = [
       `Category: ${bucket.label}`,
       `Reason: ${reason}`,
       `Name: ${name.trim()}`,
-      `Country: ${selectedCountry.name} (${selectedCountry.code})`,
-      `WhatsApp: ${phone}`,
+      email.trim() ? `Email: ${email.trim()}` : null,
+      selectedCountry ? `Country: ${selectedCountry.name} (${selectedCountry.code})` : null,
+      phone ? `Phone: ${phone}` : null,
       reference.trim() ? `Reference: ${reference.trim()}` : null,
       '',
       trimmedMessage,
@@ -223,7 +203,8 @@ export default function SupportPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           name: name.trim(),
-          phone,
+          email: email.trim() || undefined,
+          phone: phone || undefined,
           orderNumber: reference.trim() || undefined,
           message: messageBody,
           pageUrl: typeof window !== 'undefined' ? window.location.href : undefined,
@@ -253,7 +234,7 @@ export default function SupportPage() {
         <div className="space-y-2">
           <h1 className="text-h1 font-bold text-foreground">Complaints</h1>
           <p className="text-body text-muted-foreground/90">
-            Get help fast. WhatsApp first.
+            Report access issues, license concerns, or policy questions.
           </p>
         </div>
 
@@ -265,7 +246,7 @@ export default function SupportPage() {
 
         {success && (
           <div className="p-4 bg-success/10 border border-success/20 rounded-lg text-success text-sm">
-            Thanks for reaching out. We’ll follow up on WhatsApp shortly.
+            Complaint received. We&apos;ll follow up using the contact details you provided.
           </div>
         )}
 
@@ -339,7 +320,7 @@ export default function SupportPage() {
             <div className="rounded-lg border border-border bg-muted/40 px-4 py-3 text-sm text-muted-foreground">
               <span className="font-medium text-foreground">{bucket.label}</span>
               {reason ? ` · ${reason}` : ''}
-              <div className="mt-1">WhatsApp only — we’ll respond there.</div>
+              <div className="mt-1">We&apos;ll respond using the contact details you provide.</div>
             </div>
 
             <Input
@@ -350,9 +331,16 @@ export default function SupportPage() {
               required
             />
 
+            <Input
+              label="email (optional)"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+              placeholder="you@example.com"
+            />
+
             <div className="space-y-2">
               <label className="block text-sm font-medium text-foreground">
-                whatsapp number
+                phone (optional)
               </label>
               <div className="flex flex-col sm:flex-row gap-3">
                 <div className="sm:max-w-[180px]">
@@ -377,13 +365,14 @@ export default function SupportPage() {
                   <Input
                     value={whatsAppNumber}
                     onChange={(event) => setWhatsAppNumber(event.target.value)}
-                    placeholder="WhatsApp number"
-                    required
-                    aria-label="whatsapp number"
+                    placeholder="Phone number"
+                    aria-label="phone number"
                   />
                 </div>
               </div>
-              <div className="text-xs text-muted-foreground">WhatsApp only.</div>
+              <div className="text-xs text-muted-foreground">
+                Include a phone number if you want a call or WhatsApp reply.
+              </div>
               {countryOpen && (
                 <div className="rounded-lg border border-border bg-card p-3 shadow-sm">
                   <Input
@@ -466,10 +455,10 @@ export default function SupportPage() {
             </div>
 
             <Input
-              label="reference (optional)"
+              label="order or license reference (optional)"
               value={reference}
               onChange={(event) => setReference(event.target.value)}
-              placeholder="Order #1234 or Request ID"
+              placeholder="Order #1234 or license ID"
             />
 
             <div>
