@@ -92,13 +92,13 @@ export default function DownloadsPage() {
           <Package className="mx-auto mb-4 text-muted-foreground" size={64} />
           <h2 className="text-2xl font-bold text-foreground mb-2">No downloads yet</h2>
           <p className="text-muted-foreground mb-6 max-w-md mx-auto">
-            You haven't purchased any digital products yet. Browse our services to find templates, UI kits, and more.
+            You haven't purchased any digital products yet. Browse the shop to find templates, UI kits, and more.
           </p>
           <Link
-            href="/services"
+            href="/products"
             className="inline-block px-6 py-3 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition font-medium"
           >
-            Browse Services
+            Browse Shop
           </Link>
         </div>
       ) : (

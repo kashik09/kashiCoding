@@ -726,7 +726,7 @@ export default function SettingsPage() {
             onClose={() => setShowDeleteModal(false)}
             onConfirm={handleDeleteAccount}
             title="Delete your account"
-            message="This will permanently delete your account, requests, memberships, and download history. This action cannot be undone."
+            message="This will permanently delete your account, orders, and download history. This action cannot be undone."
             confirmText="Yes, delete my account"
             cancelText="Cancel"
             type="danger"

@@ -5,9 +5,7 @@ import { useSession } from 'next-auth/react'
 import { useRouter, usePathname } from 'next/navigation'
 import Link from 'next/link'
 import {
-  Home,
   Download,
-  FileText,
   Settings,
   ArrowLeft,
   Menu,
@@ -54,8 +52,7 @@ export default function DashboardLayout({
     { href: '/dashboard', icon: DashboardIcon, label: 'Dashboard' },
     { href: '/dashboard/downloads', icon: Download, label: 'My Downloads' },
     { href: '/dashboard/orders', icon: ShoppingCart, label: 'My Orders' },
-    { href: '/dashboard/requests', icon: FileText, label: 'My Requests' },
-    { href: '/support', icon: AlertTriangle, label: 'Complaints' },
+    { href: '/complaints', icon: AlertTriangle, label: 'Complaints' },
     { href: '/dashboard/settings', icon: Settings, label: 'Settings' },
   ]
   useEffect(() => {

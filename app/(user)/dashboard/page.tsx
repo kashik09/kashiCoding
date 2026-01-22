@@ -4,48 +4,18 @@ export const dynamic = 'force-dynamic'
 import { useSession } from 'next-auth/react'
 import { useCallback, useEffect, useState } from 'react'
 import Link from 'next/link'
-import { Download, FileText, ArrowRight, Package, Clock } from 'lucide-react'
+import { Download, ArrowRight, Package, Clock, AlertTriangle } from 'lucide-react'
 import DashboardCard from '@/components/features/dashboard/DashboardCard'
 import { useToast } from '@/components/ui/Toast'
 import { Spinner } from '@/components/ui/Spinner'
-import { ProgressBar } from '@/components/ui/ProgressBar'
 interface DashboardStats {
   totalDownloads: number
-  totalRequests: number
-  pendingRequests: number
 }
 interface RecentDownload {
   slug: string
   name: string
   category: string
   downloadedAt: string
-}
-interface RecentRequest {
-  id: string
-  projectType: string
-  status: string
-  createdAt: string
-}
-interface MembershipSummary {
-  tier: string
-  status: string
-  totalCredits: number
-  usedCredits: number
-  remainingCredits: number
-  startDate: string
-  endDate: string
-  renewalDate?: string | null
-}
-interface ActiveProjectSummary {
-  id: string
-  name: string
-  currentPhase: string
-  designRevisions: number
-  designRevisionsMax: number
-  buildRevisions: number
-  buildRevisionsMax: number
-  approvedFeatures: string[]
-  scope?: string | null
 }
 interface MeSummaryResponse {
   success: boolean
@@ -57,13 +27,8 @@ interface MeSummaryResponse {
     }
     stats: {
       licensesCount: number
-      requestsCount: number
-      pendingRequestsCount: number
     }
-    membership: MembershipSummary | null
     recentDownloads: RecentDownload[]
-    recentRequests: RecentRequest[]
-    activeProject: ActiveProjectSummary | null
   }
 }
 export default function DashboardPage() {
@@ -73,13 +38,8 @@ export default function DashboardPage() {
   const [error, setError] = useState<string | null>(null)
   const [stats, setStats] = useState<DashboardStats>({
     totalDownloads: 0,
-    totalRequests: 0,
-    pendingRequests: 0
   })
   const [recentDownloads, setRecentDownloads] = useState<RecentDownload[]>([])
-  const [recentRequests, setRecentRequests] = useState<RecentRequest[]>([])
-  const [membership, setMembership] = useState<MembershipSummary | null>(null)
-  const [activeProject, setActiveProject] = useState<ActiveProjectSummary | null>(null)
   const fetchDashboardData = useCallback(async () => {
     try {
       setLoading(true)
@@ -96,13 +56,8 @@ export default function DashboardPage() {
       }
       setStats({
         totalDownloads: json.data.stats.licensesCount,
-        totalRequests: json.data.stats.requestsCount,
-        pendingRequests: json.data.stats.pendingRequestsCount,
       })
-      setMembership(json.data.membership)
-      setActiveProject(json.data.activeProject || null)
       setRecentDownloads(json.data.recentDownloads || [])
-      setRecentRequests(json.data.recentRequests || [])
     } catch (error) {
       console.error('Error fetching dashboard data:', error)
       showToast('Failed to load dashboard data', 'error')
@@ -114,22 +69,6 @@ export default function DashboardPage() {
   useEffect(() => {
     fetchDashboardData()
   }, [fetchDashboardData])
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case 'PENDING':
-        return 'bg-warning/20 text-warning'
-      case 'IN_PROGRESS':
-      case 'REVIEWING':
-        return 'bg-info/20 text-info'
-      case 'COMPLETED':
-        return 'bg-success/20 text-success'
-      case 'REJECTED':
-      case 'CANCELLED':
-        return 'bg-destructive/20 text-destructive'
-      default:
-        return 'bg-primary/20 text-primary'
-    }
-  }
   const formatDate = (dateString: string) => {
     const date = new Date(dateString)
     const now = new Date()
@@ -139,18 +78,6 @@ export default function DashboardPage() {
     if (diffDays === 1) return 'Yesterday'
     if (diffDays < 7) return `${diffDays} days ago`
     return date.toLocaleDateString()
-  }
-  const formatResetsIn = (endDate?: string | null) => {
-    if (!endDate) return 'Unknown'
-    const end = new Date(endDate)
-    const now = new Date()
-    const diffTime = end.getTime() - now.getTime()
-    if (diffTime <= 0) return 'Now'
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
-    if (diffDays === 1) return '1 day'
-    if (diffDays < 30) return `${diffDays} days`
-    const diffMonths = Math.round(diffDays / 30)
-    return `${diffMonths} month${diffMonths !== 1 ? 's' : ''}`
   }
   const greetingName = (() => {
     const name = session?.user?.name?.trim()
@@ -162,18 +89,6 @@ export default function DashboardPage() {
     }
     return 'there'
   })()
-  const designRevisionsRemaining =
-    activeProject &&
-    Math.max(
-      0,
-      activeProject.designRevisionsMax - activeProject.designRevisions
-    )
-  const buildRevisionsRemaining =
-    activeProject &&
-    Math.max(
-      0,
-      activeProject.buildRevisionsMax - activeProject.buildRevisions
-    )
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
@@ -198,7 +113,7 @@ export default function DashboardPage() {
         )}
       </div>
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <DashboardCard className="p-6">
           <div className="flex items-center gap-4">
             <div className="p-3 bg-primary/10 rounded-lg">
@@ -212,192 +127,51 @@ export default function DashboardPage() {
         </DashboardCard>
         <DashboardCard className="p-6">
           <div className="flex items-center gap-4">
-            <div className="p-3 bg-info/10 rounded-lg">
-              <FileText className="text-info" size={24} />
-            </div>
-            <div>
-              <p className="text-sm text-muted-foreground">Requests Submitted</p>
-              <p className="text-3xl font-bold text-foreground">{stats.totalRequests}</p>
-            </div>
-          </div>
-        </DashboardCard>
-        <DashboardCard className="p-6">
-          <div className="flex items-center gap-4">
             <div className="p-3 bg-warning/10 rounded-lg">
               <Clock className="text-warning" size={24} />
             </div>
             <div>
-              <p className="text-sm text-muted-foreground">Pending Requests</p>
-              <p className="text-3xl font-bold text-foreground">{stats.pendingRequests}</p>
+              <p className="text-sm text-muted-foreground">Recent Downloads</p>
+              <p className="text-3xl font-bold text-foreground">{recentDownloads.length}</p>
             </div>
           </div>
         </DashboardCard>
       </div>
-      {/* Usage Limits */}
-      <DashboardCard
-        title="Usage Limits"
-        subtitle="Current period credit usage for your membership"
-        rightSlot={
-          membership ? (
-            <div className="text-right">
-              <p className="text-sm text-muted-foreground">Membership</p>
-              <p className="font-medium text-base-content">
-                {membership.tier} · {membership.status}
-              </p>
-            </div>
-          ) : null
-        }
-      >
-        {membership ? (
-          <div className="space-y-4">
-            <div className="flex flex-wrap items-center justify-between gap-2 text-sm">
-              <span className="text-muted-foreground">Credits used this period</span>
-              <span className="font-medium text-base-content">
-                {membership.usedCredits} / {membership.totalCredits} (
-                {membership.totalCredits > 0
-                  ? Math.round(
-                      (membership.usedCredits / membership.totalCredits) * 100
-                    )
-                  : 0}
-                %)
-              </span>
-            </div>
-            <ProgressBar
-              label="Credits used"
-              value={
-                membership.totalCredits > 0
-                  ? (membership.usedCredits / membership.totalCredits) * 100
-                  : 0
-              }
-            />
-            <div className="flex flex-wrap gap-4 text-sm text-muted-foreground mt-2">
-              <span>
-                Credits remaining:{' '}
-                <span className="font-medium text-base-content">
-                  {membership.remainingCredits}
-                </span>
-              </span>
-              <span>
-                Resets in{' '}
-                <span className="font-medium text-base-content">
-                  {formatResetsIn(membership.endDate)}
-                </span>
-              </span>
-              <span>
-                Weekly limits:{' '}
-                <span className="font-medium text-base-content">
-                  Not enforced yet
-                </span>
-              </span>
-            </div>
-          </div>
-        ) : (
-          <div className="space-y-4">
-            <p className="text-sm text-muted-foreground">
-              You don&apos;t have an active membership yet. Credits and usage limits will appear here once a membership is assigned to your account.
-            </p>
-            <Link
-              href="/memberships"
-              className="inline-flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition font-medium"
-            >
-              Browse Membership Plans
-              <ArrowRight size={18} className="animate-arrow-bounce" />
-            </Link>
-          </div>
-        )}
-      </DashboardCard>
-      <DashboardCard
-        title="Scope & Revisions"
-        subtitle="Approved scope and revision limits for active work"
-      >
-        {activeProject ? (
-          <div className="space-y-4 text-sm">
-            <div className="text-sm text-muted-foreground">
-              Active project:{' '}
-              <span className="font-medium text-foreground">
-                {activeProject.name}
-              </span>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
-                <p className="text-muted-foreground mb-1">Design revisions</p>
-                <p className="font-medium text-foreground">
-                  {activeProject.designRevisions} used
-                  {typeof designRevisionsRemaining === 'number' &&
-                    ` · ${designRevisionsRemaining} remaining`}
-                </p>
-              </div>
-              <div>
-                <p className="text-muted-foreground mb-1">Build revisions</p>
-                <p className="font-medium text-foreground">
-                  {activeProject.buildRevisions} used
-                  {typeof buildRevisionsRemaining === 'number' &&
-                    ` · ${buildRevisionsRemaining} remaining`}
-                </p>
-              </div>
-            </div>
-            <div>
-              <p className="text-muted-foreground mb-1">Scope summary</p>
-              {activeProject.approvedFeatures.length > 0 ? (
-                <ul className="list-disc list-inside text-foreground space-y-1">
-                  {activeProject.approvedFeatures.map(feature => (
-                    <li key={feature}>{feature}</li>
-                  ))}
-                </ul>
-              ) : (
-                <p className="text-muted-foreground">
-                  Scope is being finalized.
-                </p>
-              )}
-              {activeProject.scope && (
-                <p className="mt-3 text-muted-foreground whitespace-pre-line">
-                  {activeProject.scope}
-                </p>
-              )}
-            </div>
-          </div>
-        ) : (
-          <p className="text-sm text-muted-foreground">
-            No active service project yet. Once a quote is accepted, your scope
-            summary and revision limits will appear here.
-          </p>
-        )}
-      </DashboardCard>
       {/* Quick Actions */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <Link
-          href="/request"
-          className="group"
-        >
-          <DashboardCard className="p-8 border-2 border-primary/20 hover:border-primary/40 hover:shadow-lg transition-all">
-            <FileText size={32} className="mb-4 text-primary" />
-            <h3 className="text-xl font-bold text-foreground mb-2">Request a Service</h3>
-            <p className="text-muted-foreground mb-4">
-              Need help with a project? Submit a service request and I'll get back to you.
-            </p>
-            <span className="inline-flex items-center gap-2 text-primary font-medium group-hover:gap-3 transition-all">
-              Get Started <ArrowRight size={20} />
-            </span>
-          </DashboardCard>
-        </Link>
-        <Link
-          href="/services"
+          href="/products"
           className="group"
         >
           <DashboardCard className="p-8 border-2 border-primary/20 hover:border-primary/40 hover:shadow-lg transition-all">
             <Package size={32} className="mb-4 text-primary" />
-            <h3 className="text-xl font-bold text-foreground mb-2">Browse Services</h3>
+            <h3 className="text-xl font-bold text-foreground mb-2">Browse the Shop</h3>
             <p className="text-muted-foreground mb-4">
-              Explore the services I offer and find the right solution for your needs.
+              Explore digital products and pick up your next download.
             </p>
             <span className="inline-flex items-center gap-2 text-primary font-medium group-hover:gap-3 transition-all">
-              View Services <ArrowRight size={20} />
+              Visit Shop <ArrowRight size={20} />
+            </span>
+          </DashboardCard>
+        </Link>
+        <Link
+          href="/complaints"
+          className="group"
+        >
+          <DashboardCard className="p-8 border-2 border-primary/20 hover:border-primary/40 hover:shadow-lg transition-all">
+            <AlertTriangle size={32} className="mb-4 text-primary" />
+            <h3 className="text-xl font-bold text-foreground mb-2">Submit a Complaint</h3>
+            <p className="text-muted-foreground mb-4">
+              Report access issues, license concerns, or policy questions.
+            </p>
+            <span className="inline-flex items-center gap-2 text-primary font-medium group-hover:gap-3 transition-all">
+              Open Form <ArrowRight size={20} />
             </span>
           </DashboardCard>
         </Link>
       </div>
       {/* Recent Activity */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 gap-8">
         {/* Recent Downloads */}
         <DashboardCard
           title="Recent Downloads"
@@ -417,10 +191,10 @@ export default function DashboardPage() {
               <Download className="mx-auto mb-4 text-muted-foreground" size={48} />
               <p className="text-muted-foreground mb-4">No downloads yet</p>
               <Link
-                href="/services"
+                href="/products"
                 className="inline-block px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition"
               >
-                Browse Services
+                Browse Shop
               </Link>
             </div>
           ) : (
@@ -442,53 +216,6 @@ export default function DashboardPage() {
                       {formatDate(download.downloadedAt)}
                     </span>
                   </div>
-                </Link>
-              ))}
-            </div>
-          )}
-        </DashboardCard>
-        {/* Recent Requests */}
-        <DashboardCard
-          title="Recent Requests"
-          rightSlot={
-            recentRequests.length > 0 ? (
-              <Link
-                href="/dashboard/requests"
-                className="text-sm text-primary hover:underline font-medium"
-              >
-                View all
-              </Link>
-            ) : null
-          }
-        >
-          {recentRequests.length === 0 ? (
-            <div className="text-center py-12">
-              <FileText className="mx-auto mb-4 text-muted-foreground" size={48} />
-              <p className="text-muted-foreground mb-4">No requests submitted yet</p>
-              <Link
-                href="/request"
-                className="inline-block px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition"
-              >
-                Submit Request
-              </Link>
-            </div>
-          ) : (
-            <div className="space-y-4">
-              {recentRequests.map((request) => (
-                <Link
-                  key={request.id}
-                  href={`/dashboard/requests/${request.id}`}
-                  className="block p-4 bg-muted rounded-lg hover:bg-muted/70 transition"
-                >
-                  <div className="flex items-start justify-between mb-2">
-                    <h3 className="font-medium text-foreground">{request.projectType}</h3>
-                    <span className={`px-2 py-1 text-xs rounded-full font-medium ${getStatusColor(request.status)}`}>
-                      {request.status.replace('_', ' ')}
-                    </span>
-                  </div>
-                  <p className="text-sm text-muted-foreground">
-                    {formatDate(request.createdAt)}
-                  </p>
                 </Link>
               ))}
             </div>
