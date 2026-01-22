@@ -55,8 +55,8 @@ export default function LandingContentEditor() {
           subtitle: 'i notice things that could work better, then i build them',
           primaryCtaLabel: 'see what i\'ve built',
           primaryCtaHref: '/projects',
-          secondaryCtaLabel: 'get in touch',
-          secondaryCtaHref: '/contact'
+          secondaryCtaLabel: 'complaints',
+          secondaryCtaHref: '/complaints'
         },
         proofSnapshot: [
           { id: '1', text: 'this site is fully custom-built (no templates)' },

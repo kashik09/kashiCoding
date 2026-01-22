@@ -2,7 +2,7 @@ export const dynamic = 'force-dynamic'
 
 import { NextRequest, NextResponse } from 'next/server'
 import { getServerSession } from '@/lib/auth'
-import { captureProjectScreenshot } from '@/scripts/capture-screenshot'
+import { captureProjectScreenshot } from '@/scripts/ts/capture-screenshot'
 import { chromium } from 'playwright'
 
 // GET /api/admin/screenshot - Check if Playwright is available

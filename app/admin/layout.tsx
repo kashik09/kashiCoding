@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { LayoutDashboard, FolderKanban, FileText, Users, Settings, LogOut, Shield, Megaphone, ArrowUp, Package, ShoppingBag, Menu, MessageSquareWarning } from 'lucide-react'
+import { LayoutDashboard, FolderKanban, FileText, Users, Settings, LogOut, Shield, Megaphone, ArrowUp, Package, ShoppingBag, Menu, MessageSquareWarning, Lightbulb } from 'lucide-react'
 import AdminHeader from '@/components/features/admin/AdminHeader'
 import DashboardShell from '@/components/features/dashboard/DashboardShell'
 import MobileNav from '@/components/admin/MobileNav'
@@ -40,6 +40,7 @@ export default function AdminLayout({
   const navItems = [
     { href: '/admin', icon: LayoutDashboard, label: 'Dashboard' },
     { href: '/admin/projects', icon: FolderKanban, label: 'Projects' },
+    { href: '/admin/ideas', icon: Lightbulb, label: 'Ideas' },
     { href: '/admin/digital-products', icon: Package, label: 'Digital Products' },
     { href: '/admin/orders', icon: ShoppingBag, label: 'Orders' },
     { href: '/admin/requests', icon: FileText, label: 'Requests' },
