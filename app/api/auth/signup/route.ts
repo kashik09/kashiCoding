@@ -47,7 +47,7 @@ export async function POST(request: NextRequest) {
 
     if (!isValidPassword(password)) {
       return NextResponse.json(
-        { error: 'Password must be at least 8 characters' },
+        { error: 'Password must be at least 12 characters with uppercase, lowercase, number, and special character' },
         { status: 400 }
       )
     }

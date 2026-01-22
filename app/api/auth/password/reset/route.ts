@@ -32,7 +32,7 @@ export async function POST(request: NextRequest) {
 
   if (!isValidPassword(newPassword)) {
     return NextResponse.json(
-      { error: 'Password must be at least 8 characters' },
+      { error: 'Password must be at least 12 characters with uppercase, lowercase, number, and special character' },
       { status: 400 }
     )
   }
@@ -61,7 +61,11 @@ export async function POST(request: NextRequest) {
   await prisma.$transaction([
     prisma.user.update({
       where: { id: resetToken.userId },
-      data: { password: hashedPassword }
+      data: {
+        password: hashedPassword,
+        mustResetPassword: false,
+        passwordUpdatedAt: now,
+      }
     }),
     prisma.$executeRaw`
       UPDATE "password_reset_tokens"

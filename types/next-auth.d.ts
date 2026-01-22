@@ -8,6 +8,7 @@ declare module "next-auth" {
       role: Role
       twoFactorEnabled?: boolean
       twoFactorVerified?: boolean
+      mustResetPassword?: boolean
     } & DefaultSession["user"]
   }
 
@@ -23,5 +24,6 @@ declare module "next-auth/jwt" {
     image?: string | null
     twoFactorEnabled?: boolean
     twoFactorVerified?: boolean
+    mustResetPassword?: boolean
   }
 }

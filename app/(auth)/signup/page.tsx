@@ -6,7 +6,9 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
+import { PasswordStrengthMeter } from '@/components/ui/PasswordStrengthMeter'
 import { usePendingAction } from '@/lib/usePendingAction'
+import { isValidPassword, getPasswordErrorMessage } from '@/lib/auth-utils'
 
 export default function SignupPage() {
   const router = useRouter()
@@ -46,6 +48,14 @@ export default function SignupPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError('')
+
+    // Client-side validation before API call
+    if (!isValidPassword(formData.password)) {
+      const errorMsg = getPasswordErrorMessage(formData.password)
+      setError(errorMsg || 'Password does not meet requirements')
+      return
+    }
+
     await run(async () => {
       try {
         // Create account
@@ -121,14 +131,20 @@ export default function SignupPage() {
           required
         />
 
-        <Input
-          label="Password"
-          type="password"
-          value={formData.password}
-          onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-          placeholder="••••••••"
-          required
-        />
+        <div className="space-y-2">
+          <Input
+            label="Password"
+            type="password"
+            value={formData.password}
+            onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+            placeholder="Create a strong password"
+            required
+          />
+          <PasswordStrengthMeter
+            password={formData.password}
+            showRequirements={formData.password.length > 0}
+          />
+        </div>
 
         <Button
           type="submit"

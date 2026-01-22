@@ -129,10 +129,31 @@ function addNoStoreHeaders(response: NextResponse, path: string): NextResponse {
   return response
 }
 
+// Paths allowed even when password reset is required
+const PASSWORD_RESET_ALLOWED_PATHS = [
+  "/force-reset-password",
+  "/api/auth/force-reset",
+  "/api/auth/signout",
+  "/api/auth/session",
+  "/logout",
+]
+
+function isPasswordResetAllowedPath(path: string): boolean {
+  return PASSWORD_RESET_ALLOWED_PATHS.some((p) => path.startsWith(p))
+}
+
 export default withAuth(
   async function middleware(req) {
     const token = req.nextauth.token
     const path = req.nextUrl.pathname
+
+    // Check if user must reset password (skip for allowed paths)
+    if (
+      token?.mustResetPassword === true &&
+      !isPasswordResetAllowedPath(path)
+    ) {
+      return NextResponse.redirect(new URL("/force-reset-password", req.url))
+    }
 
     if (path.startsWith("/api")) {
       if (!SAFE_METHODS.has(req.method)) {
@@ -256,5 +277,5 @@ export default withAuth(
 )
 
 export const config = {
-  matcher: ["/admin/:path*", "/dashboard/:path*", "/api/:path*"],
+  matcher: ["/admin/:path*", "/dashboard/:path*", "/api/:path*", "/force-reset-password"],
 }

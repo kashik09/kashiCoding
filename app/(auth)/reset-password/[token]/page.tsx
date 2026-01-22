@@ -5,6 +5,8 @@ import Link from 'next/link'
 import { usePendingAction } from '@/lib/usePendingAction'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
+import { PasswordStrengthMeter } from '@/components/ui/PasswordStrengthMeter'
+import { isValidPassword, getPasswordErrorMessage } from '@/lib/auth-utils'
 
 type ResetPasswordPageProps = {
   params: {
@@ -30,6 +32,12 @@ export default function ResetPasswordPage({ params }: ResetPasswordPageProps) {
 
     if (password !== confirmPassword) {
       setError('Passwords do not match.')
+      return
+    }
+
+    if (!isValidPassword(password)) {
+      const errorMsg = getPasswordErrorMessage(password)
+      setError(errorMsg || 'Password does not meet requirements')
       return
     }
 
@@ -66,21 +74,32 @@ export default function ResetPasswordPage({ params }: ResetPasswordPageProps) {
         )}
 
         <form onSubmit={handleSubmit} className="space-y-4 mb-6">
-          <Input
-            label="New password"
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="••••••••"
-            required
-          />
+          <div className="space-y-2">
+            <Input
+              label="New password"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Create a strong password"
+              required
+            />
+            <PasswordStrengthMeter
+              password={password}
+              showRequirements={password.length > 0}
+            />
+          </div>
           <Input
             label="Confirm password"
             type="password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
-            placeholder="••••••••"
+            placeholder="Re-enter your new password"
             required
+            error={
+              confirmPassword && password !== confirmPassword
+                ? 'Passwords do not match'
+                : undefined
+            }
           />
 
           <Button

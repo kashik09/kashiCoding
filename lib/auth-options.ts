@@ -191,15 +191,17 @@ export const authOptions: NextAuthOptions = {
           token.exp = Math.min(baseExp, now + ADMIN_SESSION_MAX_AGE_SECONDS)
         }
 
-        // Fetch 2FA status from database
+        // Fetch 2FA status and password reset flag from database
         const dbUser = await prisma.user.findUnique({
           where: { id: user.id },
-          select: { twoFactorEnabled: true, twoFactorVerified: true },
+          select: { twoFactorEnabled: true, twoFactorVerified: true, mustResetPassword: true },
         })
         // @ts-ignore
         token.twoFactorEnabled = dbUser?.twoFactorEnabled || false
         // @ts-ignore
         token.twoFactorVerified = dbUser?.twoFactorVerified || false
+        // @ts-ignore
+        token.mustResetPassword = dbUser?.mustResetPassword || false
       }
 
       const shouldRefresh =
@@ -207,7 +209,8 @@ export const authOptions: NextAuthOptions = {
         !token.id ||
         !token.role ||
         token.twoFactorEnabled === undefined ||
-        token.twoFactorVerified === undefined
+        token.twoFactorVerified === undefined ||
+        token.mustResetPassword === undefined
 
       if (shouldRefresh && token.email) {
         const dbUser = await prisma.user.findUnique({
@@ -220,6 +223,7 @@ export const authOptions: NextAuthOptions = {
             image: true,
             twoFactorEnabled: true,
             twoFactorVerified: true,
+            mustResetPassword: true,
           },
         })
 
@@ -234,6 +238,8 @@ export const authOptions: NextAuthOptions = {
           token.twoFactorEnabled = dbUser.twoFactorEnabled || false
           // @ts-ignore
           token.twoFactorVerified = dbUser.twoFactorVerified || false
+          // @ts-ignore
+          token.mustResetPassword = dbUser.mustResetPassword || false
         }
       }
 
@@ -264,6 +270,8 @@ export const authOptions: NextAuthOptions = {
         session.user.twoFactorEnabled = token.twoFactorEnabled || false
         // @ts-ignore
         session.user.twoFactorVerified = token.twoFactorVerified || false
+        // @ts-ignore
+        session.user.mustResetPassword = token.mustResetPassword || false
       }
 
       // Align session expiry with token.exp (so UI shows the right expiry too)
