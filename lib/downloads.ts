@@ -1,4 +1,4 @@
-import crypto from 'crypto'
+import crypto, { timingSafeEqual } from 'crypto'
 import { AuditAction } from '@prisma/client'
 import { prisma } from '@/lib/prisma'
 
