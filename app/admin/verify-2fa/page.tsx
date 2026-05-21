@@ -1,13 +1,13 @@
 'use client'
 
-import { useState } from 'react'
+import { Suspense, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { Shield, AlertCircle } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
 import { Spinner } from '@/components/ui/Spinner'
 
-export default function VerifyTwoFactorPage() {
+function VerifyTwoFactorForm() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const callbackUrl = searchParams.get('callbackUrl') || '/admin'
@@ -40,6 +40,42 @@ export default function VerifyTwoFactorPage() {
   }
 
   return (
+    <>
+      {error && (
+        <div className="mb-6 p-4 bg-error/10 border border-error/20 rounded-lg text-error text-sm flex items-start gap-3">
+          <AlertCircle className="flex-shrink-0 mt-0.5" size={18} />
+          <span>{error}</span>
+        </div>
+      )}
+
+      <form onSubmit={handleVerify} className="space-y-6">
+        <Input
+          label="Verification Code"
+          type="text"
+          value={token}
+          onChange={(e) => setToken(e.target.value.trim())}
+          placeholder="123456 or backup code"
+          autoComplete="one-time-code"
+          required
+        />
+
+        <Button
+          type="submit"
+          size="lg"
+          variant="primary"
+          className="w-full"
+          disabled={loading || !token}
+          loading={loading}
+        >
+          {loading ? <><Spinner size="sm" /> Verifying...</> : 'Verify & Continue'}
+        </Button>
+      </form>
+    </>
+  )
+}
+
+export default function VerifyTwoFactorPage() {
+  return (
     <div className="min-h-screen bg-background py-8 px-4">
       <div className="w-full max-w-xl mx-auto bg-card border border-border rounded-2xl p-8 shadow-lg">
         <div className="flex items-center justify-center mb-6">
@@ -54,35 +90,9 @@ export default function VerifyTwoFactorPage() {
           Enter a code from your authenticator app or a backup code to continue.
         </p>
 
-        {error && (
-          <div className="mb-6 p-4 bg-error/10 border border-error/20 rounded-lg text-error text-sm flex items-start gap-3">
-            <AlertCircle className="flex-shrink-0 mt-0.5" size={18} />
-            <span>{error}</span>
-          </div>
-        )}
-
-        <form onSubmit={handleVerify} className="space-y-6">
-          <Input
-            label="Verification Code"
-            type="text"
-            value={token}
-            onChange={(e) => setToken(e.target.value.trim())}
-            placeholder="123456 or backup code"
-            autoComplete="one-time-code"
-            required
-          />
-
-          <Button
-            type="submit"
-            size="lg"
-            variant="primary"
-            className="w-full"
-            disabled={loading || !token}
-            loading={loading}
-          >
-            {loading ? <><Spinner size="sm" /> Verifying...</> : 'Verify & Continue'}
-          </Button>
-        </form>
+        <Suspense fallback={<div className="flex justify-center py-8"><Spinner size="lg" /></div>}>
+          <VerifyTwoFactorForm />
+        </Suspense>
       </div>
     </div>
   )

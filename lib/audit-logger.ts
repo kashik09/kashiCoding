@@ -116,35 +116,10 @@ export async function logDeletion(
 ) {
   return createAuditLog({
     userId,
-    action: 'ACCOUNT_LOCKED', // Reusing enum for deletions
+    action: 'SETTINGS_CHANGED',
     resource: resourceType,
     resourceId,
     details: { deleted: true, ...resourceData },
-    ipHash,
-    userAgent,
-  })
-}
-
-/**
- * Log order status change
- */
-export async function logOrderStatusChange(
-  userId: string,
-  orderId: string,
-  oldStatus: string,
-  newStatus: string,
-  ipHash?: string,
-  userAgent?: string
-) {
-  return createAuditLog({
-    userId,
-    action: 'SETTINGS_CHANGED', // Reusing for order changes
-    resource: 'Order',
-    resourceId: orderId,
-    details: {
-      oldStatus,
-      newStatus,
-    },
     ipHash,
     userAgent,
   })

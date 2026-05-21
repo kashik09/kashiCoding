@@ -28,7 +28,7 @@ export default function Footer({ pathname }: { pathname?: string }) {
       </div>
 
       <div className="container mx-auto px-6 sm:px-8 py-8 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {/* Brand */}
           <div className="space-y-3">
             <div className="flex items-center gap-2 mb-3 group">
@@ -47,30 +47,7 @@ export default function Footer({ pathname }: { pathname?: string }) {
             <ul className="space-y-2">
               {[
                 { href: '/projects', label: 'Portfolio' },
-                { href: '/products', label: 'Shop' },
-                { href: '/complaints', label: 'Complaints' },
-              ].map((link) => (
-                <li key={link.href}>
-                  <Link href={link.href} className={linkClass(link.href)}>
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Legal */}
-          <div>
-            <h4 className="font-semibold text-app mb-4 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-              Legal
-            </h4>
-            <ul className="space-y-2">
-              {[
-                { href: '/legal/privacy-policy', label: 'Privacy Policy' },
-                { href: '/legal/terms-of-service', label: 'Terms of Service' },
-                { href: '/legal/acceptable-use', label: 'Acceptable Use' },
-                { href: '/legal/refund-policy', label: 'Refund Policy' },
-                { href: '/legal/license-terms', label: 'License Terms' },
+                { href: '/complaints', label: 'Contact' },
               ].map((link) => (
                 <li key={link.href}>
                   <Link href={link.href} className={linkClass(link.href)}>
