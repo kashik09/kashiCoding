@@ -713,12 +713,7 @@ model UserAdConsent {
 
 enum Role {
   USER
-  MODERATOR
-  VIEWER
-  EDITOR
   ADMIN
-  DEVELOPER
-  OWNER
 }
 
 enum Theme {

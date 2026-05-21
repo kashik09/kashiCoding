@@ -85,7 +85,7 @@ export default function PrivacyPage() {
             <strong>Data Retention:</strong> Active verifications are retained while status is APPROVED. Expired verifications are retained for 24 months after expiration. Rejected verifications are retained for 12 months to enforce cooldown periods. Uploaded documents are retained for the verification period plus 12 months.
           </p>
           <p className="text-foreground leading-relaxed mb-4">
-            <strong>Data Access:</strong> Limited to ADMIN and OWNER roles. Users can view their own verification status. Verification data is never shared with third parties. Guardian information is kept confidential.
+            <strong>Data Access:</strong> Limited to ADMIN role. Users can view their own verification status. Verification data is never shared with third parties. Guardian information is kept confidential.
           </p>
           <p className="text-foreground leading-relaxed mb-4">
             <strong>Security:</strong> Uploaded documents are stored securely with encryption at rest. All access is logged in audit trails. No public exposure of verification data.

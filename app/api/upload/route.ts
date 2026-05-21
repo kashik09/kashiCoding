@@ -15,8 +15,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    const allowedRoles = new Set(['ADMIN', 'OWNER', 'EDITOR'])
-    if (!allowedRoles.has(session.user.role)) {
+    if (session.user.role !== 'ADMIN') {
       return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
     }
 

@@ -24,7 +24,7 @@ export async function GET(request: NextRequest) {
 
     // Public users only see published projects
     // Admin users can see all based on status param
-    const isAdmin = session?.user?.role && ['ADMIN', 'OWNER', 'MODERATOR', 'EDITOR'].includes(session.user.role)
+    const isAdmin = session?.user?.role === 'ADMIN'
 
     if (!isAdmin) {
       where.published = true
@@ -128,7 +128,7 @@ export async function POST(request: NextRequest) {
     const session = await getServerSession(authOptions)
 
     // Check authentication
-    if (!session?.user?.role || !['ADMIN', 'OWNER', 'MODERATOR', 'EDITOR'].includes(session.user.role)) {
+    if (session?.user?.role !== 'ADMIN') {
       return NextResponse.json(
         { success: false, error: 'Unauthorized' },
         { status: 401 }

@@ -27,7 +27,7 @@ async function main() {
       name,
       email,
       password: hashedPassword,
-      role: 'OWNER',
+      role: 'ADMIN',
       accountStatus: 'ACTIVE',
       emailVerified: new Date()
     }

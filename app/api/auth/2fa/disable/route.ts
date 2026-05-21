@@ -39,10 +39,10 @@ export async function POST(request: NextRequest) {
       }
     })
 
-    // Only OWNER can disable 2FA
-    if (!user || user.role !== 'OWNER') {
+    // Only ADMIN can disable 2FA
+    if (!user || user.role !== 'ADMIN') {
       return NextResponse.json(
-        { success: false, error: 'Only the site owner can disable 2FA' },
+        { success: false, error: 'Only admin can disable 2FA' },
         { status: 403 }
       )
     }
