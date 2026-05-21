@@ -8,11 +8,11 @@ import { prisma } from "@/lib/prisma"
 import { isValidEmail, normalizeEmail } from "@/lib/auth-utils"
 import { validateAuthEnv } from "@/lib/auth-env"
 import { verifyPassword } from "@/lib/password"
-import { ADMIN_SESSION_MAX_AGE_SECONDS } from "@/lib/admin-security"
 
 const ONE_DAY_SECONDS = 60 * 60 * 24
+const ADMIN_SESSION_MAX_AGE_SECONDS = 8 * 60 * 60 // 8 hours
 const THIRTY_DAYS_SECONDS = 60 * 60 * 24 * 30
-const ADMIN_ROLES = new Set(["ADMIN", "OWNER", "MODERATOR", "EDITOR"])
+const ADMIN_ROLES = new Set(["ADMIN"])
 const DUMMY_PASSWORD_HASH =
   "$2b$12$trWG92Qki.b.ii8VzyUn8.Cg0ke1/Xd7GIvNs7zTg9hxWbBmJPKeC"
 

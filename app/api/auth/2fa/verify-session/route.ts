@@ -5,21 +5,6 @@ import { getServerSession } from '@/lib/auth'
 import { checkRateLimit, getRateLimitHeaders, getRateLimitKey } from '@/lib/rate-limit'
 import { createAuditLog } from '@/lib/audit-logger'
 import { AuditAction } from '@prisma/client'
-import {
-  ADMIN_DEVICE_ID_COOKIE,
-  ADMIN_TRUST_DEVICE_COOKIE,
-  ADMIN_STEPUP_COOKIE,
-  ADMIN_LAST_ACTIVE_COOKIE,
-  ADMIN_TRUST_DEVICE_TTL_SECONDS,
-  ADMIN_STEPUP_TTL_SECONDS,
-  ADMIN_SESSION_MAX_AGE_SECONDS,
-  createSignedToken,
-  getRequestCountry,
-  getRequestIp,
-  hashValue,
-} from '@/lib/admin-security'
-
-const ADMIN_ROLES = new Set(['ADMIN', 'OWNER', 'MODERATOR', 'EDITOR'])
 
 export async function POST(request: NextRequest) {
   try {
@@ -43,7 +28,7 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    if (!ADMIN_ROLES.has(session.user.role)) {
+    if (session.user.role !== 'ADMIN') {
       return NextResponse.json(
         { success: false, error: 'Forbidden' },
         { status: 403 }
@@ -60,7 +45,6 @@ export async function POST(request: NextRequest) {
 
     const body = await request.json().catch(() => null)
     const token = typeof body?.token === 'string' ? body.token.trim() : ''
-    const rememberDevice = body?.rememberDevice === true
 
     if (!token) {
       return NextResponse.json(
@@ -81,7 +65,7 @@ export async function POST(request: NextRequest) {
       },
     })
 
-    if (!user || !ADMIN_ROLES.has(user.role)) {
+    if (!user || user.role !== 'ADMIN') {
       return NextResponse.json(
         { success: false, error: 'Forbidden' },
         { status: 403 }
@@ -124,97 +108,6 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    const now = new Date()
-    const ip = getRequestIp(request.headers)
-    const ipHash = ip ? await hashValue(ip) : 'unknown'
-    const userAgent = request.headers.get('user-agent') || undefined
-    const deviceCookie = request.cookies.get(ADMIN_DEVICE_ID_COOKIE)
-    const deviceId = deviceCookie?.value || globalThis.crypto.randomUUID()
-    const trustedUntil = rememberDevice
-      ? new Date(now.getTime() + ADMIN_TRUST_DEVICE_TTL_SECONDS * 1000)
-      : new Date(now.getTime() + ADMIN_SESSION_MAX_AGE_SECONDS * 1000)
-
-    await prisma.deviceSession.upsert({
-      where: {
-        userId_deviceFingerprint: {
-          userId: user.id,
-          deviceFingerprint: deviceId,
-        },
-      },
-      update: {
-        ipHash,
-        userAgent,
-        blocked: false,
-        blockedReason: null,
-        lastSeen: now,
-        trustedUntil,
-        lastTwoFactorAt: now,
-      },
-      create: {
-        userId: user.id,
-        deviceFingerprint: deviceId,
-        ipHash,
-        userAgent,
-        blocked: false,
-        trustedUntil,
-        lastTwoFactorAt: now,
-      },
-    })
-
-    const nowSeconds = Math.floor(now.getTime() / 1000)
-    const trustPayload = {
-      u: user.id,
-      d: deviceId,
-      iat: nowSeconds,
-      exp: nowSeconds + (rememberDevice ? ADMIN_TRUST_DEVICE_TTL_SECONDS : ADMIN_SESSION_MAX_AGE_SECONDS),
-      ip: ip ? ipHash : undefined,
-      c: getRequestCountry(request.headers) || undefined,
-      ua: userAgent ? await hashValue(userAgent) : undefined,
-    }
-    const stepupPayload = {
-      u: user.id,
-      iat: nowSeconds,
-      exp: nowSeconds + ADMIN_STEPUP_TTL_SECONDS,
-    }
-
-    const trustToken = await createSignedToken(trustPayload)
-    const stepupToken = await createSignedToken(stepupPayload)
-    const isProd = process.env.NODE_ENV === 'production'
-
-    const response = NextResponse.json({
-      success: true,
-      backupCodeUsed: isBackupCode,
-    })
-
-    response.cookies.set(ADMIN_DEVICE_ID_COOKIE, deviceId, {
-      httpOnly: true,
-      secure: isProd,
-      sameSite: 'lax',
-      path: '/',
-      maxAge: ADMIN_TRUST_DEVICE_TTL_SECONDS,
-    })
-    response.cookies.set(ADMIN_TRUST_DEVICE_COOKIE, trustToken, {
-      httpOnly: true,
-      secure: isProd,
-      sameSite: 'lax',
-      path: '/',
-      maxAge: rememberDevice ? ADMIN_TRUST_DEVICE_TTL_SECONDS : ADMIN_SESSION_MAX_AGE_SECONDS,
-    })
-    response.cookies.set(ADMIN_STEPUP_COOKIE, stepupToken, {
-      httpOnly: true,
-      secure: isProd,
-      sameSite: 'lax',
-      path: '/',
-      maxAge: ADMIN_STEPUP_TTL_SECONDS,
-    })
-    response.cookies.set(ADMIN_LAST_ACTIVE_COOKIE, nowSeconds.toString(), {
-      httpOnly: true,
-      secure: isProd,
-      sameSite: 'lax',
-      path: '/',
-      maxAge: ADMIN_TRUST_DEVICE_TTL_SECONDS,
-    })
-
     await createAuditLog({
       userId: user.id,
       action: AuditAction.USER_LOGIN,
@@ -222,12 +115,14 @@ export async function POST(request: NextRequest) {
       resourceId: user.id,
       details: {
         success: true,
-        rememberDevice,
         backupCodeUsed: isBackupCode,
       },
     })
 
-    return response
+    return NextResponse.json({
+      success: true,
+      backupCodeUsed: isBackupCode,
+    })
   } catch (error: any) {
     console.error('Error verifying 2FA session:', error)
     return NextResponse.json(

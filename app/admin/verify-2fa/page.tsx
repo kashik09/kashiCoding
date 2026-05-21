@@ -13,7 +13,6 @@ export default function VerifyTwoFactorPage() {
   const callbackUrl = searchParams.get('callbackUrl') || '/admin'
 
   const [token, setToken] = useState('')
-  const [rememberDevice, setRememberDevice] = useState(true)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
 
@@ -26,7 +25,7 @@ export default function VerifyTwoFactorPage() {
       const response = await fetch('/api/auth/2fa/verify-session', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ token, rememberDevice }),
+        body: JSON.stringify({ token }),
       })
       const data = await response.json()
       if (!response.ok || !data.success) {
@@ -72,16 +71,6 @@ export default function VerifyTwoFactorPage() {
             autoComplete="one-time-code"
             required
           />
-
-          <label className="flex items-center gap-3 text-sm text-muted-foreground">
-            <input
-              type="checkbox"
-              checked={rememberDevice}
-              onChange={(e) => setRememberDevice(e.target.checked)}
-              className="w-4 h-4 rounded border-border"
-            />
-            Remember this device for 7 days
-          </label>
 
           <Button
             type="submit"
