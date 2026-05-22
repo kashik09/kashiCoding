@@ -16,10 +16,8 @@ export async function GET(request: NextRequest) {
       data: {
         maintenanceMode: settings.maintenanceMode,
         availableForBusiness: settings.availableForBusiness,
-        adsEnabled: settings.adsEnabled,
-        adsProvider: settings.adsProvider,
-        adsClientId: settings.adsClientId,
-        adsPlacements: settings.adsPlacements,
+        availabilityStatus: settings.availabilityStatus,
+        availabilityMessage: settings.availabilityMessage,
       },
     })
   } catch (error) {
@@ -30,4 +28,3 @@ export async function GET(request: NextRequest) {
     )
   }
 }
-
