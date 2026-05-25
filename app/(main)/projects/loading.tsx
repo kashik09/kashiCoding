@@ -1,9 +1,0 @@
-import { Spinner } from '@/components/ui/Spinner'
-
-export default function ProjectsLoading() {
-  return (
-    <div className="flex min-h-[50vh] items-center justify-center">
-      <Spinner size="lg" />
-    </div>
-  )
-}

@@ -1,5 +1,0 @@
-export { HomeCanvas } from './HomeCanvas'
-export { IntroCollage } from './IntroCollage'
-export { IntroScene } from './IntroScene'
-export { StickerField } from './StickerField'
-export { FeaturedWorkStory } from './FeaturedWorkStory'
