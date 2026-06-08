@@ -27,22 +27,22 @@ export function CookieConsent() {
   if (!show) return null;
 
   return (
-    <div className="fixed bottom-4 left-4 right-4 z-[100] mx-auto max-w-lg animate-fade-in">
-      <div className="rounded-card border border-[var(--shadow)] bg-bg-card p-5 shadow-[0_4px_20px_var(--shadow-mid)]">
-        <p className="mb-3 font-mono text-sm leading-relaxed text-ink">
+    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-ink/50 backdrop-blur-sm animate-fade-in">
+      <div className="mx-4 max-w-md rounded-card border border-[var(--shadow)] bg-bg-card p-6 shadow-[0_8px_32px_var(--shadow-mid)]">
+        <p className="mb-4 text-center font-mono text-sm leading-relaxed text-ink">
           this site uses cookies to enhance your experience and remember your
           preferences.
         </p>
-        <div className="flex flex-wrap gap-2">
+        <div className="flex justify-center gap-3">
           <button
             onClick={accept}
-            className="rounded-btn bg-rose px-4 py-2 font-pixel text-xs text-bg-linen transition-all hover:-translate-y-0.5 hover:bg-rose-deep"
+            className="rounded-btn bg-rose px-5 py-2.5 font-pixel text-xs text-bg-linen transition-all hover:-translate-y-0.5 hover:bg-rose-deep"
           >
             accept
           </button>
           <button
             onClick={decline}
-            className="rounded-btn border border-[var(--shadow)] px-4 py-2 font-pixel text-xs text-whisper transition-colors hover:border-rose hover:text-rose"
+            className="rounded-btn border border-[var(--shadow)] px-5 py-2.5 font-pixel text-xs text-whisper transition-colors hover:border-rose hover:text-rose"
           >
             decline
           </button>
