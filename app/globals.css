@@ -56,35 +56,77 @@
 }
 
 /* ════════════════════════════════════════════════════════════════
-   TAILWIND 4 THEME
+   TAILWIND 4 THEME — static tokens only
    ════════════════════════════════════════════════════════════════ */
 
 @theme inline {
-  /* Colors */
-  --color-bg-page: var(--bg-page);
-  --color-bg-card: var(--bg-card);
-  --color-bg-linen: var(--bg-linen);
-  --color-moss: var(--moss);
-  --color-fern: var(--fern);
-  --color-rose: var(--rose);
-  --color-rose-deep: var(--rose-deep);
-  --color-honey: var(--honey);
-  --color-ink: var(--ink);
-  --color-whisper: var(--whisper);
-  --color-shadow: var(--shadow);
-  --color-shadow-mid: var(--shadow-mid);
-
   /* Border radius */
   --radius-card: 12px;
   --radius-btn: 8px;
   --radius-pill: 999px;
 
-  /* Fonts */
+  /* Fonts — these reference next/font CSS variables */
   --font-serif: var(--font-fraunces), Georgia, serif;
   --font-pixel: var(--font-pixelify), system-ui, sans-serif;
   --font-stamp: var(--font-silkscreen), monospace;
   --font-mono: var(--font-ibm-plex-mono), ui-monospace, monospace;
 }
+
+/* ════════════════════════════════════════════════════════════════
+   COLOR UTILITIES — theme-aware via CSS variables
+   ════════════════════════════════════════════════════════════════ */
+
+/* Background colors */
+.bg-bg-page { background-color: var(--bg-page); }
+.bg-bg-card { background-color: var(--bg-card); }
+.bg-bg-linen { background-color: var(--bg-linen); }
+.bg-moss { background-color: var(--moss); }
+.bg-fern { background-color: var(--fern); }
+.bg-rose { background-color: var(--rose); }
+.bg-rose-deep { background-color: var(--rose-deep); }
+.bg-honey { background-color: var(--honey); }
+.bg-ink { background-color: var(--ink); }
+.bg-whisper { background-color: var(--whisper); }
+
+/* Text colors */
+.text-bg-page { color: var(--bg-page); }
+.text-bg-card { color: var(--bg-card); }
+.text-bg-linen { color: var(--bg-linen); }
+.text-moss { color: var(--moss); }
+.text-fern { color: var(--fern); }
+.text-rose { color: var(--rose); }
+.text-rose-deep { color: var(--rose-deep); }
+.text-honey { color: var(--honey); }
+.text-ink { color: var(--ink); }
+.text-whisper { color: var(--whisper); }
+
+/* Border colors */
+.border-bg-page { border-color: var(--bg-page); }
+.border-bg-card { border-color: var(--bg-card); }
+.border-bg-linen { border-color: var(--bg-linen); }
+.border-moss { border-color: var(--moss); }
+.border-fern { border-color: var(--fern); }
+.border-rose { border-color: var(--rose); }
+.border-rose-deep { border-color: var(--rose-deep); }
+.border-honey { border-color: var(--honey); }
+.border-ink { border-color: var(--ink); }
+.border-whisper { border-color: var(--whisper); }
+
+/* Hover states */
+.hover\:bg-rose:hover { background-color: var(--rose); }
+.hover\:bg-rose-deep:hover { background-color: var(--rose-deep); }
+.hover\:bg-moss:hover { background-color: var(--moss); }
+.hover\:bg-fern:hover { background-color: var(--fern); }
+.hover\:bg-bg-card:hover { background-color: var(--bg-card); }
+.hover\:bg-bg-linen:hover { background-color: var(--bg-linen); }
+
+.hover\:text-rose:hover { color: var(--rose); }
+.hover\:text-rose-deep:hover { color: var(--rose-deep); }
+.hover\:text-ink:hover { color: var(--ink); }
+.hover\:text-bg-linen:hover { color: var(--bg-linen); }
+
+.hover\:border-rose:hover { border-color: var(--rose); }
+.hover\:border-rose-deep:hover { border-color: var(--rose-deep); }
 
 /* ════════════════════════════════════════════════════════════════
    BASE STYLES
@@ -98,7 +140,7 @@ html, body {
   margin: 0;
   padding: 0;
   min-height: 100%;
-  background: var(--bg-page);
+  background-color: var(--bg-page);
   color: var(--ink);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -106,7 +148,9 @@ html, body {
 
 /* Smooth theme transitions */
 body,
-.panel, .card, .dialog, .navbar, .chip, .pill {
+.bg-bg-page, .bg-bg-card, .bg-bg-linen,
+.bg-moss, .bg-fern, .bg-rose, .bg-rose-deep,
+.text-ink, .text-whisper, .text-rose {
   transition:
     background-color 0.4s ease,
     color 0.4s ease,
