@@ -29,9 +29,9 @@ export default function HomePage() {
 
             <div className="mt-[26px] flex flex-wrap items-center gap-[18px]">
               {/* Status Pill */}
-              <span className="animate-pulse-soft inline-flex items-center gap-2 rounded-pill bg-moss px-3.5 py-1.5 font-mono text-sm text-ink">
-                <span className="h-2 w-2 rounded-full bg-fern shadow-[0_0_0_3px_rgba(122,144,114,0.25)]" />
-                available
+              <span className="inline-flex items-center gap-2 rounded-pill bg-rose/20 px-3.5 py-1.5 font-mono text-sm text-ink">
+                <span className="h-2 w-2 rounded-full bg-rose shadow-[0_0_0_3px_rgba(184,146,143,0.25)]" />
+                busy
               </span>
 
               {/* CTA Button */}

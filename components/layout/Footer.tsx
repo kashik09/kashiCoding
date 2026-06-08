@@ -12,7 +12,6 @@ const ROOMS = [
 
 const SOCIAL = [
   { href: "https://github.com/kashik09", label: "github", external: true },
-  { href: "https://twitter.com/kashikweyu", label: "twitter", external: true },
   { href: "/contact", label: "letter →", external: false },
 ] as const;
 
@@ -96,8 +95,8 @@ export function Footer() {
       {/* Status Row */}
       <div className="mx-auto mt-8 flex max-w-[960px] items-center justify-between border-t border-[var(--shadow)] pt-6">
         <div className="flex items-center gap-2">
-          <span className="h-2 w-2 rounded-full bg-moss shadow-[0_0_0_3px_rgba(168,187,150,0.3)]" />
-          <span>available for projects</span>
+          <span className="h-2 w-2 rounded-full bg-rose shadow-[0_0_0_3px_rgba(184,146,143,0.3)]" />
+          <span>very busy, working on other projects</span>
         </div>
         <div className="text-[11px] opacity-70">
           © {new Date().getFullYear()} kashi kweyu
