@@ -8,6 +8,7 @@ import {
 import { Header, Footer } from "@/components/layout";
 import { AutoTheme } from "@/components/theme/AutoTheme";
 import { CookieConsent } from "@/components/CookieConsent";
+import { SplashScreen } from "@/components/SplashScreen";
 import "./globals.css";
 
 const fraunces = Fraunces({
@@ -63,10 +64,12 @@ export default function RootLayout({
     >
       <body className="flex min-h-full flex-col bg-bg-page font-mono text-ink">
         <AutoTheme />
-        <Header />
-        <main className="flex-1 pt-14">{children}</main>
-        <Footer />
-        <CookieConsent />
+        <SplashScreen>
+          <Header />
+          <main className="flex-1 pt-14">{children}</main>
+          <Footer />
+          <CookieConsent />
+        </SplashScreen>
       </body>
     </html>
   );
