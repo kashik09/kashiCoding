@@ -4,9 +4,8 @@ import { ReadingDesk } from "@/components/illustrations/ReadingDesk";
 import Link from "next/link";
 
 const ROOMS = [
-  { id: "projects", label: "projects", sub: "what i've built" },
-  { id: "about", label: "about", sub: "who you're reading" },
   { id: "skills", label: "skills", sub: "what i work with" },
+  { id: "blog", label: "blog", sub: "field notes" },
   { id: "contact", label: "contact", sub: "send a letter" },
 ] as const;
 
@@ -37,19 +36,19 @@ export default function HomePage() {
 
               {/* CTA Button */}
               <Link
-                href="/projects"
+                href="/skills"
                 className="inline-flex items-center gap-2 rounded-btn bg-rose px-5 py-2.5 font-pixel text-sm text-bg-linen shadow-[0_2px_6px_var(--shadow)] transition-all hover:-translate-y-0.5 hover:bg-rose-deep hover:shadow-[0_4px_10px_var(--shadow-mid)]"
               >
-                view work
+                view skills
                 <ArrowRightIcon className="h-4 w-4" />
               </Link>
 
               {/* Ghost Link */}
               <Link
-                href="/about"
+                href="/contact"
                 className="inline-flex items-center gap-1.5 font-pixel text-sm text-whisper transition-colors hover:text-rose-deep"
               >
-                or read about me →
+                or say hello →
               </Link>
             </div>
           </div>

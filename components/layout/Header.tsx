@@ -4,11 +4,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const NAV_ITEMS = [
-  { id: "projects", href: "/projects", label: "[ projects ]" },
-  { id: "about", href: "/about", label: "<about/>" },
   { id: "skills", href: "/skills", label: "# skills" },
   { id: "blog", href: "/blog", label: "# blog" },
-  { id: "shop", href: "/shop", label: "$ shop" },
   { id: "contact", href: "/contact", label: "@ contact" },
 ] as const;
 

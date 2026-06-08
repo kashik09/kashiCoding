@@ -5,9 +5,9 @@ import { usePathname } from "next/navigation";
 
 const ROOMS = [
   { href: "/", label: "home" },
-  { href: "/projects", label: "projects" },
+  { href: "/skills", label: "skills" },
   { href: "/blog", label: "blog" },
-  { href: "/shop", label: "shop" },
+  { href: "/contact", label: "contact" },
 ] as const;
 
 const SOCIAL = [
