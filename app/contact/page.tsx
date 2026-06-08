@@ -31,16 +31,46 @@ export default function ContactPage() {
   const [msg, setMsg] = useState("");
   const [fromName, setFromName] = useState("");
   const [returnAddr, setReturnAddr] = useState("");
-  const [step, setStep] = useState<"draft" | "envelope" | "sent">("draft");
+  const [step, setStep] = useState<"draft" | "envelope" | "sent" | "error">("draft");
+  const [sending, setSending] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
 
   const goToEnvelope = () => {
     if (!msg.trim()) return;
     setStep("envelope");
   };
 
-  const sendLetter = () => {
+  const sendLetter = async () => {
     if (!fromName.trim()) return;
-    setStep("sent");
+    setSending(true);
+    setErrorMsg("");
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: fromName,
+          email: returnAddr,
+          message: msg,
+        }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        setErrorMsg(data.error || "Something went wrong.");
+        setStep("error");
+        return;
+      }
+
+      setStep("sent");
+    } catch {
+      setErrorMsg("Failed to send. Please try again.");
+      setStep("error");
+    } finally {
+      setSending(false);
+    }
   };
 
   const resetForm = () => {
@@ -48,6 +78,7 @@ export default function ContactPage() {
     setFromName("");
     setReturnAddr("");
     setStep("draft");
+    setErrorMsg("");
   };
 
   return (
