@@ -115,60 +115,60 @@ function LogoMark({ size = 28 }: { size?: number }) {
     <svg
       width={size}
       height={size}
-      viewBox="0 0 32 32"
-      fill="none"
-      className="text-rose transition-colors hover:text-rose-deep"
+      viewBox="0 0 200 200"
+      aria-label="kashi"
+      className="transition-colors"
     >
-      {/* Simple leaf/sprout mark */}
+      {/* wax seal with bumpy edges */}
       <path
-        d="M16 28c0-8 6-14 6-14s-3 1-6 1-6-1-6-1 6 6 6 14z"
-        fill="currentColor"
-        opacity="0.3"
+        d="M100 10
+           q14 4 28 -2 q-6 14 4 26
+           q14 4 14 18 q0 14 -14 18
+           q-10 12 -4 26 q-14 -6 -28 -2
+           q-14 4 -28 2 q6 -14 -4 -26
+           q-14 -4 -14 -18 q0 -14 14 -18
+           q10 -12 4 -26 q14 6 28 2 z"
+        fill="var(--rose)"
+        className="transition-colors hover:fill-[var(--rose-deep)]"
       />
-      <path
-        d="M16 4c-4 6-8 10-8 16 0 4 3.5 8 8 8s8-4 8-8c0-6-4-10-8-16z"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        fill="none"
-      />
-      <path
-        d="M16 12v12"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-      />
-      <path
-        d="M13 16c2-1 4-1 6 0"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-      />
+      {/* kk monogram */}
+      <text
+        x="100"
+        y="118"
+        fontFamily="var(--font-pixel), sans-serif"
+        fontSize="74"
+        fontWeight="600"
+        fill="var(--bg-linen)"
+        textAnchor="middle"
+        letterSpacing="-2"
+      >
+        kk
+      </text>
+      {/* cherry blossom petals */}
+      <g transform="translate(146 150)" opacity="0.85">
+        <ellipse cx="0" cy="-9" rx="6" ry="9" fill="var(--bg-linen)" transform="rotate(0)" />
+        <ellipse cx="0" cy="-9" rx="6" ry="9" fill="var(--bg-linen)" transform="rotate(72)" />
+        <ellipse cx="0" cy="-9" rx="6" ry="9" fill="var(--bg-linen)" transform="rotate(144)" />
+        <ellipse cx="0" cy="-9" rx="6" ry="9" fill="var(--bg-linen)" transform="rotate(216)" />
+        <ellipse cx="0" cy="-9" rx="6" ry="9" fill="var(--bg-linen)" transform="rotate(288)" />
+        <circle r="3" fill="var(--honey)" />
+      </g>
     </svg>
   );
 }
 
 function CherryIcon({ className }: { className?: string }) {
   return (
-    <svg
-      className={className}
-      viewBox="0 0 32 32"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path
-        d="M16 28c0-8 6-14 6-14s-3 1-6 1-6-1-6-1 6 6 6 14z"
-        fill="currentColor"
-        fillOpacity="0.3"
-        stroke="none"
-      />
-      <path d="M16 4c-4 6-8 10-8 16 0 4 3.5 8 8 8s8-4 8-8c0-6-4-10-8-16z" fill="none" />
-      <path d="M16 12v12" />
-      <path d="M13 16c2-1 4-1 6 0" strokeWidth="1.5" />
+    <svg className={className} viewBox="0 0 24 24" fill="none">
+      {/* 5 petal cherry blossom */}
+      <g transform="translate(12 12)">
+        <ellipse cx="0" cy="-6" rx="3" ry="5" fill="currentColor" transform="rotate(0)" />
+        <ellipse cx="0" cy="-6" rx="3" ry="5" fill="currentColor" transform="rotate(72)" />
+        <ellipse cx="0" cy="-6" rx="3" ry="5" fill="currentColor" transform="rotate(144)" />
+        <ellipse cx="0" cy="-6" rx="3" ry="5" fill="currentColor" transform="rotate(216)" />
+        <ellipse cx="0" cy="-6" rx="3" ry="5" fill="currentColor" transform="rotate(288)" />
+        <circle r="2.5" fill="var(--honey)" />
+      </g>
     </svg>
   );
 }
