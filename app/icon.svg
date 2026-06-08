@@ -1,32 +1,67 @@
-<svg width="32" height="32" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <!-- wax seal with bumpy edges -->
-  <path
-    d="M100 10
-       q14 4 28 -2 q-6 14 4 26
-       q14 4 14 18 q0 14 -14 18
-       q-10 12 -4 26 q-14 -6 -28 -2
-       q-14 4 -28 2 q6 -14 -4 -26
-       q-14 -4 -14 -18 q0 -14 14 -18
-       q10 -12 4 -26 q14 6 28 2 z"
-    fill="#b8928f"
-  />
-  <!-- kk monogram -->
-  <text
-    x="100" y="118"
-    font-family="sans-serif"
-    font-size="74"
-    font-weight="600"
-    fill="#f4ecdc"
-    text-anchor="middle"
-    letter-spacing="-2"
-  >kk</text>
-  <!-- cherry blossom petals -->
-  <g transform="translate(146 150)" opacity="0.85">
-    <ellipse cx="0" cy="-9" rx="6" ry="9" fill="#f4ecdc" transform="rotate(0)"/>
-    <ellipse cx="0" cy="-9" rx="6" ry="9" fill="#f4ecdc" transform="rotate(72)"/>
-    <ellipse cx="0" cy="-9" rx="6" ry="9" fill="#f4ecdc" transform="rotate(144)"/>
-    <ellipse cx="0" cy="-9" rx="6" ry="9" fill="#f4ecdc" transform="rotate(216)"/>
-    <ellipse cx="0" cy="-9" rx="6" ry="9" fill="#f4ecdc" transform="rotate(288)"/>
-    <circle r="3" fill="#d8b87a"/>
+<?xml version="1.0"?>
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <title>Cherry Blossom</title>
+  <defs>
+    <radialGradient id="petalShade" cx="50%" cy="78%" r="80%">
+      <stop offset="0%" stop-color="#a87a72" stop-opacity="0.35"></stop>
+      <stop offset="55%" stop-color="#a87a72" stop-opacity="0"></stop>
+    </radialGradient>
+
+    <radialGradient id="centerFill" cx="50%" cy="42%" r="55%">
+      <stop offset="0%" stop-color="#f0d28f"></stop>
+      <stop offset="65%" stop-color="#d8b87a"></stop>
+      <stop offset="100%" stop-color="#b88a3e"></stop>
+    </radialGradient>
+
+    <symbol id="petal" overflow="visible">
+      <path d="&#xA;          M 0 -30&#xA;          C -42 -34, -82 -64, -82 -114&#xA;          C -82 -158, -50 -190, -16 -198&#xA;          C -10 -200, -6 -198, -4 -192&#xA;          L -2 -184&#xA;          L 0 -200&#xA;          L 2 -184&#xA;          L 4 -192&#xA;          C 6 -198, 10 -200, 16 -198&#xA;          C 50 -190, 82 -158, 82 -114&#xA;          C 82 -64, 42 -34, 0 -30&#xA;          Z" fill="#c89a92" stroke="#4a4238" stroke-width="6" stroke-linejoin="round"></path>
+      <path d="&#xA;          M 0 -30&#xA;          C -42 -34, -82 -64, -82 -114&#xA;          C -82 -158, -50 -190, -16 -198&#xA;          C -10 -200, -6 -198, -4 -192&#xA;          L -2 -184&#xA;          L 0 -200&#xA;          L 2 -184&#xA;          L 4 -192&#xA;          C 6 -198, 10 -200, 16 -198&#xA;          C 50 -190, 82 -158, 82 -114&#xA;          C 82 -64, 42 -34, 0 -30&#xA;          Z" fill="url(#petalShade)"></path>
+      <ellipse cx="-22" cy="-150" rx="14" ry="28" fill="#e5c4be" opacity="0.7" transform="rotate(-18 -22 -150)"></ellipse>
+    </symbol>
+  </defs>
+
+  <g transform="translate(256 270)">
+    <g>
+      <use href="#petal" transform="rotate(0)"></use>
+      <use href="#petal" transform="rotate(72)"></use>
+      <use href="#petal" transform="rotate(144)"></use>
+      <use href="#petal" transform="rotate(216)"></use>
+      <use href="#petal" transform="rotate(288)"></use>
+    </g>
+
+    <g stroke="#4a4238" stroke-width="3.5" stroke-linecap="round">
+      <g><line x1="0" y1="-6" x2="0" y2="-58"></line></g>
+      <g transform="rotate(36)"><line x1="0" y1="-6" x2="0" y2="-48"></line></g>
+      <g transform="rotate(72)"><line x1="0" y1="-6" x2="0" y2="-58"></line></g>
+      <g transform="rotate(108)"><line x1="0" y1="-6" x2="0" y2="-48"></line></g>
+      <g transform="rotate(144)"><line x1="0" y1="-6" x2="0" y2="-58"></line></g>
+      <g transform="rotate(180)"><line x1="0" y1="-6" x2="0" y2="-58"></line></g>
+      <g transform="rotate(216)"><line x1="0" y1="-6" x2="0" y2="-48"></line></g>
+      <g transform="rotate(252)"><line x1="0" y1="-6" x2="0" y2="-58"></line></g>
+      <g transform="rotate(288)"><line x1="0" y1="-6" x2="0" y2="-48"></line></g>
+      <g transform="rotate(324)"><line x1="0" y1="-6" x2="0" y2="-58"></line></g>
+    </g>
+    <g fill="#d8b87a" stroke="#4a4238" stroke-width="1.8">
+      <circle cx="0" cy="-60" r="4.5"></circle>
+      <g transform="rotate(36)"><circle cx="0" cy="-50" r="4"></circle></g>
+      <g transform="rotate(72)"><circle cx="0" cy="-60" r="4.5"></circle></g>
+      <g transform="rotate(108)"><circle cx="0" cy="-50" r="4"></circle></g>
+      <g transform="rotate(144)"><circle cx="0" cy="-60" r="4.5"></circle></g>
+      <g transform="rotate(180)"><circle cx="0" cy="-60" r="4.5"></circle></g>
+      <g transform="rotate(216)"><circle cx="0" cy="-50" r="4"></circle></g>
+      <g transform="rotate(252)"><circle cx="0" cy="-60" r="4.5"></circle></g>
+      <g transform="rotate(288)"><circle cx="0" cy="-50" r="4"></circle></g>
+      <g transform="rotate(324)"><circle cx="0" cy="-60" r="4.5"></circle></g>
+    </g>
+
+    <circle r="22" fill="url(#centerFill)" stroke="#4a4238" stroke-width="4"></circle>
+    <g fill="#4a4238">
+      <circle cx="-7" cy="-5" r="1.8"></circle>
+      <circle cx="6" cy="-6" r="1.6"></circle>
+      <circle cx="8" cy="4" r="1.8"></circle>
+      <circle cx="-5" cy="7" r="1.6"></circle>
+      <circle cx="0" cy="0" r="1.8"></circle>
+    </g>
   </g>
 </svg>

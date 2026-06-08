@@ -112,41 +112,38 @@ function LogoMark({ size = 24 }: { size?: number }) {
     <svg
       width={size}
       height={size}
-      viewBox="0 0 200 200"
+      viewBox="0 0 512 512"
       aria-label="kashi"
     >
-      {/* wax seal with bumpy edges */}
-      <path
-        d="M100 10
-           q14 4 28 -2 q-6 14 4 26
-           q14 4 14 18 q0 14 -14 18
-           q-10 12 -4 26 q-14 -6 -28 -2
-           q-14 4 -28 2 q6 -14 -4 -26
-           q-14 -4 -14 -18 q0 -14 14 -18
-           q10 -12 4 -26 q14 6 28 2 z"
-        fill="var(--rose)"
-      />
-      {/* kk monogram */}
-      <text
-        x="100"
-        y="118"
-        fontFamily="var(--font-pixel), sans-serif"
-        fontSize="74"
-        fontWeight="600"
-        fill="var(--bg-linen)"
-        textAnchor="middle"
-        letterSpacing="-2"
-      >
-        kk
-      </text>
-      {/* cherry blossom petals */}
-      <g transform="translate(146 150)" opacity="0.85">
-        <ellipse cx="0" cy="-9" rx="6" ry="9" fill="var(--bg-linen)" transform="rotate(0)" />
-        <ellipse cx="0" cy="-9" rx="6" ry="9" fill="var(--bg-linen)" transform="rotate(72)" />
-        <ellipse cx="0" cy="-9" rx="6" ry="9" fill="var(--bg-linen)" transform="rotate(144)" />
-        <ellipse cx="0" cy="-9" rx="6" ry="9" fill="var(--bg-linen)" transform="rotate(216)" />
-        <ellipse cx="0" cy="-9" rx="6" ry="9" fill="var(--bg-linen)" transform="rotate(288)" />
-        <circle r="3" fill="var(--honey)" />
+      <defs>
+        <radialGradient id="centerFillFooter" cx="50%" cy="42%" r="55%">
+          <stop offset="0%" stopColor="#f0d28f" />
+          <stop offset="65%" stopColor="#d8b87a" />
+          <stop offset="100%" stopColor="#b88a3e" />
+        </radialGradient>
+      </defs>
+      <g transform="translate(256 270)">
+        {/* petals */}
+        {[0, 72, 144, 216, 288].map((angle) => (
+          <g key={angle} transform={`rotate(${angle})`}>
+            <path
+              d="M 0 -30 C -42 -34, -82 -64, -82 -114 C -82 -158, -50 -190, -16 -198 C -10 -200, -6 -198, -4 -192 L -2 -184 L 0 -200 L 2 -184 L 4 -192 C 6 -198, 10 -200, 16 -198 C 50 -190, 82 -158, 82 -114 C 82 -64, 42 -34, 0 -30 Z"
+              fill="#c89a92"
+              stroke="#4a4238"
+              strokeWidth="6"
+              strokeLinejoin="round"
+            />
+          </g>
+        ))}
+        {/* center */}
+        <circle r="22" fill="url(#centerFillFooter)" stroke="#4a4238" strokeWidth="4" />
+        <g fill="#4a4238">
+          <circle cx="-7" cy="-5" r="1.8" />
+          <circle cx="6" cy="-6" r="1.6" />
+          <circle cx="8" cy="4" r="1.8" />
+          <circle cx="-5" cy="7" r="1.6" />
+          <circle cx="0" cy="0" r="1.8" />
+        </g>
       </g>
     </svg>
   );
