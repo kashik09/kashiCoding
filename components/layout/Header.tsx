@@ -4,7 +4,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const NAV_ITEMS = [
-  { id: "home", href: "/", label: "~ home" },
   { id: "projects", href: "/projects", label: "[ projects ]" },
   { id: "about", href: "/about", label: "<about/>" },
   { id: "skills", href: "/skills", label: "# skills" },
@@ -45,6 +44,21 @@ export function Header() {
         className="flex flex-1 items-center justify-center gap-2 overflow-hidden font-pixel text-sm sm:gap-3.5 md:gap-4"
         aria-label="primary navigation"
       >
+        {/* Home link with cherry icon */}
+        <Link
+          href="/"
+          className={`
+            group relative flex shrink-0 items-center gap-1.5 whitespace-nowrap px-1 py-1.5 transition-colors
+            ${current === "home" ? "text-rose" : "text-whisper hover:text-rose-deep"}
+          `}
+        >
+          {current === "home" && (
+            <span className="h-1.5 w-1.5 rounded-full bg-honey" />
+          )}
+          <CherryIcon className="h-4 w-4" />
+          <span className="hidden sm:inline">home</span>
+        </Link>
+
         {NAV_ITEMS.map((item) => {
           const isActive = current === item.id;
           return (
@@ -131,6 +145,30 @@ function LogoMark({ size = 28 }: { size?: number }) {
         strokeWidth="1.5"
         strokeLinecap="round"
       />
+    </svg>
+  );
+}
+
+function CherryIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 32 32"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path
+        d="M16 28c0-8 6-14 6-14s-3 1-6 1-6-1-6-1 6 6 6 14z"
+        fill="currentColor"
+        fillOpacity="0.3"
+        stroke="none"
+      />
+      <path d="M16 4c-4 6-8 10-8 16 0 4 3.5 8 8 8s8-4 8-8c0-6-4-10-8-16z" fill="none" />
+      <path d="M16 12v12" />
+      <path d="M13 16c2-1 4-1 6 0" strokeWidth="1.5" />
     </svg>
   );
 }
