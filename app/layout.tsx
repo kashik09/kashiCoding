@@ -6,6 +6,8 @@ import {
   IBM_Plex_Mono,
 } from "next/font/google";
 import { Header, Footer } from "@/components/layout";
+import { AutoTheme } from "@/components/theme/AutoTheme";
+import { CookieConsent } from "@/components/CookieConsent";
 import "./globals.css";
 
 const fraunces = Fraunces({
@@ -60,9 +62,11 @@ export default function RootLayout({
       `}
     >
       <body className="flex min-h-full flex-col bg-bg-page font-mono text-ink">
+        <AutoTheme />
         <Header />
         <main className="flex-1 pt-14">{children}</main>
         <Footer />
+        <CookieConsent />
       </body>
     </html>
   );
