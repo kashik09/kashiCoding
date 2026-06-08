@@ -1,26 +1,283 @@
 @import "tailwindcss";
 
+/* ════════════════════════════════════════════════════════════════
+   PALETTE — pastel forest, 3 themes
+   ════════════════════════════════════════════════════════════════ */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Morning (light) — default */
+  --bg-page: #d8e0d2;
+  --bg-card: #e8ede2;
+  --bg-linen: #f4ecdc;
+  --moss: #a8bb96;
+  --fern: #7a9072;
+  --rose: #b8928f;
+  --rose-deep: #966e6c;
+  --honey: #d8b87a;
+  --ink: #4a4238;
+  --whisper: #8a8278;
+  --shadow: rgba(74, 66, 56, 0.08);
+  --shadow-mid: rgba(74, 66, 56, 0.14);
+
+  /* Shape system */
+  --radius-card: 12px;
+  --radius-btn: 8px;
+  --radius-pill: 999px;
 }
+
+[data-theme="dusk"] {
+  --bg-page: #2a2e26;
+  --bg-card: #353a30;
+  --bg-linen: #3f4438;
+  --moss: #7a9072;
+  --fern: #5a6e52;
+  --rose: #a8786f;
+  --rose-deep: #8a5e58;
+  --honey: #b89870;
+  --ink: #d8d0c2;
+  --whisper: #8a8278;
+  --shadow: rgba(0, 0, 0, 0.3);
+  --shadow-mid: rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="cabin"] {
+  --bg-page: #0E1410;
+  --bg-card: #161C17;
+  --bg-linen: #1f2419;
+  --moss: #6F8A4E;
+  --fern: #3D5A2E;
+  --rose: #a8786f;
+  --rose-deep: #8a5e58;
+  --honey: #C89A3A;
+  --ink: #EDE4C8;
+  --whisper: #6f7560;
+  --shadow: rgba(0, 0, 0, 0.5);
+  --shadow-mid: rgba(0, 0, 0, 0.6);
+}
+
+/* ════════════════════════════════════════════════════════════════
+   TAILWIND 4 THEME
+   ════════════════════════════════════════════════════════════════ */
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* Colors */
+  --color-bg-page: var(--bg-page);
+  --color-bg-card: var(--bg-card);
+  --color-bg-linen: var(--bg-linen);
+  --color-moss: var(--moss);
+  --color-fern: var(--fern);
+  --color-rose: var(--rose);
+  --color-rose-deep: var(--rose-deep);
+  --color-honey: var(--honey);
+  --color-ink: var(--ink);
+  --color-whisper: var(--whisper);
+  --color-shadow: var(--shadow);
+  --color-shadow-mid: var(--shadow-mid);
+
+  /* Border radius */
+  --radius-card: 12px;
+  --radius-btn: 8px;
+  --radius-pill: 999px;
+
+  /* Fonts */
+  --font-serif: var(--font-fraunces), Georgia, serif;
+  --font-pixel: var(--font-pixelify), system-ui, sans-serif;
+  --font-stamp: var(--font-silkscreen), monospace;
+  --font-mono: var(--font-ibm-plex-mono), ui-monospace, monospace;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* ════════════════════════════════════════════════════════════════
+   BASE STYLES
+   ════════════════════════════════════════════════════════════════ */
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  background: var(--bg-page);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Smooth theme transitions */
+body,
+.panel, .card, .dialog, .navbar, .chip, .pill {
+  transition:
+    background-color 0.4s ease,
+    color 0.4s ease,
+    border-color 0.4s ease,
+    box-shadow 0.4s ease;
+}
+
+/* Scrollbar styling */
+.scroll {
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--whisper) transparent;
+}
+
+.scroll::-webkit-scrollbar {
+  width: 8px;
+}
+
+.scroll::-webkit-scrollbar-thumb {
+  background: var(--moss);
+  border-radius: 999px;
+}
+
+.scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* ════════════════════════════════════════════════════════════════
+   ANIMATIONS
+   ════════════════════════════════════════════════════════════════ */
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@keyframes bob {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
+}
+
+@keyframes wiggle {
+  0%, 100% {
+    transform: rotate(-1deg);
+  }
+  50% {
+    transform: rotate(1deg);
+  }
+}
+
+@keyframes blink {
+  0%, 50% {
+    opacity: 1;
+  }
+  50.01%, 100% {
+    opacity: 0;
+  }
+}
+
+@keyframes pulse-soft {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(168, 187, 150, 0.45);
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba(168, 187, 150, 0);
+  }
+}
+
+@keyframes leaf-fall {
+  0% {
+    transform: translate(0, -10vh) rotate(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.5;
+  }
+  100% {
+    transform: translate(80px, 110vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+@keyframes slide-in-right {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 10px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+@keyframes toast-out {
+  from {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+  to {
+    opacity: 0;
+    transform: translate(-50%, 10px);
+  }
+}
+
+@keyframes typing-dot {
+  0%, 60%, 100% {
+    transform: translateY(0);
+    opacity: 0.4;
+  }
+  30% {
+    transform: translateY(-4px);
+    opacity: 1;
+  }
+}
+
+/* Animation utility classes */
+.animate-fade-in {
+  animation: fade-in 0.4s ease-out;
+}
+
+.animate-bob {
+  animation: bob 4s ease-in-out infinite;
+}
+
+.animate-wiggle {
+  animation: wiggle 6s ease-in-out infinite;
+  transform-origin: bottom center;
+}
+
+.animate-blink {
+  animation: blink 0.9s steps(1, end) infinite;
+}
+
+.animate-pulse-soft {
+  animation: pulse-soft 2.4s ease-in-out infinite;
+}
+
+/* ════════════════════════════════════════════════════════════════
+   REDUCED MOTION
+   ════════════════════════════════════════════════════════════════ */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .animate-bob,
+  .animate-wiggle,
+  .animate-blink {
+    animation: none !important;
+  }
 }
