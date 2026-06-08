@@ -32,7 +32,7 @@ export function Header() {
           <LogoMark size={28} />
         </Link>
         <div className="hidden rounded-md border border-[var(--shadow)] bg-bg-linen px-2.5 py-1 font-stamp text-[10px] uppercase tracking-widest text-whisper sm:block">
-          ◆ KASHI.QUEST · v2
+          ◆ STATUS207 · v2
         </div>
       </div>
 

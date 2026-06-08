@@ -64,7 +64,7 @@ export default function DesignTestPage() {
                 font-serif (Fraunces)
               </p>
               <p className="font-serif text-4xl font-medium italic text-ink">
-                kashi.quest
+                status207
               </p>
             </div>
 
@@ -82,7 +82,7 @@ export default function DesignTestPage() {
                 font-stamp (Silkscreen)
               </p>
               <p className="font-stamp text-sm uppercase tracking-widest text-whisper">
-                KASHI.QUEST v2.0
+                STATUS207 v2.0
               </p>
             </div>
 
@@ -285,7 +285,7 @@ export default function DesignTestPage() {
         {/* Footer */}
         <footer className="border-t border-[var(--shadow)] pt-8 text-center">
           <p className="font-mono text-sm text-whisper">
-            design tokens test page — kashi.quest v2
+            design tokens test page — status207 v2
           </p>
         </footer>
       </div>

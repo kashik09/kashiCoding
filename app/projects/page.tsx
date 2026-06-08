@@ -5,7 +5,7 @@ const FILTERS = ["all", "web", "tools", "experiments", "archive"] as const;
 const PROJECTS = [
   {
     slug: "portfolio",
-    name: "kashi.quest",
+    name: "status207",
     tag: "web",
     year: "2024",
     desc: "a soft little portfolio in the shape of a game.",

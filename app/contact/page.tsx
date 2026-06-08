@@ -14,8 +14,8 @@ import { ArrowRightIcon } from "@/components/icons";
 const CONTACT_INFO = [
   {
     k: "email",
-    v: "hello@kashi.quest",
-    href: "mailto:hello@kashi.quest",
+    v: "email",
+    href: "mailto:email",
     icon: MailIcon,
   },
   {

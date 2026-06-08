@@ -38,7 +38,7 @@ const ibmPlexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "kashi.quest",
+  title: "status207",
   description: "a soft little portfolio in the shape of a game",
 };
 

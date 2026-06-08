@@ -32,7 +32,7 @@ export function Footer() {
           <div className="mb-2 flex items-center gap-2">
             <LogoMark size={24} />
             <span className="font-serif text-sm italic text-ink">
-              kashi.quest
+              status207
             </span>
           </div>
           <div className="leading-relaxed">
