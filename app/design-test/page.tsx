@@ -182,13 +182,13 @@ export default function DesignTestPage() {
                 chips
               </p>
               <div className="flex flex-wrap gap-2">
-                <span className="rounded-pill border border-[var(--shadow)] bg-bg-linen px-3 py-1 font-mono text-xs text-ink">
+                <span className="rounded-pill border border-(--shadow) bg-bg-linen px-3 py-1 font-mono text-xs text-ink">
                   Next.js
                 </span>
-                <span className="rounded-pill border border-[var(--shadow)] bg-bg-linen px-3 py-1 font-mono text-xs text-ink">
+                <span className="rounded-pill border border-(--shadow) bg-bg-linen px-3 py-1 font-mono text-xs text-ink">
                   TypeScript
                 </span>
-                <span className="rounded-pill border border-[var(--shadow)] bg-bg-linen px-3 py-1 font-mono text-xs text-ink">
+                <span className="rounded-pill border border-(--shadow) bg-bg-linen px-3 py-1 font-mono text-xs text-ink">
                   Tailwind
                 </span>
               </div>
@@ -200,14 +200,14 @@ export default function DesignTestPage() {
                 cards
               </p>
               <div className="grid gap-4 sm:grid-cols-2">
-                <div className="relative rounded-card border border-[var(--shadow)] bg-bg-card p-5 shadow-[0_2px_8px_var(--shadow)] transition-all hover:-translate-y-0.5 hover:shadow-[0_6px_16px_var(--shadow-mid)] before:absolute before:left-0 before:top-3 before:bottom-3 before:w-0.5 before:rounded-r before:bg-transparent before:transition-colors hover:before:bg-rose">
+                <div className="relative rounded-card border border-(--shadow) bg-bg-card p-5 shadow-[0_2px_8px_var(--shadow)] transition-all hover:-translate-y-0.5 hover:shadow-[0_6px_16px_var(--shadow-mid)] before:absolute before:left-0 before:top-3 before:bottom-3 before:w-0.5 before:rounded-r before:bg-transparent before:transition-colors hover:before:bg-rose">
                   <p className="font-pixel text-lg text-ink">projects</p>
                   <p className="mt-1 font-mono text-xs text-whisper">
                     what i've built
                   </p>
                   <p className="mt-4 font-mono text-xs text-rose">→ enter</p>
                 </div>
-                <div className="rounded-card border border-[var(--shadow)] bg-bg-card p-5 shadow-[0_2px_8px_var(--shadow)]">
+                <div className="rounded-card border border-(--shadow) bg-bg-card p-5 shadow-[0_2px_8px_var(--shadow)]">
                   <div className="mb-3 flex items-center justify-between">
                     <span className="font-pixel text-xs uppercase tracking-widest text-rose">
                       NOW BUILDING
@@ -226,10 +226,10 @@ export default function DesignTestPage() {
                 keycap
               </p>
               <div className="flex gap-2">
-                <span className="inline-flex h-6 min-w-[22px] items-center justify-center rounded-md border border-[var(--shadow-mid)] bg-bg-linen px-1.5 font-pixel text-xs text-ink shadow-[0_1px_2px_var(--shadow)]">
+                <span className="inline-flex h-6 min-w-5.5 items-center justify-center rounded-md border border-(--shadow-mid) bg-bg-linen px-1.5 font-pixel text-xs text-ink shadow-[0_1px_2px_var(--shadow)]">
                   SPACE
                 </span>
-                <span className="inline-flex h-6 min-w-[22px] items-center justify-center rounded-md border border-[var(--shadow-mid)] bg-bg-linen px-1.5 font-pixel text-xs text-ink shadow-[0_1px_2px_var(--shadow)]">
+                <span className="inline-flex h-6 min-w-5.5 items-center justify-center rounded-md border border-(--shadow-mid) bg-bg-linen px-1.5 font-pixel text-xs text-ink shadow-[0_1px_2px_var(--shadow)]">
                   ESC
                 </span>
               </div>
@@ -283,7 +283,7 @@ export default function DesignTestPage() {
         </section>
 
         {/* Footer */}
-        <footer className="border-t border-[var(--shadow)] pt-8 text-center">
+        <footer className="border-t border-(--shadow) pt-8 text-center">
           <p className="font-mono text-sm text-whisper">
             design tokens test page — status207 v2
           </p>
@@ -303,7 +303,7 @@ function ColorSwatch({
   return (
     <div className="space-y-2">
       <div
-        className={`h-16 w-full rounded-card border border-[var(--shadow)] ${className}`}
+        className={`h-16 w-full rounded-card border border-(--shadow) ${className}`}
       />
       <p className="font-mono text-xs text-whisper">{name}</p>
     </div>

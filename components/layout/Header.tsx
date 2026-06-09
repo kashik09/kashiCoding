@@ -21,7 +21,7 @@ export function Header() {
   const current = getCurrent();
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 flex h-14 items-center gap-4 border-b border-[var(--shadow)] bg-bg-card px-5 shadow-[0_1px_4px_var(--shadow)] transition-colors">
+    <header className="fixed top-0 left-0 right-0 z-50 flex h-14 items-center gap-4 border-b border-(--shadow) bg-bg-card px-5 shadow-[0_1px_4px_var(--shadow)] transition-colors">
       {/* Logo + Stamp */}
       <div className="flex shrink-0 items-center gap-2.5">
         <Link
@@ -31,7 +31,7 @@ export function Header() {
         >
           <LogoMark size={28} />
         </Link>
-        <div className="hidden rounded-md border border-[var(--shadow)] bg-bg-linen px-2.5 py-1 font-stamp text-[10px] uppercase tracking-widest text-whisper sm:block">
+        <div className="hidden rounded-md border border-(--shadow) bg-bg-linen px-2.5 py-1 font-stamp text-[10px] uppercase tracking-widest text-whisper sm:block">
           ◆ STATUS207 · v2
         </div>
       </div>
@@ -98,7 +98,7 @@ function ThemeToggle() {
     <button
       type="button"
       onClick={cycleTheme}
-      className="flex items-center gap-2 rounded-md border border-[var(--shadow)] bg-bg-linen px-3 py-1.5 font-pixel text-xs text-whisper transition-colors hover:border-rose-deep hover:bg-rose hover:text-bg-linen"
+      className="flex items-center gap-2 rounded-md border border-(--shadow) bg-bg-linen px-3 py-1.5 font-pixel text-xs text-whisper transition-colors hover:border-rose-deep hover:bg-rose hover:text-bg-linen"
       aria-label="cycle theme"
     >
       <SunIcon className="h-4 w-4" />

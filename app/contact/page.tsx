@@ -99,7 +99,7 @@ export default function ContactPage() {
     <div className="relative min-h-screen">
       <SoftLeaves count={3} />
 
-      <div className="animate-fade-in relative z-[2] mx-auto max-w-[1080px] px-[clamp(24px,4vw,48px)] pb-24 pt-[clamp(24px,4vw,40px)]">
+      <div className="animate-fade-in relative z-2 mx-auto max-w-270 px-[clamp(24px,4vw,48px)] pb-24 pt-[clamp(24px,4vw,40px)]">
         {/* Header */}
         <div className="mb-7">
           <p className="mb-1.5 font-pixel text-[13px] uppercase tracking-[0.16em] text-rose">
@@ -108,17 +108,17 @@ export default function ContactPage() {
           <h1 className="font-serif text-[clamp(34px,4.5vw,48px)] font-medium italic leading-[1.1] tracking-[-0.01em] text-ink">
             say hello
           </h1>
-          <div className="mt-4 h-0.5 w-[50px] rounded-full bg-rose" />
+          <div className="mt-4 h-0.5 w-12.5 rounded-full bg-rose" />
         </div>
 
         {/* Two Column Layout */}
         <div className="grid gap-[clamp(20px,3vw,36px)] md:grid-cols-[minmax(0,0.95fr)_minmax(0,1.1fr)]">
           {/* Left - Mailbox + Contact Cards */}
-          <div className="flex flex-col rounded-card border border-[var(--shadow)] bg-bg-card p-[30px] shadow-[0_2px_8px_var(--shadow)]">
+          <div className="flex flex-col rounded-card border border-(--shadow) bg-bg-card p-7.5 shadow-[0_2px_8px_var(--shadow)]">
             {/* Mailbox Illustration */}
             <div className="mb-4 text-center">
-              <div className="animate-bob mx-auto flex h-[132px] w-[132px] items-center justify-center rounded-full bg-bg-linen shadow-[0_6px_18px_var(--shadow)]">
-                <MailboxIcon className="h-[72px] w-[72px] text-rose-deep" />
+              <div className="animate-bob mx-auto flex h-33 w-33 items-center justify-center rounded-full bg-bg-linen shadow-[0_6px_18px_var(--shadow)]">
+                <MailboxIcon className="h-18 w-18 text-rose-deep" />
               </div>
               <p className="mt-3.5 font-mono text-[13px] italic text-whisper">
                 flag&apos;s up — drop a letter in.
@@ -136,7 +136,7 @@ export default function ContactPage() {
                     href={c.href || undefined}
                     target={c.href ? "_blank" : undefined}
                     rel={c.href ? "noopener noreferrer" : undefined}
-                    className="flex items-center gap-3.5 rounded-[10px] border border-[var(--shadow)] bg-bg-linen px-4 py-3 shadow-[0_1px_4px_var(--shadow)] transition-transform hover:-translate-y-0.5"
+                    className="flex items-center gap-3.5 rounded-[10px] border border-(--shadow) bg-bg-linen px-4 py-3 shadow-[0_1px_4px_var(--shadow)] transition-transform hover:-translate-y-0.5"
                   >
                     <Icon className="h-5 w-5 text-rose-deep" />
                     <div className="min-w-0 flex-1">
@@ -157,7 +157,7 @@ export default function ContactPage() {
           </div>
 
           {/* Right - Letter Writer */}
-          <div className="rounded-card border border-[var(--shadow)] bg-bg-card p-[30px] shadow-[0_4px_14px_var(--shadow)]">
+          <div className="rounded-card border border-(--shadow) bg-bg-card p-7.5 shadow-[0_4px_14px_var(--shadow)]">
             {step === "draft" && (
               <div className="animate-fade-in">
                 <p className="mb-3.5 flex items-center gap-2 font-pixel text-xs uppercase tracking-[0.12em] text-rose">
@@ -169,7 +169,7 @@ export default function ContactPage() {
                 </p>
 
                 {/* Letter Paper */}
-                <div className="relative rounded-[10px] border border-[var(--shadow)] bg-bg-linen px-[22px] py-[18px]">
+                <div className="relative rounded-[10px] border border-(--shadow) bg-bg-linen px-5.5 py-4.5">
                   <p className="mb-2.5 font-pixel text-[11px] uppercase tracking-[0.14em] text-whisper">
                     dear kashi,
                   </p>
@@ -177,7 +177,7 @@ export default function ContactPage() {
                     value={msg}
                     onChange={(e) => setMsg(e.target.value)}
                     placeholder="hi! i saw your portfolio and..."
-                    className="min-h-[224px] w-full resize-none border-none bg-transparent font-mono text-[15px] leading-7 text-ink outline-none placeholder:text-whisper/50"
+                    className="min-h-56 w-full resize-none border-none bg-transparent font-mono text-[15px] leading-7 text-ink outline-none placeholder:text-whisper/50"
                     style={{
                       backgroundImage:
                         "repeating-linear-gradient(to bottom, transparent 0, transparent 27px, var(--shadow-mid) 27px, var(--shadow-mid) 28px)",
@@ -223,7 +223,7 @@ export default function ContactPage() {
                 </p>
 
                 {/* Envelope */}
-                <div className="relative overflow-hidden rounded-[10px] border border-[var(--shadow)] bg-bg-linen px-[26px] pb-[26px] pt-[22px] shadow-[0_4px_14px_var(--shadow)]">
+                <div className="relative overflow-hidden rounded-[10px] border border-(--shadow) bg-bg-linen px-6.5 pb-6.5 pt-5.5 shadow-[0_4px_14px_var(--shadow)]">
                   {/* TO */}
                   <div className="mb-4">
                     <p className="mb-1 font-pixel text-[10px] uppercase tracking-[0.18em] text-whisper">
@@ -246,7 +246,7 @@ export default function ContactPage() {
                         value={fromName}
                         onChange={(e) => setFromName(e.target.value)}
                         placeholder="your name"
-                        className="w-full border-b border-[var(--shadow-mid)] bg-transparent py-1 font-mono text-[15px] text-ink outline-none placeholder:text-whisper/50"
+                        className="w-full border-b border-(--shadow-mid) bg-transparent py-1 font-mono text-[15px] text-ink outline-none placeholder:text-whisper/50"
                       />
                     </label>
                   </div>
@@ -264,14 +264,14 @@ export default function ContactPage() {
                         value={returnAddr}
                         onChange={(e) => setReturnAddr(e.target.value)}
                         placeholder="so i can write back"
-                        className="w-full border-b border-[var(--shadow-mid)] bg-transparent py-1 font-mono text-sm text-ink outline-none placeholder:text-whisper/50"
+                        className="w-full border-b border-(--shadow-mid) bg-transparent py-1 font-mono text-sm text-ink outline-none placeholder:text-whisper/50"
                       />
                     </label>
                   </div>
                 </div>
 
                 {/* Letter Preview */}
-                <div className="mt-3.5 overflow-hidden rounded-lg border border-dashed border-[var(--shadow-mid)] bg-bg-card px-3.5 py-2.5 font-mono text-xs leading-relaxed text-whisper">
+                <div className="mt-3.5 overflow-hidden rounded-lg border border-dashed border-(--shadow-mid) bg-bg-card px-3.5 py-2.5 font-mono text-xs leading-relaxed text-whisper">
                   <span className="text-rose">letter</span>: &quot;
                   {msg.length > 90 ? msg.slice(0, 90) + "…" : msg}&quot;
                 </div>
@@ -313,7 +313,7 @@ export default function ContactPage() {
             )}
 
             {step === "sent" && (
-              <div className="animate-fade-in flex min-h-[400px] flex-col items-center justify-center text-center">
+              <div className="animate-fade-in flex min-h-100 flex-col items-center justify-center text-center">
                 <div className="mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-moss/20">
                   <MailIcon className="h-10 w-10 text-moss" />
                 </div>
@@ -335,7 +335,7 @@ export default function ContactPage() {
             )}
 
             {step === "error" && (
-              <div className="animate-fade-in flex min-h-[400px] flex-col items-center justify-center text-center">
+              <div className="animate-fade-in flex min-h-100 flex-col items-center justify-center text-center">
                 <div className="mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-rose/20">
                   <MailIcon className="h-10 w-10 text-rose" />
                 </div>

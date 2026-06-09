@@ -23,7 +23,7 @@ export default function BlogPage() {
           <p className="mt-2.5 font-mono text-sm text-whisper">
             what i&apos;m thinking about, learning, building.
           </p>
-          <div className="mt-4 h-0.5 w-[50px] rounded-full bg-rose" />
+          <div className="mt-4 h-0.5 w-12.5 rounded-full bg-rose" />
         </div>
 
         {/* Posts List */}
@@ -31,7 +31,7 @@ export default function BlogPage() {
           {POSTS.map((post) => (
             <article
               key={post.id}
-              className="rounded-card border border-[var(--shadow)] bg-bg-card p-5 shadow-[0_2px_8px_var(--shadow)] transition-all hover:-translate-y-0.5 hover:shadow-[0_6px_16px_var(--shadow-mid)]"
+              className="rounded-card border border-(--shadow) bg-bg-card p-5 shadow-[0_2px_8px_var(--shadow)] transition-all hover:-translate-y-0.5 hover:shadow-[0_6px_16px_var(--shadow-mid)]"
             >
               <h2 className="mb-1 font-serif text-[22px] font-medium italic leading-[1.2] text-ink">
                 {post.title}
@@ -46,7 +46,7 @@ export default function BlogPage() {
                 {post.tags.map((t) => (
                   <span
                     key={t}
-                    className="rounded-pill border border-[var(--shadow)] px-2 py-0.5 font-mono text-[10px] text-whisper"
+                    className="rounded-pill border border-(--shadow) px-2 py-0.5 font-mono text-[10px] text-whisper"
                   >
                     {t}
                   </span>

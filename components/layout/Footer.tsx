@@ -24,8 +24,8 @@ export function Footer() {
   };
 
   return (
-    <footer className="mt-12 border-t border-[var(--shadow)] bg-bg-card px-6 py-8 font-mono text-xs text-whisper transition-colors">
-      <div className="mx-auto grid max-w-[960px] grid-cols-2 gap-8 sm:grid-cols-4">
+    <footer className="mt-12 border-t border-(--shadow) bg-bg-card px-6 py-8 font-mono text-xs text-whisper transition-colors">
+      <div className="mx-auto grid max-w-240 grid-cols-2 gap-8 sm:grid-cols-4">
         {/* Brand Column */}
         <div className="col-span-2 min-w-0">
           <div className="mb-2 flex items-center gap-2">
@@ -93,7 +93,7 @@ export function Footer() {
       </div>
 
       {/* Status Row */}
-      <div className="mx-auto mt-8 flex max-w-[960px] items-center justify-between border-t border-[var(--shadow)] pt-6">
+      <div className="mx-auto mt-8 flex max-w-240 items-center justify-between border-t border-(--shadow) pt-6">
         <div className="flex items-center gap-2">
           <span className="h-2 w-2 rounded-full bg-rose shadow-[0_0_0_3px_rgba(184,146,143,0.3)]" />
           <span>very busy, working on other projects</span>

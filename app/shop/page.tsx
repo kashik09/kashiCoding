@@ -13,7 +13,7 @@ export default function ShopPage() {
           <p className="mt-2.5 font-mono text-sm text-whisper">
             digital goods & services, coming soon.
           </p>
-          <div className="mt-4 h-0.5 w-[50px] rounded-full bg-rose" />
+          <div className="mt-4 h-0.5 w-12.5 rounded-full bg-rose" />
         </div>
 
         {/* Coming Soon State */}
@@ -35,7 +35,7 @@ export default function ShopPage() {
           {[1, 2, 3].map((i) => (
             <div
               key={i}
-              className="rounded-card border border-dashed border-[var(--shadow)] bg-bg-card/50 p-5"
+              className="rounded-card border border-dashed border-(--shadow) bg-bg-card/50 p-5"
             >
               <div className="mb-4 grid aspect-square place-items-center rounded-lg bg-bg-linen font-pixel text-sm text-whisper">
                 {"{ item }"}

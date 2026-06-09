@@ -61,7 +61,7 @@ export default async function BlogPostPage({
           {post.tags.map((t) => (
             <span
               key={t}
-              className="rounded-pill border border-[var(--shadow)] px-2 py-0.5"
+              className="rounded-pill border border-(--shadow) px-2 py-0.5"
             >
               {t}
             </span>
@@ -74,7 +74,7 @@ export default async function BlogPostPage({
         </div>
 
         {/* Back to blog */}
-        <div className="mt-14 border-t border-[var(--shadow)] pt-6">
+        <div className="mt-14 border-t border-(--shadow) pt-6">
           <Link
             href="/blog"
             className="font-pixel text-sm text-rose transition-colors hover:text-rose-deep"

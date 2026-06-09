@@ -39,7 +39,7 @@ export default async function ProjectDetailPage({
         </p>
 
         {/* Meta Strip */}
-        <div className="mb-9 grid gap-3.5 rounded-card border border-[var(--shadow)] bg-bg-card px-[18px] py-4 sm:grid-cols-3">
+        <div className="mb-9 grid gap-3.5 rounded-card border border-(--shadow) bg-bg-card px-[18px] py-4 sm:grid-cols-3">
           {[
             { k: "role", v: "{ role }" },
             { k: "period", v: "{ period }" },
@@ -55,7 +55,7 @@ export default async function ProjectDetailPage({
         </div>
 
         {/* Hero Preview */}
-        <div className="mb-9 grid aspect-video place-items-center rounded-card border border-[var(--shadow)] bg-bg-linen font-pixel text-xs text-whisper">
+        <div className="mb-9 grid aspect-video place-items-center rounded-card border border-(--shadow) bg-bg-linen font-pixel text-xs text-whisper">
           {"{ hero shot }"}
         </div>
 
@@ -88,7 +88,7 @@ export default async function ProjectDetailPage({
             {["{ step 1 }", "{ step 2 }", "{ step 3 }"].map((step, i) => (
               <li
                 key={i}
-                className="grid grid-cols-[32px_1fr] gap-3.5 rounded-[10px] border border-[var(--shadow)] bg-bg-card px-4 py-3"
+                className="grid grid-cols-[32px_1fr] gap-3.5 rounded-[10px] border border-(--shadow) bg-bg-card px-4 py-3"
               >
                 <div className="grid h-7 w-7 place-items-center rounded-full bg-rose font-pixel text-xs text-bg-linen">
                   {i + 1}

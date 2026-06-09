@@ -44,7 +44,7 @@ export default function ProjectsPage() {
           <p className="mt-2.5 font-mono text-sm text-whisper">
             things i&apos;ve built, am building, or want to build.
           </p>
-          <div className="mt-4 h-0.5 w-[50px] rounded-full bg-rose" />
+          <div className="mt-4 h-0.5 w-12.5 rounded-full bg-rose" />
         </div>
 
         {/* Filter Chips */}
@@ -86,7 +86,7 @@ function ProjectCard({
   return (
     <Link
       href={`/projects/${project.slug}`}
-      className="group grid gap-3 rounded-card border border-[var(--shadow)] bg-bg-card p-5 shadow-[0_2px_8px_var(--shadow)] transition-all hover:-translate-y-0.5 hover:border-rose hover:shadow-[0_6px_16px_var(--shadow-mid)]"
+      className="group grid gap-3 rounded-card border border-(--shadow) bg-bg-card p-5 shadow-[0_2px_8px_var(--shadow)] transition-all hover:-translate-y-0.5 hover:border-rose hover:shadow-[0_6px_16px_var(--shadow-mid)]"
       style={{ gridTemplateRows: "auto auto 1fr auto" }}
     >
       {/* Preview Thumbnail */}
@@ -115,7 +115,7 @@ function ProjectCard({
         {project.stack.map((s, j) => (
           <span
             key={j}
-            className="rounded-pill border border-[var(--shadow)] px-2 py-0.5 font-mono text-[10px] text-whisper"
+            className="rounded-pill border border-(--shadow) px-2 py-0.5 font-mono text-[10px] text-whisper"
           >
             {s}
           </span>

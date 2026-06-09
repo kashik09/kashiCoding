@@ -14,7 +14,7 @@ export default function HomePage() {
     <div className="relative min-h-screen">
       <SoftLeaves count={4} />
 
-      <div className="animate-fade-in relative z-[2] mx-auto max-w-[1100px] px-[clamp(24px,4vw,48px)] pb-20 pt-8">
+      <div className="animate-fade-in relative z-2 mx-auto max-w-[1100px] px-[clamp(24px,4vw,48px)] pb-20 pt-8">
         {/* HERO */}
         <section className="mt-8 grid items-center gap-[clamp(24px,4vw,56px)] md:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)]">
           <div>
@@ -113,7 +113,7 @@ function NowCard({
   icon: React.ReactNode;
 }) {
   return (
-    <div className="rounded-card border border-[var(--shadow)] bg-bg-card p-5 shadow-[0_2px_8px_var(--shadow)] transition-all hover:-translate-y-0.5 hover:shadow-[0_6px_16px_var(--shadow-mid)]">
+    <div className="rounded-card border border-(--shadow) bg-bg-card p-5 shadow-[0_2px_8px_var(--shadow)] transition-all hover:-translate-y-0.5 hover:shadow-[0_6px_16px_var(--shadow-mid)]">
       <div className="mb-3.5 flex items-center justify-between">
         <span className="font-pixel text-xs uppercase tracking-[0.12em] text-rose">
           {label}
@@ -137,7 +137,7 @@ function RoomCard({
   return (
     <Link
       href={href}
-      className="group relative block rounded-card border border-[var(--shadow)] bg-bg-card p-5 text-left shadow-[0_2px_8px_var(--shadow)] transition-all hover:-translate-y-0.5 hover:shadow-[0_6px_16px_var(--shadow-mid)] before:absolute before:bottom-3 before:left-0 before:top-3 before:w-0.5 before:rounded-r before:bg-transparent before:transition-colors hover:before:bg-rose"
+      className="group relative block rounded-card border border-(--shadow) bg-bg-card p-5 text-left shadow-[0_2px_8px_var(--shadow)] transition-all hover:-translate-y-0.5 hover:shadow-[0_6px_16px_var(--shadow-mid)] before:absolute before:bottom-3 before:left-0 before:top-3 before:w-0.5 before:rounded-r before:bg-transparent before:transition-colors hover:before:bg-rose"
     >
       <p className="font-pixel text-lg text-ink">{label}</p>
       <p className="mt-1.5 font-mono text-xs text-whisper">{sub}</p>

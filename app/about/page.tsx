@@ -28,7 +28,7 @@ export default function AboutPage() {
     <div className="relative min-h-screen">
       <SoftLeaves count={3} />
 
-      <div className="animate-fade-in relative z-[2] mx-auto max-w-[880px] px-[clamp(24px,4vw,48px)] pb-20 pt-[clamp(24px,4vw,40px)]">
+      <div className="animate-fade-in relative z-2 mx-auto max-w-220 px-[clamp(24px,4vw,48px)] pb-20 pt-[clamp(24px,4vw,40px)]">
         {/* Header */}
         <div className="mb-8">
           <p className="mb-1.5 font-pixel text-[13px] uppercase tracking-[0.16em] text-rose">
@@ -37,15 +37,15 @@ export default function AboutPage() {
           <h1 className="font-serif text-[clamp(34px,4.5vw,48px)] font-medium italic leading-[1.1] tracking-[-0.01em] text-ink">
             a small introduction
           </h1>
-          <div className="mt-4 h-0.5 w-[50px] rounded-full bg-rose" />
+          <div className="mt-4 h-0.5 w-12.5 rounded-full bg-rose" />
         </div>
 
         {/* Two Column Layout */}
         <div className="grid gap-[clamp(20px,3vw,36px)] md:grid-cols-[minmax(0,0.9fr)_minmax(0,1.3fr)]">
           {/* Left - Monogram Card */}
-          <div className="rounded-card border border-[var(--shadow)] bg-bg-card p-[26px] shadow-[0_2px_8px_var(--shadow)]">
+          <div className="rounded-card border border-(--shadow) bg-bg-card p-6.5 shadow-[0_2px_8px_var(--shadow)]">
             {/* Avatar Circle */}
-            <div className="mx-auto mb-5 flex h-[90px] w-[90px] items-center justify-center rounded-full border border-[var(--shadow)] bg-bg-linen shadow-[0_4px_14px_var(--shadow)]">
+            <div className="mx-auto mb-5 flex h-22.5 w-22.5 items-center justify-center rounded-full border border-(--shadow) bg-bg-linen shadow-[0_4px_14px_var(--shadow)]">
               <span className="font-serif text-[40px] italic leading-none text-rose-deep">
                 k
               </span>
@@ -64,7 +64,7 @@ export default function AboutPage() {
             </div>
 
             {/* Location */}
-            <div className="mt-5 border-t border-[var(--shadow)] pt-3.5">
+            <div className="mt-5 border-t border-(--shadow) pt-3.5">
               <p className="mb-2 font-pixel text-[11px] uppercase tracking-[0.12em] text-whisper">
                 where
               </p>
@@ -76,12 +76,12 @@ export default function AboutPage() {
           </div>
 
           {/* Right - Dialog Letter */}
-          <div className="min-h-[280px] rounded-card border border-[var(--shadow)] bg-bg-card p-6 shadow-[0_4px_14px_var(--shadow)]">
+          <div className="min-h-70 rounded-card border border-(--shadow) bg-bg-card p-6 shadow-[0_4px_14px_var(--shadow)]">
             <p className="mb-4 font-pixel text-xs uppercase tracking-[0.12em] text-rose">
               ✎ from kashi
             </p>
 
-            <div className="min-h-[160px] font-mono text-[17px] leading-[1.7] text-ink">
+            <div className="min-h-40 font-mono text-[17px] leading-[1.7] text-ink">
               {ABOUT_LINES.map((line, i) => (
                 <p key={i} className="mb-2 last:mb-0">
                   {line}
@@ -89,15 +89,15 @@ export default function AboutPage() {
               ))}
             </div>
 
-            <div className="mt-4 flex items-center justify-between border-t border-[var(--shadow)] pt-3.5 font-mono text-xs text-whisper">
+            <div className="mt-4 flex items-center justify-between border-t border-(--shadow) pt-3.5 font-mono text-xs text-whisper">
               <span className="text-rose">— that&apos;s the whole letter.</span>
             </div>
           </div>
         </div>
 
         {/* Stat Sheet */}
-        <section className="mt-8 rounded-card border border-[var(--shadow)] bg-bg-card p-6 shadow-[0_2px_8px_var(--shadow)]">
-          <p className="mb-4 font-pixel text-[11px] uppercase tracking-[0.1em] text-rose">
+        <section className="mt-8 rounded-card border border-(--shadow) bg-bg-card p-6 shadow-[0_2px_8px_var(--shadow)]">
+          <p className="mb-4 font-pixel text-[11px] uppercase tracking-widest text-rose">
             STAT SHEET
           </p>
 
@@ -107,7 +107,7 @@ export default function AboutPage() {
               {STATS.map((row) => (
                 <div
                   key={row.k}
-                  className="grid grid-cols-[90px_1fr] gap-3 border-b border-dashed border-[var(--shadow)] pb-2 text-[13px]"
+                  className="grid grid-cols-[90px_1fr] gap-3 border-b border-dashed border-(--shadow) pb-2 text-[13px]"
                 >
                   <span className="font-pixel text-[11px] tracking-[0.08em] text-rose">
                     {row.k}
@@ -138,7 +138,7 @@ export default function AboutPage() {
             </div>
           </div>
 
-          <p className="mt-4 border-t border-dashed border-[var(--shadow)] pt-3 text-center text-[10px] text-whisper/70">
+          <p className="mt-4 border-t border-dashed border-(--shadow) pt-3 text-center text-[10px] text-whisper/70">
             · self-reported · updated whenever ·
           </p>
         </section>

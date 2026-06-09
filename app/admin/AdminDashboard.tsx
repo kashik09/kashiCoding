@@ -48,7 +48,7 @@ export default function AdminDashboard() {
         </div>
 
         {/* Tabs */}
-        <div className="mb-6 flex gap-2 border-b border-[var(--shadow)]">
+        <div className="mb-6 flex gap-2 border-b border-(--shadow)">
           <button
             type="button"
             onClick={() => setActiveTab("blog")}
@@ -153,7 +153,7 @@ function BlogManager() {
         {posts.map((post) => (
           <div
             key={post.id}
-            className="rounded-card border border-[var(--shadow)] bg-bg-card p-5"
+            className="rounded-card border border-(--shadow) bg-bg-card p-5"
           >
             {editing === post.id ? (
               <div className="flex flex-col gap-4">
@@ -161,20 +161,20 @@ function BlogManager() {
                   type="text"
                   value={editForm.title}
                   onChange={(e) => setEditForm({ ...editForm, title: e.target.value })}
-                  className="w-full rounded-btn border border-[var(--shadow)] bg-bg-linen px-3 py-2 font-serif text-lg italic text-ink outline-none focus:border-rose"
+                  className="w-full rounded-btn border border-(--shadow) bg-bg-linen px-3 py-2 font-serif text-lg italic text-ink outline-none focus:border-rose"
                   placeholder="Post title"
                 />
                 <textarea
                   value={editForm.excerpt}
                   onChange={(e) => setEditForm({ ...editForm, excerpt: e.target.value })}
-                  className="min-h-[100px] w-full resize-none rounded-btn border border-[var(--shadow)] bg-bg-linen px-3 py-2 font-mono text-sm text-ink outline-none focus:border-rose"
+                  className="min-h-[100px] w-full resize-none rounded-btn border border-(--shadow) bg-bg-linen px-3 py-2 font-mono text-sm text-ink outline-none focus:border-rose"
                   placeholder="Excerpt..."
                 />
                 <input
                   type="text"
                   value={editForm.tags}
                   onChange={(e) => setEditForm({ ...editForm, tags: e.target.value })}
-                  className="w-full rounded-btn border border-[var(--shadow)] bg-bg-linen px-3 py-2 font-mono text-sm text-ink outline-none focus:border-rose"
+                  className="w-full rounded-btn border border-(--shadow) bg-bg-linen px-3 py-2 font-mono text-sm text-ink outline-none focus:border-rose"
                   placeholder="Tags (comma separated)"
                 />
                 <div className="flex gap-2">
@@ -188,7 +188,7 @@ function BlogManager() {
                   <button
                     type="button"
                     onClick={() => setEditing(null)}
-                    className="rounded-btn border border-[var(--shadow)] px-4 py-2 font-pixel text-sm text-whisper"
+                    className="rounded-btn border border-(--shadow) px-4 py-2 font-pixel text-sm text-whisper"
                   >
                     cancel
                   </button>
@@ -214,7 +214,7 @@ function BlogManager() {
                   {post.tags.map((t) => (
                     <span
                       key={t}
-                      className="rounded-pill border border-[var(--shadow)] px-2 py-0.5 font-mono text-[10px] text-whisper"
+                      className="rounded-pill border border-(--shadow) px-2 py-0.5 font-mono text-[10px] text-whisper"
                     >
                       {t}
                     </span>
@@ -301,7 +301,7 @@ function ContactsManager() {
 
   if (contacts.length === 0) {
     return (
-      <div className="rounded-card border border-[var(--shadow)] bg-bg-card p-6 text-center">
+      <div className="rounded-card border border-(--shadow) bg-bg-card p-6 text-center">
         <p className="font-mono text-sm text-whisper">no contact submissions yet</p>
       </div>
     );
@@ -312,7 +312,7 @@ function ContactsManager() {
       {contacts.map((contact) => (
         <div
           key={contact.id}
-          className={`rounded-card border border-[var(--shadow)] bg-bg-card p-5 ${
+          className={`rounded-card border border-(--shadow) bg-bg-card p-5 ${
             !contact.read ? "border-l-4 border-l-rose" : ""
           }`}
         >
@@ -352,7 +352,7 @@ function ContactsManager() {
 
 function SettingsPanel() {
   return (
-    <div className="rounded-card border border-[var(--shadow)] bg-bg-card p-6">
+    <div className="rounded-card border border-(--shadow) bg-bg-card p-6">
       <h3 className="mb-4 font-pixel text-sm uppercase tracking-wider text-rose">
         site settings
       </h3>

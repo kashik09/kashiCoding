@@ -27,8 +27,8 @@ export function CookieConsent() {
   if (!show) return null;
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-ink/50 backdrop-blur-sm animate-fade-in">
-      <div className="mx-4 max-w-md rounded-card border border-[var(--shadow)] bg-bg-card p-6 shadow-[0_8px_32px_var(--shadow-mid)]">
+    <div className="fixed inset-0 z-100 flex items-center justify-center bg-ink/50 backdrop-blur-sm animate-fade-in">
+      <div className="mx-4 max-w-md rounded-card border border-(--shadow) bg-bg-card p-6 shadow-[0_8px_32px_var(--shadow-mid)]">
         <p className="mb-4 text-center font-mono text-sm leading-relaxed text-ink">
           this site uses cookies to enhance your experience and remember your
           preferences.
@@ -42,7 +42,7 @@ export function CookieConsent() {
           </button>
           <button
             onClick={decline}
-            className="rounded-btn border border-[var(--shadow)] px-5 py-2.5 font-pixel text-xs text-whisper transition-colors hover:border-rose hover:text-rose"
+            className="rounded-btn border border-(--shadow) px-5 py-2.5 font-pixel text-xs text-whisper transition-colors hover:border-rose hover:text-rose"
           >
             decline
           </button>
