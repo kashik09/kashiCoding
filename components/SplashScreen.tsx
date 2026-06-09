@@ -66,7 +66,7 @@ export function SplashScreen({ children }: { children: React.ReactNode }) {
 
         {/* Tagline */}
         <p className="mx-auto max-w-[520px] font-mono text-[17px] leading-relaxed text-whisper">
-          a soft little portfolio in the shape of a game.
+          a cozy, slightly gamified portfolio.
           <br />
           made with care by <span className="text-ink">kashi kweyu</span>.
         </p>
