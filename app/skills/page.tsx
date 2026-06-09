@@ -2,18 +2,16 @@ const TECH_ICONS = [
   { name: "TypeScript", icon: "TS", color: "#3178c6" },
   { name: "JavaScript", icon: "JS", color: "#f7df1e" },
   { name: "Python", icon: "PY", color: "#3776ab" },
-  { name: "Go", icon: "GO", color: "#00add8" },
   { name: "React", icon: "⚛", color: "#61dafb" },
   { name: "Next.js", icon: "N", color: "#000000" },
   { name: "Tailwind", icon: "TW", color: "#06b6d4" },
   { name: "Node.js", icon: "NO", color: "#339933" },
   { name: "PostgreSQL", icon: "PG", color: "#4169e1" },
   { name: "Prisma", icon: "PR", color: "#2d3748" },
-  { name: "Docker", icon: "DK", color: "#2496ed" },
   { name: "Git", icon: "GI", color: "#f05032" },
   { name: "Vercel", icon: "▲", color: "#000000" },
   { name: "Supabase", icon: "SB", color: "#3ecf8e" },
-  { name: "Figma", icon: "FI", color: "#f24e1e" },
+  { name: "Claude", icon: "◇", color: "#d97757" },
 ];
 
 const SKILL_BARS = [
@@ -43,7 +41,7 @@ export default function SkillsPage() {
           <h1 className="font-serif text-[clamp(34px,4.5vw,48px)] font-medium italic leading-[1.1] tracking-[-0.01em] text-ink">
             what i work with
           </h1>
-          <div className="mt-4 h-0.5 w-[50px] rounded-full bg-rose" />
+          <div className="mt-4 h-0.5 w-12.5 rounded-full bg-rose" />
         </div>
 
         {/* Tech Icons Grid */}
@@ -55,7 +53,7 @@ export default function SkillsPage() {
             {TECH_ICONS.map((tech) => (
               <div
                 key={tech.name}
-                className="group relative flex aspect-square flex-col items-center justify-center rounded-card border border-[var(--shadow)] bg-bg-card p-2 shadow-[0_2px_6px_var(--shadow)] transition-all hover:-translate-y-1 hover:shadow-[0_4px_12px_var(--shadow-mid)]"
+                className="group relative flex aspect-square flex-col items-center justify-center rounded-card border border-(--shadow) bg-bg-card p-2 shadow-[0_2px_6px_var(--shadow)] transition-all hover:-translate-y-1 hover:shadow-[0_4px_12px_var(--shadow-mid)]"
               >
                 <span
                   className="mb-1 font-pixel text-lg font-bold"
@@ -76,7 +74,7 @@ export default function SkillsPage() {
           <p className="mb-4 font-pixel text-xs uppercase tracking-[0.12em] text-whisper">
             proficiency
           </p>
-          <div className="rounded-card border border-[var(--shadow)] bg-bg-card p-5 shadow-[0_2px_8px_var(--shadow)]">
+          <div className="rounded-card border border-(--shadow) bg-bg-card p-5 shadow-[0_2px_8px_var(--shadow)]">
             <div className="flex flex-col gap-5">
               {SKILL_BARS.map((skill) => (
                 <div key={skill.name}>
