@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
+import { Turnstile, type TurnstileInstance } from "@marsidev/react-turnstile";
 import { SoftLeaves } from "@/components/ambient/SoftLeaves";
 import {
   MailIcon,
@@ -34,6 +35,8 @@ export default function ContactPage() {
   const [step, setStep] = useState<"draft" | "envelope" | "sent" | "error">("draft");
   const [sending, setSending] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
+  const turnstileRef = useRef<TurnstileInstance>(null);
 
   const goToEnvelope = () => {
     if (!msg.trim()) return;
@@ -42,6 +45,10 @@ export default function ContactPage() {
 
   const sendLetter = async () => {
     if (!fromName.trim()) return;
+    if (!turnstileToken) {
+      setErrorMsg("Please complete the verification.");
+      return;
+    }
     setSending(true);
     setErrorMsg("");
 
@@ -53,6 +60,7 @@ export default function ContactPage() {
           name: fromName,
           email: returnAddr,
           message: msg,
+          turnstileToken,
         }),
       });
 
@@ -61,6 +69,8 @@ export default function ContactPage() {
       if (!res.ok) {
         setErrorMsg(data.error || "Something went wrong.");
         setStep("error");
+        turnstileRef.current?.reset();
+        setTurnstileToken(null);
         return;
       }
 
@@ -68,6 +78,8 @@ export default function ContactPage() {
     } catch {
       setErrorMsg("Failed to send. Please try again.");
       setStep("error");
+      turnstileRef.current?.reset();
+      setTurnstileToken(null);
     } finally {
       setSending(false);
     }
@@ -79,6 +91,8 @@ export default function ContactPage() {
     setReturnAddr("");
     setStep("draft");
     setErrorMsg("");
+    setTurnstileToken(null);
+    turnstileRef.current?.reset();
   };
 
   return (
@@ -262,12 +276,27 @@ export default function ContactPage() {
                   {msg.length > 90 ? msg.slice(0, 90) + "…" : msg}&quot;
                 </div>
 
+                {/* Turnstile CAPTCHA */}
+                {process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY && (
+                  <div className="mt-4">
+                    <Turnstile
+                      ref={turnstileRef}
+                      siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY}
+                      onSuccess={setTurnstileToken}
+                      onError={() => setTurnstileToken(null)}
+                      onExpire={() => setTurnstileToken(null)}
+                      options={{ theme: "light", size: "flexible" }}
+                    />
+                  </div>
+                )}
+
                 {/* Actions */}
                 <div className="mt-4 flex flex-wrap items-center gap-3">
                   <button
                     type="button"
                     onClick={sendLetter}
-                    className="inline-flex items-center gap-2 rounded-btn bg-rose px-4 py-2.5 font-pixel text-sm text-bg-linen transition-all hover:-translate-y-0.5 hover:bg-rose-deep"
+                    disabled={!turnstileToken && !!process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY}
+                    className="inline-flex items-center gap-2 rounded-btn bg-rose px-4 py-2.5 font-pixel text-sm text-bg-linen transition-all hover:-translate-y-0.5 hover:bg-rose-deep disabled:cursor-not-allowed disabled:opacity-50"
                   >
                     <SendIcon className="h-4 w-4" />
                     seal & send
@@ -301,6 +330,27 @@ export default function ContactPage() {
                   className="mt-6 font-pixel text-sm text-rose transition-colors hover:text-rose-deep"
                 >
                   write another letter
+                </button>
+              </div>
+            )}
+
+            {step === "error" && (
+              <div className="animate-fade-in flex min-h-[400px] flex-col items-center justify-center text-center">
+                <div className="mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-rose/20">
+                  <MailIcon className="h-10 w-10 text-rose" />
+                </div>
+                <p className="font-serif text-2xl italic text-ink">
+                  oops...
+                </p>
+                <p className="mt-2 max-w-xs font-mono text-sm text-whisper">
+                  {errorMsg || "something went wrong. please try again."}
+                </p>
+                <button
+                  type="button"
+                  onClick={() => setStep("envelope")}
+                  className="mt-6 font-pixel text-sm text-rose transition-colors hover:text-rose-deep"
+                >
+                  try again
                 </button>
               </div>
             )}
