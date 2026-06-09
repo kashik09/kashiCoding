@@ -231,7 +231,7 @@ export default function ContactPage() {
                     </p>
                     <p className="font-mono text-base text-ink">
                       kashi kweyu
-                      <span className="text-whisper"> · kampala, uganda</span>
+                      <span className="text-whisper"> · somewhere in the cloud</span>
                     </p>
                   </div>
 
