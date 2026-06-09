@@ -1,17 +1,39 @@
-const TECH_ICONS = [
-  { name: "TypeScript", icon: "TS", color: "#3178c6" },
-  { name: "JavaScript", icon: "JS", color: "#f7df1e" },
-  { name: "Python", icon: "PY", color: "#3776ab" },
-  { name: "React", icon: "⚛", color: "#61dafb" },
-  { name: "Next.js", icon: "N", color: "#000000" },
-  { name: "Tailwind", icon: "TW", color: "#06b6d4" },
-  { name: "Node.js", icon: "NO", color: "#339933" },
-  { name: "PostgreSQL", icon: "PG", color: "#4169e1" },
-  { name: "Prisma", icon: "PR", color: "#2d3748" },
-  { name: "Git", icon: "GI", color: "#f05032" },
-  { name: "Vercel", icon: "▲", color: "#000000" },
-  { name: "Supabase", icon: "SB", color: "#3ecf8e" },
-  { name: "Claude", icon: "◇", color: "#d97757" },
+import {
+  TypeScriptIcon,
+  JavaScriptIcon,
+  PythonIcon,
+  ReactIcon,
+  NextJsIcon,
+  TailwindIcon,
+  NodeJsIcon,
+  PostgreSQLIcon,
+  PrismaIcon,
+  GitIcon,
+  VercelIcon,
+  SupabaseIcon,
+  ClaudeIcon,
+} from "@/components/icons/tech";
+import { ComponentType, SVGProps } from "react";
+
+type TechItem = {
+  name: string;
+  Icon: ComponentType<SVGProps<SVGSVGElement>>;
+};
+
+const TECH_ICONS: TechItem[] = [
+  { name: "TypeScript", Icon: TypeScriptIcon },
+  { name: "JavaScript", Icon: JavaScriptIcon },
+  { name: "Python", Icon: PythonIcon },
+  { name: "React", Icon: ReactIcon },
+  { name: "Next.js", Icon: NextJsIcon },
+  { name: "Tailwind", Icon: TailwindIcon },
+  { name: "Node.js", Icon: NodeJsIcon },
+  { name: "PostgreSQL", Icon: PostgreSQLIcon },
+  { name: "Prisma", Icon: PrismaIcon },
+  { name: "Git", Icon: GitIcon },
+  { name: "Vercel", Icon: VercelIcon },
+  { name: "Supabase", Icon: SupabaseIcon },
+  { name: "Claude", Icon: ClaudeIcon },
 ];
 
 const SKILL_BARS = [
@@ -49,19 +71,14 @@ export default function SkillsPage() {
           <p className="mb-4 font-pixel text-xs uppercase tracking-[0.12em] text-whisper">
             tools & technologies
           </p>
-          <div className="grid grid-cols-5 gap-3 sm:grid-cols-6 md:grid-cols-8">
+          <div className="grid grid-cols-4 gap-3 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-7">
             {TECH_ICONS.map((tech) => (
               <div
                 key={tech.name}
-                className="group relative flex aspect-square flex-col items-center justify-center rounded-card border border-(--shadow) bg-bg-card p-2 shadow-[0_2px_6px_var(--shadow)] transition-all hover:-translate-y-1 hover:shadow-[0_4px_12px_var(--shadow-mid)]"
+                className="group relative flex aspect-square flex-col items-center justify-center rounded-card border border-(--shadow) bg-bg-card p-3 shadow-[0_2px_6px_var(--shadow)] transition-all hover:-translate-y-1 hover:shadow-[0_4px_12px_var(--shadow-mid)]"
               >
-                <span
-                  className="mb-1 font-pixel text-lg font-bold"
-                  style={{ color: tech.color }}
-                >
-                  {tech.icon}
-                </span>
-                <span className="text-center font-mono text-[8px] leading-tight text-whisper">
+                <tech.Icon className="mb-2 h-8 w-8" />
+                <span className="text-center font-mono text-[9px] leading-tight text-whisper">
                   {tech.name}
                 </span>
               </div>
