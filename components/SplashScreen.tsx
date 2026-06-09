@@ -4,18 +4,12 @@ import { useEffect, useState, useCallback } from "react";
 import { SoftLeaves } from "@/components/ambient/SoftLeaves";
 
 export function SplashScreen({ children }: { children: React.ReactNode }) {
-  const [showSplash, setShowSplash] = useState<boolean | null>(null);
+  const [showSplash, setShowSplash] = useState(true);
   const [fadeOut, setFadeOut] = useState(false);
-
-  useEffect(() => {
-    const seen = localStorage.getItem("splash-seen");
-    setShowSplash(!seen);
-  }, []);
 
   const handleStart = useCallback(() => {
     setFadeOut(true);
     setTimeout(() => {
-      localStorage.setItem("splash-seen", "true");
       setShowSplash(false);
     }, 500);
   }, []);
@@ -42,13 +36,6 @@ export function SplashScreen({ children }: { children: React.ReactNode }) {
     };
   }, [showSplash, handleStart]);
 
-  // Loading state
-  if (showSplash === null) {
-    return (
-      <div className="fixed inset-0 bg-bg-page" />
-    );
-  }
-
   // Show main content
   if (!showSplash) {
     return <>{children}</>;
@@ -57,7 +44,7 @@ export function SplashScreen({ children }: { children: React.ReactNode }) {
   // Splash screen
   return (
     <div
-      className={`fixed inset-0 z-[200] flex items-center justify-center bg-bg-page transition-opacity duration-500 ${
+      className={`fixed inset-0 z-200 flex items-center justify-center bg-bg-page transition-opacity duration-500 ${
         fadeOut ? "opacity-0" : "opacity-100"
       }`}
     >
