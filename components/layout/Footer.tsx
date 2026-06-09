@@ -37,7 +37,7 @@ export function Footer() {
           <div className="leading-relaxed">
             a portfolio adventure.
             <br />
-            made cozily in kampala.
+            hosted somewhere between curiosity and caffeine ☕.
           </div>
         </div>
 
