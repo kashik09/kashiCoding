@@ -263,24 +263,23 @@ function ContactsManager() {
   const [error, setError] = useState("");
 
   useEffect(() => {
+    async function fetchContacts() {
+      try {
+        const res = await fetch("/api/admin/contacts");
+        if (res.ok) {
+          const data = await res.json();
+          setContacts(data.contacts || []);
+        } else {
+          setError("Failed to load contacts");
+        }
+      } catch {
+        setError("Failed to load contacts");
+      } finally {
+        setLoading(false);
+      }
+    }
     fetchContacts();
   }, []);
-
-  async function fetchContacts() {
-    try {
-      const res = await fetch("/api/admin/contacts");
-      if (res.ok) {
-        const data = await res.json();
-        setContacts(data.contacts || []);
-      } else {
-        setError("Failed to load contacts");
-      }
-    } catch {
-      setError("Failed to load contacts");
-    } finally {
-      setLoading(false);
-    }
-  }
 
   const markRead = async (id: string) => {
     await fetch("/api/admin/contacts", {
