@@ -1,0 +1,184 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================
+   DESIGN TOKENS
+   ============================================
+   Override these CSS custom properties to theme
+   the entire component library. Values use OKLch
+   format: Lightness Chroma Hue (without the
+   oklch() wrapper).
+
+   Example override:
+   :root {
+     --ui-primary: 55% 0.22 225;
+   }
+   ============================================ */
+
+@layer base {
+  :root {
+    /* Backgrounds */
+    --ui-background: 98% 0.008 150;
+    --ui-card: 95% 0.015 150;
+    --ui-muted: 93% 0.01 150;
+
+    /* Foregrounds */
+    --ui-foreground: 15% 0.03 150;
+    --ui-card-foreground: 15% 0.03 150;
+    --ui-muted-foreground: 40% 0.02 150;
+
+    /* Brand */
+    --ui-primary: 50% 0.15 150;
+    --ui-primary-foreground: 98% 0.01 150;
+    --ui-secondary: 75% 0.12 150;
+    --ui-secondary-foreground: 15% 0.02 150;
+    --ui-accent: 75% 0.12 165;
+    --ui-accent-foreground: 15% 0.02 165;
+
+    /* Semantic */
+    --ui-destructive: 55% 0.22 25;
+    --ui-destructive-foreground: 98% 0.01 25;
+    --ui-success: 65% 0.20 145;
+    --ui-warning: 75% 0.15 85;
+    --ui-info: 60% 0.18 230;
+
+    /* Chrome */
+    --ui-border: 90% 0.025 150;
+    --ui-input: 90% 0.025 150;
+    --ui-ring: 50% 0.15 150;
+
+    /* Radius */
+    --ui-radius: 0.5rem;
+
+    /* Spacing */
+    --ui-space-section: clamp(4rem, 8vw, 6rem);
+    --ui-space-block: clamp(2rem, 4vw, 3rem);
+    --ui-space-item: clamp(1rem, 2vw, 1.5rem);
+  }
+
+  .dark {
+    /* Backgrounds */
+    --ui-background: 25% 0.02 140;
+    --ui-card: 22% 0.018 140;
+    --ui-muted: 19% 0.015 140;
+
+    /* Foregrounds */
+    --ui-foreground: 95% 0.015 140;
+    --ui-card-foreground: 95% 0.015 140;
+    --ui-muted-foreground: 70% 0.01 140;
+
+    /* Brand */
+    --ui-primary: 60% 0.20 145;
+    --ui-primary-foreground: 98% 0.01 145;
+    --ui-secondary: 65% 0.20 140;
+    --ui-secondary-foreground: 98% 0.015 140;
+    --ui-accent: 70% 0.18 155;
+    --ui-accent-foreground: 15% 0.02 155;
+
+    /* Semantic */
+    --ui-destructive: 60% 0.22 25;
+    --ui-destructive-foreground: 98% 0.01 25;
+    --ui-success: 65% 0.22 145;
+    --ui-warning: 75% 0.18 85;
+    --ui-info: 65% 0.20 230;
+
+    /* Chrome */
+    --ui-border: 30% 0.015 140;
+    --ui-input: 30% 0.015 140;
+    --ui-ring: 60% 0.20 145;
+  }
+
+  /* ============================================
+     TYPOGRAPHY SCALE (fluid, mobile-first)
+     ============================================ */
+  .text-display {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+
+  .text-h1 {
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+
+  .text-h2 {
+    font-size: clamp(1.5rem, 3.5vw, 2rem);
+    line-height: 1.3;
+  }
+
+  .text-h3 {
+    font-size: clamp(1.125rem, 2.5vw, 1.5rem);
+    line-height: 1.4;
+  }
+
+  .text-body-lg {
+    font-size: clamp(1rem, 2vw, 1.125rem);
+    line-height: 1.6;
+  }
+
+  .text-body {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  /* ============================================
+     CONTAINER UTILITIES
+     ============================================ */
+  .container-sm {
+    max-width: 42rem;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .container-md {
+    max-width: 56rem;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .container-lg {
+    max-width: 72rem;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  @media (min-width: 640px) {
+    .container-sm,
+    .container-md,
+    .container-lg {
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+  }
+
+  /* ============================================
+     BASE RESETS
+     ============================================ */
+  * {
+    border-color: oklch(var(--ui-border));
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+}
