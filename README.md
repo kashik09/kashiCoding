@@ -1,36 +1,66 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# status.207
 
-## Getting Started
+A cozy, slightly gamified portfolio for Kashi Kweyu. Soft pastel forest aesthetic, a splash screen, and three color themes that follow the time of day.
 
-First, run the development server:
+## Features
+
+- **Three themes, auto-switched** — morning (light), dusk, and cabin (dark), driven by the visitor's local time. All colors are CSS custom properties, so every component is theme-aware for free.
+- **Splash screen** — a small hello before the site fades in.
+- **Ambient touches** — drifting leaves, pixel-font labels, serif headings.
+- **Contact form** — Cloudflare Turnstile CAPTCHA + rate limiting, submissions stored in Supabase.
+- **Admin dashboard** — session-protected area for reading contact submissions.
+
+## Stack
+
+| Layer | Technology |
+|-------|------------|
+| Framework | Next.js (App Router) |
+| Language | TypeScript |
+| Styling | Tailwind CSS 4 + CSS custom properties |
+| Backend | Supabase |
+| Bot protection | Cloudflare Turnstile |
+| Hosting | Vercel |
+
+## Getting started
 
 ```bash
+npm install
+cp .env.example .env.local   # then fill in your keys
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Environment variables
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Variable | Purpose |
+|----------|---------|
+| `NEXT_PUBLIC_SUPABASE_URL` | Supabase project URL |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase anon (public) key |
+| `SUPABASE_SERVICE_ROLE_KEY` | Server-only Supabase key — never exposed to the client |
+| `NEXT_PUBLIC_TURNSTILE_SITE_KEY` | Cloudflare Turnstile site key (contact form) |
+| `TURNSTILE_SECRET_KEY` | Turnstile server-side verification key |
+| `ADMIN_PASSWORD` | Password for the admin dashboard login |
 
-## Learn More
+Database migrations live in `supabase/migrations/`.
 
-To learn more about Next.js, take a look at the following resources:
+## Project structure
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+app/            # Routes (App Router) — pages, admin, API
+components/     # UI components (layout, icons, theme, ambient)
+lib/            # Supabase clients, auth session helpers
+styles/         # Additional styles
+supabase/       # SQL migrations
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Design tokens (colors, radii, fonts) are defined in `app/globals.css` — start there before styling anything.
 
-## Deploy on Vercel
+## Scripts
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+| Command | What it does |
+|---------|--------------|
+| `npm run dev` | Start the dev server |
+| `npm run build` | Production build |
+| `npm run start` | Serve the production build |
+| `npm run lint` | Run ESLint |
