@@ -1,3 +1,10 @@
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "shop",
+  description: "digital goods and services from kashi — coming soon.",
+};
+
 export default function ShopPage() {
   return (
     <div className="animate-fade-in min-h-screen bg-bg-page">
@@ -30,21 +37,23 @@ export default function ShopPage() {
           </p>
         </div>
 
-        {/* Placeholder Grid */}
+        {/* Coming-soon shelf */}
         <div className="mt-12 grid gap-5 sm:grid-cols-2 md:grid-cols-3">
-          {[1, 2, 3].map((i) => (
+          {[
+            { label: "prints & wallpapers", icon: "❋" },
+            { label: "starter templates", icon: "◳" },
+            { label: "something surprising", icon: "✦" },
+          ].map((item) => (
             <div
-              key={i}
-              className="rounded-card border border-dashed border-(--shadow) bg-bg-card/50 p-5"
+              key={item.label}
+              className="rounded-card border border-dashed border-(--shadow) bg-bg-card p-5"
             >
-              <div className="mb-4 grid aspect-square place-items-center rounded-lg bg-bg-linen font-pixel text-sm text-whisper">
-                {"{ item }"}
+              <div className="mb-4 grid aspect-square place-items-center rounded-lg bg-bg-linen font-pixel text-3xl text-rose">
+                {item.icon}
               </div>
-              <p className="font-serif text-lg italic text-ink/50">
-                {"{ product name }"}
-              </p>
-              <p className="mt-1 font-mono text-sm text-whisper/50">
-                {"{ price }"}
+              <p className="font-serif text-lg italic text-ink">{item.label}</p>
+              <p className="mt-1 font-mono text-sm text-whisper">
+                on the way — soon
               </p>
             </div>
           ))}

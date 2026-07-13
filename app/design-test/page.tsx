@@ -203,7 +203,7 @@ export default function DesignTestPage() {
                 <div className="relative rounded-card border border-(--shadow) bg-bg-card p-5 shadow-[0_2px_8px_var(--shadow)] transition-all hover:-translate-y-0.5 hover:shadow-[0_6px_16px_var(--shadow-mid)] before:absolute before:left-0 before:top-3 before:bottom-3 before:w-0.5 before:rounded-r before:bg-transparent before:transition-colors hover:before:bg-rose">
                   <p className="font-pixel text-lg text-ink">projects</p>
                   <p className="mt-1 font-mono text-xs text-whisper">
-                    what i've built
+                    what i&apos;ve built
                   </p>
                   <p className="mt-4 font-mono text-xs text-rose">→ enter</p>
                 </div>

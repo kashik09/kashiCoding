@@ -14,6 +14,12 @@ import {
   ClaudeIcon,
 } from "@/components/icons/tech";
 import { ComponentType, SVGProps } from "react";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "skills",
+  description: "the tools and technologies kashi works with.",
+};
 
 type TechItem = {
   name: string;

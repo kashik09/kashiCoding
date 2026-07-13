@@ -1,5 +1,11 @@
+import type { Metadata } from "next";
 import { SoftLeaves } from "@/components/ambient/SoftLeaves";
 import { MapPinIcon } from "@/components/icons/misc";
+
+export const metadata: Metadata = {
+  title: "about",
+  description: "a small introduction to kashi kweyu.",
+};
 
 const STATS = [
   { k: "location", v: "kampala, uganda" },

@@ -41,8 +41,35 @@ const ibmPlexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "status207",
-  description: "a soft little portfolio in the shape of a game",
+  metadataBase: new URL("https://my-portfolio-kashkiji.vercel.app"),
+  title: {
+    default: "status207 — kashi kweyu",
+    template: "%s · status207",
+  },
+  description:
+    "the cozy, lightly gamified portfolio of kashi kweyu — a full-stack developer building soft, warm things on the web.",
+  keywords: [
+    "kashi kweyu",
+    "full-stack developer",
+    "portfolio",
+    "next.js",
+    "typescript",
+    "web developer",
+  ],
+  authors: [{ name: "kashi kweyu" }],
+  creator: "kashi kweyu",
+  openGraph: {
+    title: "status207 — kashi kweyu",
+    description: "a cozy, lightly gamified portfolio.",
+    url: "/",
+    siteName: "status207",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "status207 — kashi kweyu",
+    description: "a cozy, lightly gamified portfolio.",
+  },
 };
 
 export default function RootLayout({

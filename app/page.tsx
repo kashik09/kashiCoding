@@ -18,7 +18,7 @@ export default function HomePage() {
         {/* HERO */}
         <section className="mt-8 grid items-center gap-[clamp(24px,4vw,56px)] md:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)]">
           <div>
-            <p className="mb-2 font-pixel text-[17px] text-whisper">hi, i'm</p>
+            <p className="mb-2 font-pixel text-[17px] text-whisper">hi, i&apos;m</p>
             <h1 className="font-serif text-[clamp(44px,6.5vw,72px)] font-medium italic leading-[1.02] tracking-[-0.02em] text-ink">
               kashi kweyu
             </h1>

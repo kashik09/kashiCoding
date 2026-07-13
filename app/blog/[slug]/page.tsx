@@ -1,14 +1,19 @@
 import Link from "next/link";
+import type { Metadata } from "next";
+import { getPostBySlug, formatPostDate } from "@/lib/supabase/posts";
 
-const POSTS = [
-  {
-    slug: "hello-world",
-    title: "hello, world",
-    date: "coming soon",
-    body: "the first field note will appear here when i'm ready to share it.",
-    tags: ["meta", "intro"],
-  },
-];
+export const revalidate = 60;
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const post = await getPostBySlug(slug);
+  if (!post) return { title: "post not found" };
+  return { title: post.title, description: post.excerpt ?? undefined };
+}
 
 export default async function BlogPostPage({
   params,
@@ -16,7 +21,7 @@ export default async function BlogPostPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const post = POSTS.find((p) => p.slug === slug);
+  const post = await getPostBySlug(slug);
 
   if (!post) {
     return (
@@ -39,6 +44,11 @@ export default async function BlogPostPage({
     );
   }
 
+  const paragraphs = post.body
+    .split(/\n{2,}/)
+    .map((p) => p.trim())
+    .filter(Boolean);
+
   return (
     <div className="animate-fade-in min-h-screen bg-bg-page">
       <div className="mx-auto max-w-[640px] px-[clamp(24px,4vw,48px)] pb-20 pt-[clamp(24px,4vw,40px)]">
@@ -57,7 +67,7 @@ export default async function BlogPostPage({
 
         {/* Meta */}
         <div className="mt-3 mb-8 flex flex-wrap items-center gap-3 font-mono text-xs text-whisper">
-          <span>{post.date}</span>
+          <span>{formatPostDate(post.published_at)}</span>
           {post.tags.map((t) => (
             <span
               key={t}
@@ -70,7 +80,11 @@ export default async function BlogPostPage({
 
         {/* Body */}
         <div className="font-mono text-base leading-[1.7] text-ink">
-          <p>{post.body}</p>
+          {paragraphs.map((para, i) => (
+            <p key={i} className="mb-4 last:mb-0">
+              {para}
+            </p>
+          ))}
         </div>
 
         {/* Back to blog */}

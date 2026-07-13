@@ -11,22 +11,37 @@ interface Leaf {
   scale: number;
 }
 
+// Small deterministic PRNG (mulberry32). Using a fixed seed means the server
+// and client render identical leaf positions — no Math.random() in render, so
+// no hydration mismatch and no impurity.
+function makeRng(seed: number) {
+  return function () {
+    seed |= 0;
+    seed = (seed + 0x6d2b79f5) | 0;
+    let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
 export function SoftLeaves({ count = 6 }: { count?: number }) {
-  const leaves = useMemo<Leaf[]>(
-    () =>
-      Array.from({ length: count }).map(() => ({
-        left: Math.random() * 100,
-        delay: -Math.random() * 22,
-        duration: 18 + Math.random() * 16,
-        color: Math.random() < 0.5 ? "var(--moss)" : "var(--rose)",
-        rot: Math.random() * 360,
-        scale: 0.7 + Math.random() * 0.6,
-      })),
-    [count]
-  );
+  const leaves = useMemo<Leaf[]>(() => {
+    const rand = makeRng(count * 2654435761);
+    return Array.from({ length: count }).map(() => ({
+      left: rand() * 100,
+      delay: -rand() * 22,
+      duration: 18 + rand() * 16,
+      color: rand() < 0.5 ? "var(--moss)" : "var(--rose)",
+      rot: rand() * 360,
+      scale: 0.7 + rand() * 0.6,
+    }));
+  }, [count]);
 
   return (
-    <div className="pointer-events-none absolute inset-0 z-[1] overflow-hidden">
+    <div
+      className="pointer-events-none absolute inset-0 z-[1] overflow-hidden"
+      aria-hidden="true"
+    >
       {leaves.map((l, i) => (
         <div
           key={i}
