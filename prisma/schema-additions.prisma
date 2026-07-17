@@ -1,0 +1,98 @@
+// ADD THESE TO THE END OF schema.prisma (after line 1012)
+
+// ============================================
+// STUDENT VERIFICATION SYSTEM
+// ============================================
+
+model StudentVerification {
+  id                 String             @id @default(cuid())
+  userId             String             @unique
+  status             VerificationStatus @default(PENDING)
+  method             VerificationMethod
+  schoolEmail        String?
+  institutionName    String
+  country            String
+  evidenceUrl        String?            // Path to uploaded ID/document
+  notes              String?            @db.Text
+  reviewedBy         String?
+  reviewedAt         DateTime?
+  discountType       DiscountType
+  expiresAt          DateTime?
+  createdAt          DateTime           @default(now())
+  updatedAt          DateTime           @updatedAt
+  guardianEmail      String?
+  guardianConsent    Boolean            @default(false)
+  lastApplicationAt  DateTime?          // Cooldown tracking
+  user               User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([status])
+  @@index([expiresAt])
+  @@index([createdAt])
+  @@map("student_verifications")
+}
+
+enum VerificationStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  EXPIRED
+}
+
+enum VerificationMethod {
+  SCHOOL_EMAIL
+  ID_UPLOAD
+  MANUAL
+}
+
+enum DiscountType {
+  STUDENT
+  YOUTH_13_18
+  PROMOTIONAL
+  NONE
+}
+
+// ============================================
+// UPDATES TO EXISTING MODELS
+// ============================================
+
+// ADD THESE FIELDS TO THE User MODEL (after line 49, before relations):
+//
+//   suspendedAt         DateTime?
+//   suspendedReason     String?                  @db.Text
+//   suspendedBy         String?
+//   studentVerification StudentVerification?
+//
+// ADD THIS INDEX (after line 53):
+//   @@index([suspendedAt])
+
+// ADD THESE FIELDS TO THE Order MODEL (after line 476, before relations):
+//
+//   discountApplied  Boolean       @default(false)
+//   discountType     DiscountType  @default(NONE)
+//   discountPercent  Decimal       @default(0) @db.Decimal(5, 2)
+//   discountAmount   Decimal       @default(0) @db.Decimal(10, 2)
+//
+// ADD THIS INDEX (after line 484):
+//   @@index([discountType])
+
+// ADD THESE FIELDS TO THE License MODEL (after line 354, before relations):
+//
+//   resaleProhibited  Boolean   @default(true)
+//   allowedUse        String    @default("PERSONAL")
+//   suspicionScore    Int       @default(0)
+//   lastAbuseCheckAt  DateTime?
+//
+// ADD THIS INDEX (after line 365):
+//   @@index([suspicionScore])
+
+// ADD THESE ACTIONS TO AuditAction ENUM (after line 985):
+//
+//   STUDENT_VERIFICATION_SUBMITTED
+//   STUDENT_VERIFICATION_APPROVED
+//   STUDENT_VERIFICATION_REJECTED
+//   STUDENT_VERIFICATION_EXPIRED
+//   ACCOUNT_SUSPENDED
+//   ACCOUNT_UNSUSPENDED
+//   LICENSE_ABUSE_DETECTED
+//   RESALE_SUSPECTED

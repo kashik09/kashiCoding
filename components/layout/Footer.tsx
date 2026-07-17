@@ -5,14 +5,13 @@ import { usePathname } from "next/navigation";
 
 const ROOMS = [
   { href: "/", label: "home" },
-  { href: "/projects", label: "projects" },
+  { href: "/skills", label: "skills" },
   { href: "/blog", label: "blog" },
-  { href: "/shop", label: "shop" },
+  { href: "/contact", label: "contact" },
 ] as const;
 
 const SOCIAL = [
   { href: "https://github.com/kashik09", label: "github", external: true },
-  { href: "https://twitter.com/kashikweyu", label: "twitter", external: true },
   { href: "/contact", label: "letter →", external: false },
 ] as const;
 
@@ -25,20 +24,20 @@ export function Footer() {
   };
 
   return (
-    <footer className="mt-12 border-t border-[var(--shadow)] bg-bg-card px-6 py-8 font-mono text-xs text-whisper transition-colors">
-      <div className="mx-auto grid max-w-[960px] grid-cols-2 gap-8 sm:grid-cols-4">
+    <footer className="mt-12 border-t border-(--shadow) bg-bg-card px-6 py-8 font-mono text-xs text-whisper transition-colors">
+      <div className="mx-auto grid max-w-240 grid-cols-2 gap-8 sm:grid-cols-4">
         {/* Brand Column */}
         <div className="col-span-2 min-w-0">
           <div className="mb-2 flex items-center gap-2">
             <LogoMark size={24} />
             <span className="font-serif text-sm italic text-ink">
-              kashi.quest
+              status207
             </span>
           </div>
           <div className="leading-relaxed">
             a portfolio adventure.
             <br />
-            made cozily in kampala.
+            hosted somewhere between curiosity and caffeine ☕.
           </div>
         </div>
 
@@ -94,10 +93,10 @@ export function Footer() {
       </div>
 
       {/* Status Row */}
-      <div className="mx-auto mt-8 flex max-w-[960px] items-center justify-between border-t border-[var(--shadow)] pt-6">
+      <div className="mx-auto mt-8 flex max-w-240 items-center justify-between border-t border-(--shadow) pt-6">
         <div className="flex items-center gap-2">
-          <span className="h-2 w-2 rounded-full bg-moss shadow-[0_0_0_3px_rgba(168,187,150,0.3)]" />
-          <span>available for projects</span>
+          <span className="h-2 w-2 rounded-full bg-rose shadow-[0_0_0_3px_rgba(184,146,143,0.3)]" />
+          <span>very busy, working on other projects</span>
         </div>
         <div className="text-[11px] opacity-70">
           © {new Date().getFullYear()} kashi kweyu
@@ -112,35 +111,39 @@ function LogoMark({ size = 24 }: { size?: number }) {
     <svg
       width={size}
       height={size}
-      viewBox="0 0 32 32"
-      fill="none"
-      className="text-rose"
+      viewBox="0 0 512 512"
+      aria-label="kashi"
     >
-      <path
-        d="M16 28c0-8 6-14 6-14s-3 1-6 1-6-1-6-1 6 6 6 14z"
-        fill="currentColor"
-        opacity="0.3"
-      />
-      <path
-        d="M16 4c-4 6-8 10-8 16 0 4 3.5 8 8 8s8-4 8-8c0-6-4-10-8-16z"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        fill="none"
-      />
-      <path
-        d="M16 12v12"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-      />
-      <path
-        d="M13 16c2-1 4-1 6 0"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-      />
+      <defs>
+        <radialGradient id="centerFillFooter" cx="50%" cy="42%" r="55%">
+          <stop offset="0%" stopColor="#f0d28f" />
+          <stop offset="65%" stopColor="#d8b87a" />
+          <stop offset="100%" stopColor="#b88a3e" />
+        </radialGradient>
+      </defs>
+      <g transform="translate(256 270)">
+        {/* petals */}
+        {[0, 72, 144, 216, 288].map((angle) => (
+          <g key={angle} transform={`rotate(${angle})`}>
+            <path
+              d="M 0 -30 C -42 -34, -82 -64, -82 -114 C -82 -158, -50 -190, -16 -198 C -10 -200, -6 -198, -4 -192 L -2 -184 L 0 -200 L 2 -184 L 4 -192 C 6 -198, 10 -200, 16 -198 C 50 -190, 82 -158, 82 -114 C 82 -64, 42 -34, 0 -30 Z"
+              fill="#c89a92"
+              stroke="#4a4238"
+              strokeWidth="6"
+              strokeLinejoin="round"
+            />
+          </g>
+        ))}
+        {/* center */}
+        <circle r="22" fill="url(#centerFillFooter)" stroke="#4a4238" strokeWidth="4" />
+        <g fill="#4a4238">
+          <circle cx="-7" cy="-5" r="1.8" />
+          <circle cx="6" cy="-6" r="1.6" />
+          <circle cx="8" cy="4" r="1.8" />
+          <circle cx="-5" cy="7" r="1.6" />
+          <circle cx="0" cy="0" r="1.8" />
+        </g>
+      </g>
     </svg>
   );
 }

@@ -1,0 +1,30 @@
+{
+  "updates": [
+    {
+      "id": "web-dev",
+      "value": 600,
+      "prefix": "Starting at",
+      "description": "Updated base price for web development projects"
+    },
+    {
+      "id": "mobile-dev",
+      "value": 1800,
+      "description": "Increased mobile development base price"
+    },
+    {
+      "id": "ui-ux",
+      "value": 350
+    },
+    {
+      "id": "consulting",
+      "value": 125,
+      "suffix": "/hr"
+    },
+    {
+      "id": "membership-pro",
+      "value": 1599,
+      "description": "Special promotional pricing for Pro tier"
+    }
+  ],
+  "notes": "Q1 2025 pricing adjustments - updated service base prices and Pro membership promotional rate"
+}

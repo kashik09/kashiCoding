@@ -1,0 +1,95 @@
+/**
+ * Design Tokens Reference
+ *
+ * This file documents the design system tokens.
+ * The actual tokens are defined in app/globals.css
+ *
+ * Import this file if you need tokens outside of Tailwind context.
+ */
+
+/* ════════════════════════════════════════════════════════════════
+   COLOR PALETTE — Pastel Forest
+
+   Three themes: morning (light), dusk, cabin (dark)
+   Auto-switches based on time of day via AutoTheme component
+   ════════════════════════════════════════════════════════════════ */
+
+:root {
+  /* === MORNING (Light) — Default === */
+
+  /* Backgrounds */
+  --bg-page: #d8e0d2;      /* Main page background */
+  --bg-card: #e8ede2;      /* Card surfaces */
+  --bg-linen: #f4ecdc;     /* Elevated surfaces, inputs */
+
+  /* Accent colors */
+  --moss: #a8bb96;         /* Success, positive actions */
+  --fern: #7a9072;         /* Secondary accent */
+  --rose: #b8928f;         /* Primary brand color */
+  --rose-deep: #966e6c;    /* Primary hover/active */
+  --honey: #d8b87a;        /* Warning, highlights */
+
+  /* Text colors */
+  --ink: #4a4238;          /* Primary text */
+  --whisper: #8a8278;      /* Secondary/muted text */
+
+  /* Shadows */
+  --shadow: rgba(74, 66, 56, 0.08);
+  --shadow-mid: rgba(74, 66, 56, 0.14);
+}
+
+/* === DUSK — Evening theme === */
+[data-theme="dusk"] {
+  --bg-page: #2a2e26;
+  --bg-card: #353a30;
+  --bg-linen: #3f4438;
+  --moss: #7a9072;
+  --fern: #5a6e52;
+  --rose: #a8786f;
+  --rose-deep: #8a5e58;
+  --honey: #b89870;
+  --ink: #d8d0c2;
+  --whisper: #8a8278;
+  --shadow: rgba(0, 0, 0, 0.3);
+  --shadow-mid: rgba(0, 0, 0, 0.4);
+}
+
+/* === CABIN — Night theme === */
+[data-theme="cabin"] {
+  --bg-page: #0E1410;
+  --bg-card: #161C17;
+  --bg-linen: #1f2419;
+  --moss: #6F8A4E;
+  --fern: #3D5A2E;
+  --rose: #a8786f;
+  --rose-deep: #8a5e58;
+  --honey: #C89A3A;
+  --ink: #EDE4C8;
+  --whisper: #6f7560;
+  --shadow: rgba(0, 0, 0, 0.5);
+  --shadow-mid: rgba(0, 0, 0, 0.6);
+}
+
+/* ════════════════════════════════════════════════════════════════
+   SHAPE SYSTEM
+   ════════════════════════════════════════════════════════════════ */
+
+:root {
+  --radius-card: 12px;     /* Cards, modals */
+  --radius-btn: 8px;       /* Buttons, inputs */
+  --radius-pill: 999px;    /* Pills, tags, full-round */
+}
+
+/* ════════════════════════════════════════════════════════════════
+   TYPOGRAPHY
+
+   Font families are set via next/font in layout.tsx
+   These are the CSS variable references:
+   ════════════════════════════════════════════════════════════════ */
+
+:root {
+  --font-serif: var(--font-fraunces), Georgia, serif;
+  --font-pixel: var(--font-pixelify), system-ui, sans-serif;
+  --font-stamp: var(--font-silkscreen), monospace;
+  --font-mono: var(--font-ibm-plex-mono), ui-monospace, monospace;
+}
